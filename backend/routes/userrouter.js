@@ -8,4 +8,8 @@ router.post('/register', userController.addNewUser)
 
 router.post('/login', userController.checkUserByEmailAndPassword)
 
+router.put('/edit', userController.editUser)
+
+router.delete('/delete', userController.deleteUser)
+
 module.exports = router

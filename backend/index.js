@@ -21,6 +21,9 @@ app.use(express.json());
 const userRouter = require('./routes/userrouter')
 app.use('/heka/api/users', userRouter)
 
+const recipeRouter = require('./routes/reciperouter')
+app.use('/heka/api/recipes', recipeRouter)
+
 app.use("/test", (req, res) => {
   res.send('test')
 })
