@@ -1,5 +1,50 @@
 .content {
   flex: fit-content;
   text-align: center;
-  align-items: center;
+  width: 100%;
+}
+
+.dailymeals .list-group-item{
+  background-color: #726875;
+  padding: 10px;
+  margin: 5px 5px 5px 5px;
+} 
+.dailymeals{
+  background-color: #69BC45;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 30px 30px 30px 30px;
+  width: 407px !important;
+} 
+
+
+.hbar{
+  margin-bottom: 30px;
+  padding: 5px;
+}
+
+
+.dailyqotues {
+  background-color: #69BC45;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 30px 30px 30px 30px;
+  width: 377px !important;
+}
+
+.barchart {
+  background-color: #69BC45;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 30px 30px 30px 30px;
+  justify-content: center;
+  width: 407px !important;
+}
+
+.piechart {
+  background-color: #69BC45;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 30px 1px 30px 30px;
+  width: 377px !important;
 }

@@ -6,9 +6,13 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: $mainColor;
+  background-color: #fff;
   overflow-x: hidden;
   padding-top: 16px;
+  border-bottom: solid 4px #69BC45;
+  border-top: solid 4px  #69BC45;
+  border-left: solid 4px  #69BC45;
+  border-right: solid  4px #69BC45;
 }
 
 /* Style sidebar links */
@@ -16,9 +20,10 @@
   padding: 60px 8px 20px 16px;
   text-decoration: none;
   font-size: 25px;
-  color: $hekaBackgroundColor;
+  color: #69BC45;
   display: block;
   justify-content: center;
+  
 }
 
 /* Style links on mouse-over */
@@ -42,15 +47,14 @@
 width: 200px;
 border-radius: 6rem;
 }
-
+ 
 .profileImageContaioner{
-  border-bottom: solid rgb(114,104,117);
-
+  border-bottom: solid #69BC45;
   padding-bottom: 30px;
 }
 
 .span{
-color: white;
+color: #69BC45;
 font-size: x-large;
 
 }

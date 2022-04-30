@@ -6,11 +6,11 @@ import Sidebar from "../Navigation/Sidebar";
 function Body() {
   return (
     <div className="body">
-      <div className="container-fluid">
-          <Sidebar/>
-          <div className="col py-3">
+      <div className="sidebar">
+        <Sidebar/>
+      </div>
+      <div className="container">  
             <Main />
-          </div>
       </div>
     </div>
   );
