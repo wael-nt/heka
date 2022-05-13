@@ -11,7 +11,7 @@ function Pie() {
         ]}
         animationDuration="10000"
         radius="40"
-      />;
+      />
     </div>
   )
 }

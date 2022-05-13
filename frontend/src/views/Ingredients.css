@@ -1,0 +1,11 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: auto;
+}
+
+.title {
+  text-align: center;
+  align-items: center;
+}

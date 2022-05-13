@@ -1,20 +1,12 @@
 .main {
   background-color: #ffffff;
   align-self: center;
+  align-items: center;
   width: auto;
-  display: flex;
   flex-direction: row;
   max-width: 1080px;
-  margin: 5% 5% auto;
-  padding: 20px;
-  /*border:5px solid black;*/
   border-radius: 10px;
   opacity: .95;
-  flex: auto;
-}
-
-.main article {
-  margin: 20px;
-  width: auto;
   height: min-content;
+  margin-top: 2%;
 }
