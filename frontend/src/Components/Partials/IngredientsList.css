@@ -1,0 +1,10 @@
+.ingredients-list {
+  list-style: none;
+  display: grid;
+  grid-row: inherit;
+  flex-direction: row;
+  margin: 1rem auto;
+  padding: 0;
+  width: 40%;
+  max-width: 40rem;
+}

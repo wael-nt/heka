@@ -4,21 +4,22 @@
   width: 100%;
 }
 
-.dailymeals .list-group-item{
+.dailymeals .list-group-item {
   background-color: #726875;
   padding: 10px;
   margin: 5px 5px 5px 5px;
-} 
-.dailymeals{
+}
+
+.dailymeals {
   background-color: #69BC45;
   border-radius: 20px;
   padding: 10px;
   margin: 30px 30px 30px 30px;
   width: 407px !important;
-} 
+}
 
 
-.hbar{
+.hbar {
   margin-bottom: 30px;
   padding: 5px;
 }
