@@ -9,7 +9,7 @@ function Body() {
       <div className="sidebar">
         <Sidebar />
       </div>
-      <div className="container">
+      <div className="contents">
         <Main />
       </div>
     </div>

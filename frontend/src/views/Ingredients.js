@@ -32,7 +32,7 @@ function Ingredients() {
   }
 
   return (
-    <div className="content">
+    <div className="ingredients">
       <h1 className="title">Whole Foods Page</h1>
       <IngredientsList items={ingredients.current} onClick={() => { setSelected(true) }} />
     </div>
