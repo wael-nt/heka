@@ -1,10 +1,25 @@
 .ingredients-list {
   list-style: none;
   display: grid;
-  grid-row: inherit;
+  grid-template-columns: repeat(1, 1fr);
+  max-width: 2200px;
   flex-direction: row;
-  margin: 1rem auto;
-  padding: 0;
-  width: 40%;
-  max-width: 40rem;
+  margin-right: 20px;
+  width: 100%;
+}
+
+@media (min-width: 1340px) {
+  .ingredients-list {
+    margin-left: 10px;
+    align-self: flex-end;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: auto;
+  }
+}
+
+@media (min-width: 1920px) {
+  .ingredients-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

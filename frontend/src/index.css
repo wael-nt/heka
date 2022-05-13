@@ -6,15 +6,14 @@ html {
 }
 
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
   outline: 0;
   margin: 0;
   padding: 0;
 }
 
-
-
 body {
+  max-width: 90vw;
   margin: 0;
   padding: 0;
   flex: 1;

@@ -2,11 +2,11 @@
   background-color: #ffffff;
   align-self: center;
   align-items: center;
-  width: auto;
   flex-direction: row;
-  max-width: 1080px;
+  max-width: 1900px;
   border-radius: 10px;
   opacity: .95;
-  height: min-content;
+  min-height: 100vh;
+  margin-left: 2%;
   margin-top: 2%;
 }
