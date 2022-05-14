@@ -4,14 +4,19 @@ import { PieChart } from 'react-minimal-pie-chart';
 function Pie() {
   return (
     <div>
+      <h1>Goal</h1>
       <PieChart
         data={[
-          { title: 'One', value: 60, color: '#726875' },
-          { title: 'Two', value: 20, color: '#D6D4D4' },
+          { title: 'Carb', value: 60, color: '#69BC45',key:"Carb" },
+          { title: 'Protien', value: 20, color: '#D6D4D4',key:"Protien" },
         ]}
-        animationDuration="10000"
+        animationDuration="1000"
         radius="40"
-      />;
+        lineWidth={40}
+        rounded={true}
+        center={ [50, 40]}
+        animationEasing="out"
+      />
     </div>
   )
 }

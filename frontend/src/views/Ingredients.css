@@ -1,0 +1,12 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  max-width: inherit;
+}
+
+.title {
+  text-align: center;
+  align-items: center;
+  align-self: center;
+  width: fit-content;
+}

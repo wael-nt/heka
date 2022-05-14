@@ -1,6 +1,5 @@
 import React from 'react';
 import pic from '../../Assets/profile-picture.png';
-import NavbarStyle from '../Sass/NavbarStyle.css';
 
 function ProfileImg() {
   return (

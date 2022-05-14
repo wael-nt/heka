@@ -1,12 +1,19 @@
 .body {
-  background-color:#ffffff;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
   line-height: 130%;
-  display: flex;
+  width: auto;
   min-height: 100vh;
   flex-direction: row;
-  flex: auto;
+  flex: 1;
+}
+
+.contents {
+  padding-left: 2%;
+  margin-left: 2%;
 }
