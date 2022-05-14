@@ -8,6 +8,7 @@ function Nutrition() {
 <h1>
   THIS IS THE Nutrition PAGE
 </h1>
+
     </div>
   );
 }

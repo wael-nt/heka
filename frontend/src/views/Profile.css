@@ -3,3 +3,32 @@
   text-align: center;
   align-items: center;
 }
+.userInfo{
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 30px 30px 30px 30px;
+    width: 407px !important;
+}
+
+.userInfo .accordion-body{
+  background-color: #69BC45;
+}
+.button {
+  background-color: white;
+  border: 2px solid #555555;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #69BC45;
+  color: white;
+}
