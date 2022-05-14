@@ -1,0 +1,27 @@
+.form-control {
+  max-width: 16rem !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+  margin: 20px auto !important;
+  border-radius: 15px !important;
+  padding: 8px !important;
+}
+
+.btn {
+  border-radius: 15px !important;
+  background-color: gray !important;
+}
+
+.btn.btn:hover {
+  background-color: #69BC45 !important;
+}
+
+.BmiCalculator {
+  border: 3px dashed cornsilk !important;
+  border-radius: 15px !important;
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+/*# sourceMappingURL=BmiCalculator.css.map */

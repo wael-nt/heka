@@ -19,7 +19,7 @@
   background-color: #0e9809;
 }
 .dailymeals .list-group-item {
-  background-color: #4a4a4a;
+  background-color: gray ;
 }
 .dailymeals .list-group :hover{
   background-color: #807777;

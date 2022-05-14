@@ -6,6 +6,7 @@ import DailyQuotes from '../Components/Partials/DailyQuotes';
 import Bar from '../Components/Partials/Bar';
 
 import "./Home.css";
+import BmiCalculator from '../Components/Partials/BmiCalculator';
 
 function Home() {
   return (
@@ -28,6 +29,7 @@ function Home() {
           </div>
           <div className='piechart col-sm-12 col-md-5 justify-content-center d-flex'>
             <Pie />
+            <BmiCalculator/>
           </div>
         </div>
       </div>
