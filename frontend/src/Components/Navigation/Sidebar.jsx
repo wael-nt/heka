@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../Assets/pngwinggreen.png'
 import { NavLink } from 'react-router-dom';
 import ProfileImg from './ProfileImg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

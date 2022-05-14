@@ -3,6 +3,7 @@ import Main from "./Main";
 import "./Body.css"
 import Sidebar from "../Navigation/Sidebar";
 
+
 function Body() {
   return (
     <div className="body">
@@ -10,6 +11,7 @@ function Body() {
         <Sidebar />
       </div>
       <div className="contents">
+        
         <Main />
       </div>
     </div>

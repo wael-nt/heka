@@ -2,6 +2,7 @@ import React from 'react'
 
 import Pie from '../Components/Partials/Pie';
 import DailyMeals from '../Components/Partials/DailyMeals';
+import DailyQuotes from '../Components/Partials/DailyQuotes';
 import Bar from '../Components/Partials/Bar';
 
 import "./Home.css";
@@ -17,6 +18,7 @@ function Home() {
           </div>
           <div className='dailyqotues col-sm-12 col-md-5'>
             <h1>Daily qotues</h1>
+            <DailyQuotes/>
           </div>
         </div>
         <div className='row'>

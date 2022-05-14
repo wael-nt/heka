@@ -2,50 +2,73 @@
   flex: fit-content;
   text-align: center;
   width: 100%;
+  justify-content: center;
+  margin: 5% auto auto 10%;
+  align-items: center;
+  border-radius: 30px !important;
+  background-image: linear-gradient(90deg, rgba(105,188,69,1) 0%, rgba(105,188,69,1) 35%, rgba(74,74,74,1) 100%);;
 }
 
 .dailymeals .list-group-item {
-  background-color: #726875;
-  padding: 10px;
-  margin: 5px 5px 5px 5px;
-}
-
-.dailymeals {
   background-color: #69BC45;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 20px;
+}
+.dailymeals .list-group-item :hover{
+  background-color: #0e9809;
+}
+.dailymeals .list-group-item {
+  background-color: #4a4a4a;
+}
+.dailymeals .list-group :hover{
+  background-color: #807777;
+  color: #111010;
+}
+.dailymeals :hover{
+  color: #ffffff;
+}
+.dailymeals {
   border-radius: 20px;
   padding: 10px;
-  margin: 30px 30px 30px 30px;
-  width: 407px !important;
+  margin: auto;
+  margin-top: 30px !important;
+  max-width: 700px !important;
+  min-width: 300px !important;
 }
 
 
 .hbar {
   margin-bottom: 30px;
   padding: 5px;
+  border-radius: 20px;
 }
 
 
 .dailyqotues {
-  background-color: #69BC45;
   border-radius: 20px;
   padding: 10px;
-  margin: 30px 30px 30px 30px;
-  width: 377px !important;
+  margin: auto;
+  margin-top: 50px !important;
+  max-width: 700px !important;
+  min-width: 300px !important;
 }
 
 .barchart {
-  background-color: #69BC45;
   border-radius: 20px;
   padding: 10px;
-  margin: 30px 30px 30px 30px;
+  margin: auto;
+  margin-top: 30px !important;
   justify-content: center;
-  width: 407px !important;
+  max-width: 700px !important;
+  min-width: 300px !important;
 }
 
 .piechart {
-  background-color: #69BC45;
   border-radius: 20px;
   padding: 10px;
-  margin: 30px 1px 30px 30px;
-  width: 377px !important;
+  margin: auto;
+  margin-top: 30px !important;
+  max-width: 700px !important;
+  min-width: 300px !important;
 }

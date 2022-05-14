@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import NavbarStyle from '../Sass/NavbarStyle.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import Logo from "./Logo";
 
 
 function NavLinks() {
@@ -14,7 +15,9 @@ function NavLinks() {
       <NavLink to="/ingredients">Ingredients</NavLink>
       <NavLink to="/recipes"><i className='fa fa-lemon-o'></i>Recipes</NavLink>
       <NavLink to="/contact"><i className='fa fa-fw fa-envelope'></i>Contact</NavLink>
+      <Logo/>
     </ul>
+    
   );
 }
 
