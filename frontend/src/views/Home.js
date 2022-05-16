@@ -18,18 +18,20 @@ function Home() {
             <DailyMeals />
           </div>
           <div className='dailyqotues col-sm-12 col-md-5'>
-            <h1>Daily qotues</h1>
-            <DailyQuotes/>
+            <h4>Daily quotes</h4>
+            <DailyQuotes />
           </div>
         </div>
         <div className='row'>
           <div className='barchart col-sm-12 col-md-5'>
             <h1>Bar chart</h1>
             <Bar />
+            <Bar name='Vitamin A' value='45' />
+            <Bar name='Vitamin D' value='34' />
           </div>
           <div className='piechart col-sm-12 col-md-5 justify-content-center d-flex'>
             <Pie />
-            <BmiCalculator/>
+            <BmiCalculator />
           </div>
         </div>
       </div>

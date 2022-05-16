@@ -12,26 +12,27 @@ const DailyQuotes = () => {
         setAuthor(result[random].author);
         setText(result[random].text);
     }
-    const MINUTE_MS = 60000;
+    const MINUTE_MS = 4000;
 
     useEffect(() => {
         const interval = setInterval(() => {
-           updateQuote();
+            updateQuote();
         }, MINUTE_MS);
 
         return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }, [])
-   
+
     return (
-        <div>
-            <h2>
+        <blockquote>
+            <h3>
                 "{text}"
-            </h2>
+            </h3>
             <h3>
                 <strong>Author : </strong>
                 {author}
             </h3>
-        </div>
+        </blockquote>
+
     )
 }
 

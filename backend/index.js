@@ -7,7 +7,7 @@ const cors = require('cors')
 
 const app = express()
 
-const allowedOrigins = ["*", "http://localhost:3000"];
+const allowedOrigins = ["*", "http://localhost:3001"];
 const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
 const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept"]
 

@@ -48,23 +48,32 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
   })
 }
 
-// PUT {name,email,password,age,sex,weight,height}  - currentEmail
+// PUT {name,email,currentPassword,newPassword,age,sex,weight,height}  - currentEmail
 exports.editUser = async function editUser(req, res, next) {
-  userSchema.findOne({ email: req.body.currentEmail }, function (err, user) {
+  console.log('here');
+  userSchema.findOne({ email: req.body.email }, function (err, user) {
+    try {
+      if (!user.validatePassword(req.body.currentPassword)) {
+        res.status(400).json({ message: "Invalid credentials" })
+      } else {
+        user.name = req.body.name
+        user.password = user.generateHash(req.body.newPassword)
+        // user.email = req.body.email
+        user.weight = req.body.weight
+        user.height = req.body.height
+        user.sex = req.body.sex
 
-    user.name = req.body.name
-    user.password = user.generateHash(req.body.password)
-    user.email = req.body.email
-    user.weight = req.body.weight
-    user.height = req.body.height
-    user.sex = req.body.sex
+        if (err)
+          res.status(400).json({ message: err })
 
+        user.save()
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(extract(user))
+      }
+    } catch (err) {
+      res.status(400).json({ message: 'User doesnt exist' })
+    }
 
-    if (err)
-      res.status(400).json({ message: err })
-
-    user.save()
-    res.send(extract(user))
   })
 }
 

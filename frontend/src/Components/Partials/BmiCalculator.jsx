@@ -18,14 +18,14 @@ const BmiCalculator = () => {
         <div>
             <h2>Claculate BMI</h2>
             <div className='BmiCalculator container'>
-            <form onSubmit={calculate}>
-          <input id='height' value={height} onChange={(e) => setHeight(e.target.value)} placeholder="height in meters: " className='form-control'/>
-          <input value={mass} onChange={(e) => setMass(e.target.value)} placeholder="mass in kg: " className='form-control'/>
-        <button className='btn btn-warning' type="submit">calculate</button>
-            </form>
-        <h3>{bmi==null?"Your bmi :":bmi}</h3>
+                <form onSubmit={calculate}>
+                    <input id='height' value={height} onChange={(e) => setHeight(e.target.value)} placeholder="height in meters: " className='form-control' />
+                    <input value={mass} onChange={(e) => setMass(e.target.value)} placeholder="mass in kg: " className='form-control' />
+                    <button className='btn btn-warning' type="submit">calculate</button>
+                </form>
+                <h3>{bmi == null ? "Your bmi :" : bmi}</h3>
+            </div>
         </div>
-    </div>
     )
 }
 

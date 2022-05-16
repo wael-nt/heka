@@ -1,24 +1,23 @@
 import React from 'react'
+import { Line } from 'rc-progress'
 
-function Bar() {
+function Bar(props) {
+  const name = props.name
+  const value = props.value
+
   return (
     <>
-  <label><strong>protien</strong></label>
-  <div className="hbar progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-    50%
-</div>
-<label><strong>protien</strong></label>
-  <div className="hbar progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-    30%
-  </div>
-<label><strong>protien</strong></label>
-  <div className="hbar progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">30%</div>
-<label><strong>protien</strong></label>
-  <div className="hbar progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">30%</div>
-<label><strong>protien</strong></label>
-  <div className="hbar progress-bar progress-bar-striped bg-danger" role="progressbar"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">30%</div>
-</>
+      <label><strong>{name}({value}%)</strong></label>
+      <Line percent={value} strokeWidth={4} strokeColor="#D3D3D3" label={name
+      } value={value} />
+      <br />
+      <br />
+    </>
   )
+}
+Bar.defaultProps = {
+  name: "Protein",
+  value: 23
 }
 
 export default Bar
