@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Pie from '../Components/Partials/Pie';
 import DailyMeals from '../Components/Partials/DailyMeals';
 import DailyQuotes from '../Components/Partials/DailyQuotes';
