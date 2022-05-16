@@ -51,7 +51,9 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
 // PUT {name,email,currentPassword,newPassword,age,sex,weight,height}  - currentEmail
 exports.editUser = async function editUser(req, res, next) {
   console.log('here');
+  console.log(req.body);
   userSchema.findOne({ email: req.body.email }, function (err, user) {
+    res.set('Access-Control-Allow-Origin', '*');
     try {
       if (!user.validatePassword(req.body.currentPassword)) {
         res.status(400).json({ message: "Invalid credentials" })
@@ -67,7 +69,7 @@ exports.editUser = async function editUser(req, res, next) {
           res.status(400).json({ message: err })
 
         user.save()
-        res.set('Access-Control-Allow-Origin', '*');
+
         res.send(extract(user))
       }
     } catch (err) {

@@ -4,8 +4,20 @@ import { Form } from 'react-bootstrap'
 import "./Profile.css";
 
 function Profile() {
+  let obj
 
   let name = 'Wills'
+  if (checkSession) {
+    console.log('yess');
+    obj = getObject()
+  } else {
+    obj = {
+      name: "name",
+      age: "age",
+      height: "height",
+      weight: "weight"
+    }
+  }
   return (
     <>
       <div className='content'>
@@ -19,7 +31,7 @@ function Profile() {
                     <label for="name" class="col-form-label">Name</label>
                   </div>
                   <div class="col-auto">
-                    <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={name} name='name'></input>
+                    <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
                   </div>
                 </div>
 
@@ -28,7 +40,7 @@ function Profile() {
                     <label for="height" class="col-form-label">Height</label>
                   </div>
                   <div class="col-auto">
-                    <input type="number" id="height" class="form-control" aria-describedby="name" placeholder='178' name='height'></input>
+                    <input type="number" id="height" class="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
                   </div>
                 </div>
 
@@ -37,7 +49,7 @@ function Profile() {
                     <label for="weight" class="col-form-label">Weight</label>
                   </div>
                   <div class="col-auto">
-                    <input type="number" id="weight" class="form-control" aria-describedby="name" placeholder='45' name='weight'></input>
+                    <input type="number" id="weight" class="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
                   </div>
                 </div>
 
@@ -46,13 +58,13 @@ function Profile() {
                     <label for="age" class="col-form-label">Age</label>
                   </div>
                   <div class="col-auto">
-                    <input type="number" id="age" class="form-control" aria-describedby="name" placeholder='45' name='age'></input>
+                    <input type="number" id="age" class="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
                   </div>
                 </div>
 
                 <div class="row g-3 ms-3 align-items-center">
                   <div class="col-auto">
-                    <label for="age" class="col-form-label">Age</label>
+                    <label for="sex" class="col-form-label">Age</label>
                     <select name='sex'>
                       <option>Select sex</option>
                       <option>Male</option>
@@ -127,6 +139,19 @@ async function postUpdate(userData) {
   const response = await fetch('http://127.0.0.1:4300/heka/api/users/edit', requestOptions);
   const res = await response.json();
   console.log(res);
+  handleRes(res)
+}
+
+function handleRes(results) {
+  window.sessionStorage.setItem('userinfo', JSON.stringify(results))
+}
+
+const checkSession = function () {
+  return (window.sessionStorage.getItem('userinfo') != null)
+}
+
+const getObject = function () {
+  return JSON.parse(window.sessionStorage.getItem('userinfo'))
 }
 
 export default Profile
