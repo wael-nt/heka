@@ -7,6 +7,8 @@ import Recipe from './views/Recipe';
 import Ingredients from './views/Ingredients';
 import Nutrition from './views/Nutrition';
 import Contact from './views/Contact';
+import SignIn from './views/SignIn';
+import Signup from './views/Signup';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/ingredients" element={<Ingredients />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
     </Routes>
   );

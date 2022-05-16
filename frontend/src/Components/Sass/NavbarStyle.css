@@ -5,7 +5,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: #4f4b4b;
   overflow-x: hidden;
   padding-top: 16px;
   border-bottom: solid 4px #69BC45;
@@ -28,7 +28,7 @@
 
 /* Style links on mouse-over */
 .sidebar a:hover {
-  color: #000000;
+  color: #ffffff;
 }
 
 /* Style the main content */
