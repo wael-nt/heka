@@ -6,17 +6,18 @@ import IngredientItem from './IngredientItem';
 import './IngredientsList.css';
 
 function IngredientsList(props) {
+
   if (props.items.length === 0) {
     return (
       <div className="ingredients-list center">
         <Card>
-          <h2>No ingredients found. Maybe add one?</h2>
+          <h2>Ingredient not found. Maybe add one?</h2>
           <button onClick={() => { }}>Add an Ingredient</button>
         </Card>
       </div>
     );
   }
-
+  console.log(props.category)
   return (
     <ul className="ingredients-list">
       {props.items.map(ingredient => (
@@ -24,8 +25,9 @@ function IngredientsList(props) {
           key={ingredient.id}
           id={ingredient.id}
           image={ingredient.image}
+          category={props.category}
           name={ingredient.name}
-        // onClick={props.onClick}
+          onClick={props.onClick}
         />
       ))}
     </ul>

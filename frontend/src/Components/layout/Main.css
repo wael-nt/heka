@@ -3,10 +3,9 @@
   align-self: center;
   align-items: center;
   flex-direction: row;
-  max-width: 1900px;
   border-radius: 10px;
   opacity: .95;
   min-height: 100vh;
   margin-left: 2%;
-  margin-top: 2%;
+
 }

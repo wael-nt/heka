@@ -3,8 +3,9 @@
   text-align: center;
   width: 100%;
   justify-content: center;
-  margin: 5% auto auto 10%;
   align-items: center;
+  margin-top: 2%;
+  margin-left: 10px;
   border-radius: 30px !important;
   /* Created with https://www.css-gradient.com */
   background: rgba(108, 115, 118, 1.0);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import Body from './Components/layout/Body'
 import Home from './views/Home';
 import Profile from './views/Profile';
@@ -9,6 +10,8 @@ import Nutrition from './views/Nutrition';
 import Contact from './views/Contact';
 import SignIn from './views/SignIn';
 import Signup from './views/Signup';
+import AddIngredient from './views/AddIngredient';
+import Ingredient from './views/Ingredient';
 
 function App() {
   return (
@@ -22,6 +25,8 @@ function App() {
         <Route path="/ingredients" element={<Ingredients />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/add-ingredient" element={<AddIngredient />} />
+        <Route path='/ingredient/:id' element={<Ingredient />} />
       </Route>
     </Routes>
   );

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const ingredientSchema = new mongoose.Schema({
   name: {
@@ -27,12 +27,13 @@ const ingredientSchema = new mongoose.Schema({
     type: Array,
     default: [] //%protein, %fat, %carbs
   },
-  category: {
-    type: String,
+  categories: {
+    type: Array,
+    default: []
   }
-})
+});
 
-const Ingredient = mongoose.model("Food", ingredientSchema)
+const Ingredient = mongoose.model("Ingredients", ingredientSchema);
 
 
 module.exports = Ingredient;
