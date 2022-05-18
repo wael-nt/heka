@@ -2,9 +2,8 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  max-width: 2200px;
   flex-direction: row;
-  margin-right: 20px;
+  margin-left: 10px;
   width: 100%;
 }
 
@@ -21,5 +20,11 @@
 @media (min-width: 1920px) {
   .ingredients-list {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 2800px) {
+  .ingredients-list {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
