@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import "./Recipe.css";
 import axios from "axios";
 import RecipeItem from '../Components/Partials/RecipeItem';
+import { useContext } from "react";
+import RecipeContext from '../context/RecipeContext';
 
 const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
 
@@ -11,6 +13,7 @@ function Recipe() {
 
   const [cond, setCond] = useState(false)
   const [items, setRecipes] = useState([]);
+  const recipeCtx = useContext(RecipeContext)
 
   const getAuth = () => {
     let userObj = window.localStorage.getItem('cred')
@@ -53,6 +56,9 @@ function Recipe() {
 
     getUserRecipes()
   }, [])
+
+
+  //recipeCtx.updateRecipe({ name: "test", description: "teststst" })
 
 
   if (cond) {

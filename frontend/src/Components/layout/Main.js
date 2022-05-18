@@ -1,14 +1,18 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import RecipeProvider from "../../context/RecipeProvider";
 import Logo from "../Navigation/Logo";
 
 import "./Main.css";
 
 function Main() {
   return (
-    <main className="main">
-      <Outlet />
-    </main>
+    <RecipeProvider>
+      <main className="main">
+        <Outlet />
+      </main>
+    </RecipeProvider>
+
   );
 }
 
