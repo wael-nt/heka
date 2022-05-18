@@ -5,7 +5,7 @@ const {
   validationResult
 } = require("express-validator");
 
-let email ="";
+let email = "";
 // POST
 exports.addNewUser = async function addNewUser(req, res, next) {
   console.log("post");
@@ -27,7 +27,7 @@ exports.addNewUser = async function addNewUser(req, res, next) {
 
   try {
     const result = await userObj.save();
-     res.send(extract(result))
+    res.send(extract(result))
   } catch (err) {
     if (err.toString().includes('duplicate')) {
       res.status(400).json({
@@ -46,7 +46,8 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
   userSchema.findOne({
     email: req.body.email
   }, function (err, user) {
-
+    console.log('here');
+    console.log(req.body);
     try {
       if (!user.validatePassword(req.body.password)) {
         //password did not match
@@ -54,14 +55,15 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
           message: "Invalid login credentials"
         })
       } else {
-       let jsonToken =  JWT.sign(req.body.email,process.env.TOKEN_SECRET);
-       res.header('auth-token',jsonToken).send(jsonToken);
-       console.log(jsonToken);
+        let jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
+        res.header('auth-token', jsonToken).send(jsonToken);
+        console.log(jsonToken);
         // password matched. proceed forward
         // without id, v and password fields
         //res.send(extract(user))
       }
     } catch (err) {
+      console.log(err);
       res.status(400).json({
         message: 'User doesnt exist'
       })
@@ -71,25 +73,32 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
 
 // PUT {name,email,password,age,sex,weight,height}  - currentEmail
 exports.editUser = async function editUser(req, res, next) {
-  userSchema.findOne({
-    email: req.body.currentEmail
-  }, function (err, user) {
+  console.log('here');
+  console.log(req.body);
+  userSchema.findOne({ email: req.body.email }, function (err, user) {
+    res.set('Access-Control-Allow-Origin', '*');
+    try {
+      if (!user.validatePassword(req.body.currentPassword)) {
+        res.status(400).json({ message: "Invalid credentials" })
+      } else {
+        user.name = req.body.name
+        user.password = user.generateHash(req.body.newPassword)
+        // user.email = req.body.email
+        user.weight = req.body.weight
+        user.height = req.body.height
+        user.sex = req.body.sex
 
-    user.name = req.body.name
-    user.password = user.generateHash(req.body.password)
-    user.email = req.body.email
-    user.weight = req.body.weight
-    user.height = req.body.height
-    user.sex = req.body.sex
+        if (err)
+          res.status(400).json({ message: err })
 
+        user.save()
 
-    if (err)
-      res.status(400).json({
-        message: err
-      })
+        res.send(extract(user))
+      }
+    } catch (err) {
+      res.status(400).json({ message: 'User doesnt exist' })
+    }
 
-    user.save()
-    res.send(extract(user))
   })
 }
 

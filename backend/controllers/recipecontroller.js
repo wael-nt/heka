@@ -51,7 +51,7 @@ exports.deleteAllRecipes = async function deleteAllRecipes(req, res, next) {
 exports.getRecipe = async function getRecipe(req, res, next) {
   const recipeName = req.body.name
   try {
-    const r = await recipeName.findOne({ name: recipeName })
+    const r = await recipeSchema.findOne({ name: recipeName })
     res.send(extract(r))
   } catch (err) {
     res.status(400).json({ message: "Recipe doesn't exist." })
@@ -59,11 +59,13 @@ exports.getRecipe = async function getRecipe(req, res, next) {
 }
 
 exports.getRecipes = async function getRecipes(req, res, next) {
-  const owner = req.body.owner
+
+  const owner = req.params.email
+  console.log(owner);
   try {
-    const r = await recipeName.find({ owner: owner })
+    const r = await recipeSchema.find({ owner: owner })
     res.send(r)
   } catch (err) {
-    res.status(400).json({ message: "You currently own no recipes." })
+    res.status(200).json({ message: "You currently own no recipes." })
   }
 }
