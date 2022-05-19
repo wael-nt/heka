@@ -8,6 +8,12 @@ import Bar from '../Components/Partials/Bar';
 import "./Home.css";
 import BmiCalculator from '../Components/Partials/BmiCalculator';
 
+const colors = ['#69BC45', 'yellow', 'purple'];
+
+const pieItems = [{ title: "Protein %", value: 60, color: colors[0] },
+{ title: "Fat %", value: 20, color: colors[1] },
+{ title: "Carbs %", value: 20, color: colors[2] }]
+
 function Home() {
   return (
     <>
@@ -18,6 +24,7 @@ function Home() {
             <DailyMeals />
           </div>
           <div className='dailyqotues col-sm-12 col-md-5'>
+
             <h4>Daily quotes</h4>
             <DailyQuotes />
           </div>
@@ -30,7 +37,7 @@ function Home() {
             <Bar name='Vitamin D' value='34' />
           </div>
           <div className='piechart col-sm-12 col-md-5 justify-content-center d-flex'>
-            <Pie />
+            <Pie items={pieItems} title="Goals" />
             <BmiCalculator />
           </div>
         </div>

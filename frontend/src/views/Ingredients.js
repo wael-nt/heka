@@ -1,104 +1,180 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useReducer } from "react";
 
 import IngredientsList from "../Components/Partials/IngredientsList";
 import SearchBar from "../Components/Partials/SearchBar";
 
 import "./Ingredients.css";
 
-function Ingredients() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSelected, setSelected] = useState(false);
-  const [title, setTitle] = useState("Ingredients");
-  const [ingredients, setIngredients] = useState([{ id: -1, name: "Grains", image: "/grains.jpg" },
-  { id: -2, name: "Meat", image: "/meatandfish.jpg" },
-  { id: -3, name: "Vegetables", image: "/vegetables.jpg" },
-  { id: -4, name: "Fruit", image: "/fruits.jpg" },
-  { id: -5, name: "Beverages", image: "/drinks.jpg" },
-  { id: -6, name: "Dairy", image: "/dairy.jpg" },
-  { id: -7, name: "Miscellaneous", image: "/miscellaneous.jpg" }]);
-  const category = useRef({ id: 0, name: "", image: "" });
-  const navigate = useNavigate();
+import Ingredient from "./Ingredient";
 
-  function selectItem(item) {
-    if (category.current.id === 0) {
-      const { id, image, name } = item;
-      category.current = { id: id, name: name, image: image };
-      console.log(item.id);
-      setTitle(name);
-      setSelected(true);
-    } else {
-      navigate("/ingredient/" + item.id)
+const categories = [{ id: -1, name: "Grains", image: "/grains.jpg" },
+{ id: -2, name: "Meat", image: "/meatandfish.jpg" },
+{ id: -3, name: "Vegetables", image: "/vegetables.jpg" },
+{ id: -4, name: "Fruit", image: "/fruits.jpg" },
+{ id: -5, name: "Beverages", image: "/drinks.jpg" },
+{ id: -6, name: "Dairy", image: "/dairy.jpg" },
+{ id: -7, name: "Miscellaneous", image: "/miscellaneous.jpg" }];
+
+const defaultState = {
+  search: "",
+  title: "Ingredients",
+  item: {},
+  ingredients: categories,
+  isItem: false,
+  category: { id: 0, name: "", image: "" },
+  newRecipe: []
+};
+
+const reducer = (state, action) => {
+
+  switch (action.type) {
+    case 'ADD_ITEM': { }
+    case 'REMOVE_ITEM': { }
+    case 'ITEM': { return { ...state, isItem: action.bool } }
+    case 'TITLE': { return { ...state, title: action.title } }
+    case 'SEARCH': { return { ...state, search: action.search } }
+    case 'INGREDIENTS': { return { ...state, ingredients: action.ingredients } }
+    case 'SET_INGREDIENT': { return { ...state, item: action.item } }
+    case "CATEGORY": { return { ...state, category: action.category } }
+    case "DEFAULT": { return defaultState }
+    default:
+      throw new Error();
+  };
+}
+function Ingredients() {
+  const [state, dispatcher] = useReducer(reducer, defaultState);
+
+  async function selectItem(id) {
+    if (state.category.id === 0) {
+      categories.filter((category) => {
+        if (category.id === id) {
+          dispatcher({ type: "CATEGORY", category: category })
+          dispatcher({ type: "TITLE", title: category.name });
+        }
+      });
+    } else if (state.category.id < 0) {
+      state.ingredients.filter(ingredient => {
+        if (id === ingredient.id) {
+          dispatcher({ type: "SET_INGREDIENT", item: ingredient });
+          dispatcher({ type: "TITLE", title: ingredient.name.toUpperCase() });
+        }
+      });
     }
   }
 
   async function handleSearch(value) {
-    console.log(value)
-    const path = 'http://localhost:4300/heka/api/ingredients?search=' + value
-    await fetch(path).then(async response => {
-      const newData = await response.json();
-      console.log(newData)
-      setIngredients(newData);
-      setIsLoading(false)
-      setTitle("Search")
-      category.current = { id: -7, name: "Miscellaneous", image: "/miscellaneous.jpg" };
-    });
+    dispatcher({ type: "CATEGORY", category: categories[6] });
+    if (value.length > 0) {
+      dispatcher({ type: "SEARCH", search: value });
+    } else {
+      dispatcher({ type: "DEFAULT" });
+    }
+  }
+
+  function addItem(item) {
 
   }
+
+  async function searchForIngredient() {
+    try {
+      const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
+      fetch(path).then(async response => {
+        const newData = await response.json();
+        dispatcher({ type: "INGREDIENTS", ingredients: newData });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function fetchIngredientsByCategory(name) {
+    console.log(name)
+    try {
+      const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+      fetch(path).then(async response => {
+        const newData = await response.json();
+        console.log(newData);
+        dispatcher({ type: "INGREDIENTS", ingredients: newData })
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 
   useEffect(() => {
-    if (isSelected !== false) {
-      setIsLoading(true);
-      const cat = category.current;
-      let path = ""
-      if (cat.id === -1) {
-        path = "grains"
-      } else if (cat.id === -2) {
-        path = "meat"
-      } else if (cat.id === -3) {
-        path = "vegetables"
-      } else if (cat.id === -4) {
-        path = "fruit"
-      } else if (cat.id === -5) {
-        path = "drinks"
-      } else if (cat.id === -6) {
-        path = "dairy"
-      } else if (cat.id === -7) {
-        path = "miscellaneous"
-      }
-
-      const fetchData = async () => {
-        path = 'http://localhost:4300/heka/api/ingredients/' + path
-        fetch(path).then(async response => {
-          const newData = await response.json();
-          console.log(newData)
-          setIngredients(newData);
-          setIsLoading(false)
-        });
-      }
-
-      fetchData();
+    if (state.search.length > 0) {
+      dispatcher({ type: "ITEM", bool: false });
+      searchForIngredient();
+    } else if (state.category.id < 0 && !state.isItem) {
+      let name;
+      switch (state.category.id) {
+        case -1: {
+          name = "grains";
+          break;
+        }
+        case -2: {
+          name = "meat";
+          break;
+        }
+        case -3: {
+          name = "vegetables";
+          break;
+        }
+        case -4: {
+          name = "fruit";
+          break;
+        }
+        case -5: {
+          name = "drinks"
+          break;
+        }
+        case -6: {
+          name = "dairy";
+          break;
+        }
+        case -7: {
+          name = "miscellaneous";
+          break;
+        }
+        default:
+          throw new Error();
+      };
+      fetchIngredientsByCategory(name);
+      console.log(state.ingredients);
     }
-    console.log(ingredients)
-    setIsLoading(false)
-  }, [isSelected, isLoading])
+
+    if (state.item.id > 0) {
+      dispatcher({ type: "ITEM", bool: true });
+    }
+
+  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id])
 
 
-  if (isLoading) {
-    return (
-      <div className="center">
-        <h1 className="title">{title}</h1>
-        <SearchBar />
-        <h2 className="title">Loading...</h2>
-      </div>
-    );
-  }
 
   return (
     <div className="ingredients">
-      <h1 className="title">{title}</h1>
+      <h1 className="title">{state.title}</h1>
       <SearchBar type="text" placeholder="Search for an Ingredient" onSearch={handleSearch} />
-      <IngredientsList items={ingredients} category={category.current} onClick={selectItem} />
+      {!state.isItem &&
+        <IngredientsList
+          items={state.ingredients}
+          category={state.category}
+          selectItem={selectItem}
+          addItem={addItem}
+        />}
+      {state.isItem &&
+        <Ingredient
+          name={state.item.name}
+          id={state.item.id}
+          amount={state.item.amount}
+          possibleUnits={state.item.possibleUnits}
+          nutrients={state.item.nutrients}
+          caloricBreakdown={state.item.caloricBreakdown}
+          categories={state.item.categories}
+          selectItem={selectItem}
+          addItem={addItem}
+        />}
     </div>
   );
 }

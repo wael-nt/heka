@@ -27,7 +27,8 @@ function IngredientsList(props) {
           image={ingredient.image}
           category={props.category}
           name={ingredient.name}
-          onClick={props.onClick}
+          selectItem={props.selectItem}
+          addItem={props.addItem}
         />
       ))}
     </ul>
