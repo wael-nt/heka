@@ -1,5 +1,7 @@
-.content {
+.ingredient {
+  margin-left: 20px;
   display: block;
+  align-self: center;
   text-align: center;
   width: 100%;
   justify-content: center;
@@ -14,4 +16,120 @@
   background: -webkit-linear-gradient(right, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
   background: -moz-linear-gradient(right, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
   background: linear-gradient(to left, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
+}
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 99%;
+  padding: 40px;
+  align-self: center;
+  display: 1;
+  flex-direction: row;
+}
+
+.categories {
+  padding: 40px;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.category {
+  color: #0e9809;
+  background-color: white;
+  margin-top: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-style: solid;
+  border-width: thick;
+  border-color: rgba(108, 115, 118, 1.0);
+  border-radius: 10px;
+}
+
+.units {
+  padding: 40px;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.unit {
+  border-radius: 10px;
+  color: #0e9809;
+  background-color: white;
+  margin-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-style: solid;
+  border-width: thick;
+  border-color: rgba(108, 115, 118, 1.0);
+
+}
+
+.nutrients-title {
+  margin-left: 20px;
+  padding-left: 10px;
+  align-self: center;
+  width: 90%;
+  border-bottom: 2px;
+  text-align: start;
+}
+
+
+.nutrients {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 99%;
+  padding: 40px;
+  align-self: center;
+  display: 1;
+  flex-direction: row;
+}
+
+
+.nutrient {
+  border-radius: 10px;
+  color: #0e9809;
+  background-color: white;
+  margin-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: thick;
+  border-color: rgba(108, 115, 118, 1.0);
+}
+
+@media (min-width: 1000px) {
+  .nutrients {
+    margin-left: 10px;
+    align-self: flex-end;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: auto;
+  }
+}
+
+@media (min-width: 1500px) {
+  .nutrients {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 2000px) {
+  .nutrients {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

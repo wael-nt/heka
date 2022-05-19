@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Logo from "../Navigation/Logo";
 
 import "./Main.css";
 
