@@ -10,22 +10,25 @@ function IngredientItem(props) {
   const authContext = true;
   const navigate = useNavigate();
 
-  function handleClick(event) {
-    event.preventDefault(event)
-    props.onClick(props);
-  }
-
-  function handleAdd() {
-    if (authContext === false) {
-      navigate("/signin")
-    }
-  }
-
   let image = props.image;
   if (props.category.id !== 0) {
     isItem = true
     image = props.category.image;
   }
+
+  function handleView(event) {
+    event.preventDefault();
+    props.selectItem(props.id);
+  }
+
+  function handleAdd(event) {
+    event.preventDefault();
+    if (authContext === false) {
+      navigate("/signin")
+    }
+    props.addItem(props.id);
+  }
+
   return (
     <Fragment>
       <li className="ingredient-item">
@@ -37,7 +40,7 @@ function IngredientItem(props) {
             <h2>{props.name}</h2>
           </div>
           <div className="ingredient-item__actions">
-            <button className="button" onClick={handleClick}>View</button>
+            <button className="button" onClick={handleView}>View</button>
             {isItem && <button className="button" onClick={handleAdd}>Add</button>}
           </div>
         </Card>

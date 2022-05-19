@@ -30,9 +30,11 @@ async function getIngredientById(req, res, next) {
   const id = req.params.id;
   try {
     const i = await ingredientModel.find({ id: id });
+    console.log(i)
     res.send(i);
+
   } catch (err) {
-    res.status(400).json({ message: "Category doesn't exist." });
+    res.status(400).json({ message: "Item does not exist." });
   }
 }
 
@@ -41,6 +43,7 @@ async function getSearchResults(req, res, next) {
 
   try {
     const i = await ingredientModel.find({ $or: [{ categories: search }, { name: search }] });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -51,6 +54,7 @@ async function getIngredientsByGrains(req, res, next) {
   let categories = ["beans", "grains"];
   try {
     const i = await ingredientModel.find({ categories: { $in: [categories[0], categories[1]] } });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -61,6 +65,7 @@ async function getIngredientsByMeat(req, res, next) {
   let categories = ["fish", "meat"];
   try {
     const i = await ingredientModel.find({ categories: { $in: [categories[0], categories[1]] } });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -70,6 +75,7 @@ async function getIngredientsByMeat(req, res, next) {
 async function getIngredientsByVegetables(req, res, next) {
   try {
     const i = await ingredientModel.find({ categories: "vegetable" });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -79,6 +85,7 @@ async function getIngredientsByVegetables(req, res, next) {
 async function getIngredientsByFruit(req, res, next) {
   try {
     const i = await ingredientModel.find({ categories: "fruit" });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -88,6 +95,7 @@ async function getIngredientsByFruit(req, res, next) {
 async function getIngredientsByDrinks(req, res, next) {
   try {
     const i = await ingredientModel.find({ categories: "drink" });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });
@@ -103,6 +111,7 @@ async function getIngredientsByDairy(req, res, next) {
           $in: [categories[0], categories[1], categories[2], categories[3], categories[4]]
         }
       });
+    console.log(i)
     res.send(i);
   } catch (err) {
     res.status(400).json({ message: "Category doesn't exist." });

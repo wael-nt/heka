@@ -5,10 +5,11 @@ import "./SearchBar.css"
 function SearchBar(props) {
   const [searchInput, setSearchInput] = useState("");
 
-  function handleChange(e) {
-    e.preventDefault();
-    setSearchInput(e.target.value)
-    props.onSearch(e.target.value);
+  function handleChange(event) {
+    event.preventDefault();
+    setSearchInput(event.target.value);
+    props.onSearch(event.target.value);
+
   }
 
   return (
