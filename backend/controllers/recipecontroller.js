@@ -4,6 +4,7 @@ exports.addNewRecipe = async function addNewRecipe(req, res, next) {
   const ingredients = req.body.ingredients
   console.log(ingredients);
   const obj = req.body  // {..., ingredient: [],...}
+  console.log(obj);
   const recipe = new recipeSchema({
     name: obj.name,
     owner: obj.owner,
@@ -12,10 +13,15 @@ exports.addNewRecipe = async function addNewRecipe(req, res, next) {
   })
 
   try {
+    console.log('here');
     const r = await recipe.save()
+    console.log('here');
+    console.log('results', r);
     res.send(extract(r))
+    console.log('after');
 
   } catch (err) {
+    console.error(err);
     res.status(400).json({ message: err })
   }
 }

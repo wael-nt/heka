@@ -9,7 +9,7 @@ const app = express()
 
 const allowedOrigins = ["*", "http://localhost:3000"];
 const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
-const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept", "auth-token"]
+const headers = ["*"]
 
 app.use(cors({
   origin: allowedOrigins,

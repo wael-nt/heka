@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 const recipeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   description: {
     type: String,
@@ -20,6 +19,6 @@ const recipeSchema = new mongoose.Schema({
     default: []
   }
 })
-recipeSchema.index({ name: 1 }, { unique: true })
+// recipeSchema.index({ name: 1 }, { unique: true })
 
 module.exports = mongoose.model("recipes", recipeSchema)

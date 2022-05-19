@@ -5,6 +5,7 @@ import axios from "axios";
 import RecipeItem from '../Components/Partials/RecipeItem';
 import { useContext } from "react";
 import RecipeContext from '../context/RecipeContext';
+import addNewRecipe from '../Components/Partials/AddNewRecipe';
 
 const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
 
@@ -58,7 +59,7 @@ function Recipe() {
   }, [])
 
   //recipeCtx.updateRecipe({ name: "test", description: "teststst" })
-
+  addNewRecipe()
 
   if (cond) {
     return (
