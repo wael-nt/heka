@@ -1,5 +1,10 @@
 .content {
-  flex: fit-content;
+  display: block;
   text-align: center;
-  align-items: center;
+  height: 75vh;
+  margin-left: 30px;
+}
+
+.no-recipes {
+  width: 70%;
 }
