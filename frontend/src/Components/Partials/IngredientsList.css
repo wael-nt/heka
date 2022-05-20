@@ -3,13 +3,18 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   flex-direction: row;
-  margin-left: 10px;
-  width: 100%;
+  width: 99%;
+}
+
+.not-found {
+  margin: auto;
+  margin-top: 30px;
+  width: 70%;
+  padding: 10px;
 }
 
 @media (min-width: 1340px) {
   .ingredients-list {
-    margin-left: 10px;
     align-self: flex-end;
     align-items: center;
     grid-template-columns: repeat(2, 1fr);
