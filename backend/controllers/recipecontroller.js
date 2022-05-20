@@ -1,25 +1,24 @@
 const recipeSchema = require('../models/recipe')
 
 exports.addNewRecipe = async function addNewRecipe(req, res, next) {
+
   const ingredients = req.body.ingredients
   console.log(ingredients);
   const obj = req.body  // {..., ingredient: [],...}
   console.log(obj);
+
   const recipe = new recipeSchema({
     name: obj.name,
     owner: obj.owner,
+    public: obj.public,
+    img: obj.img,
     description: obj.description,
     ingredients: ingredients
   })
 
   try {
-    console.log('here');
     const r = await recipe.save()
-    console.log('here');
-    console.log('results', r);
     res.send(extract(r))
-    console.log('after');
-
   } catch (err) {
     console.error(err);
     res.status(400).json({ message: err })
@@ -29,6 +28,8 @@ exports.addNewRecipe = async function addNewRecipe(req, res, next) {
 function extract(r) {
   const recipe = {
     name: r.name,
+    public: r.public,
+    img: r.img,
     description: r.description,
     owner: r.owner,
     ingredients: r.ingredients,
@@ -38,6 +39,7 @@ function extract(r) {
 
 exports.deleteRecipe = async function deleteRecipe(req, res, next) {
   const deleted = await recipeSchema.findOne({ name: req.body.name }) // by recipe's name
+
   if (deleted != null) {
     await recipeSchema.deleteOne({ name: req.body.name })
     res.send(extract(deleted))
@@ -47,15 +49,17 @@ exports.deleteRecipe = async function deleteRecipe(req, res, next) {
 
 exports.deleteAllRecipes = async function deleteAllRecipes(req, res, next) {
   const deleted = await recipeSchema.find({ owner: req.body.owner })
+
   if (deleted != null) {
     await recipeSchema.deleteMany({ owner: req.body.owner })
-    res.send(extract(deleted))
+    res.status(204).json({ message: 'Recipes deleted' })
+    // res.send(extract(deleted))
   } else
     res.status(400).json({ message: "No recipes to delete." })
 }
 
 exports.getRecipe = async function getRecipe(req, res, next) {
-  const recipeName = req.body.name
+  const recipeName = req.params.name
   try {
     const r = await recipeSchema.findOne({ name: recipeName })
     res.send(extract(r))
@@ -64,14 +68,26 @@ exports.getRecipe = async function getRecipe(req, res, next) {
   }
 }
 
-exports.getRecipes = async function getRecipes(req, res, next) {
 
+// get private recipes
+exports.getPrivateRecipes = async function getPrivateRecipes(req, res, next) {
   const owner = req.params.email
+
   console.log(owner);
   try {
-    const r = await recipeSchema.find({ owner: owner })
+    const r = await recipeSchema.find({ owner: owner, public: false })
     res.send(r)
   } catch (err) {
-    res.status(200).json({ message: "You currently own no recipes." })
+    res.status(204).json({ message: "No private recipes." })
+  }
+}
+
+// get public recipes 
+exports.getPublicRecipes = async function getPublicRecipes(req, res, next) {
+  try {
+    const recipes = await recipeSchema.find({ public: true })
+    res.send(recipes)
+  } catch (err) {
+    res.status(204).json({ message: 'No recipes' })
   }
 }

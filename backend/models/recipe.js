@@ -5,6 +5,16 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  public: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  img: {
+    type: String,
+    required: false,
+    default: " "
+  },
   description: {
     type: String,
     required: false
