@@ -36,49 +36,49 @@ function UserInfo() {
     <>
       <div className='content'>
         <h2>Edit profile details</h2>
-        <div class="container bg-gradient">
-          <div class="row">
-            <div class="col-lg-7">
+        <div className="container bg-gradient">
+          <div className="row">
+            <div className="col-lg-7">
               <Form onSubmit={handleSubmit}>
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="name" class="col-form-label">Name</label>
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor='name' className="col-form-label">Name</label>
                   </div>
-                  <div class="col-auto">
-                    <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
-                  </div>
-                </div>
-
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="height" class="col-form-label">Height</label>
-                  </div>
-                  <div class="col-auto">
-                    <input type="number" id="height" class="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
+                  <div className="col-auto">
+                    <input type="text" id="name" className="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
                   </div>
                 </div>
 
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="weight" class="col-form-label">Weight</label>
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="height" className="col-form-label">Height</label>
                   </div>
-                  <div class="col-auto">
-                    <input type="number" id="weight" class="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
-                  </div>
-                </div>
-
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="age" class="col-form-label">Age</label>
-                  </div>
-                  <div class="col-auto">
-                    <input type="number" id="age" class="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
+                  <div className="col-auto">
+                    <input type="number" id="height" className="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
                   </div>
                 </div>
 
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="sex" class="col-form-label">Age</label>
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="weight" className="col-form-label">Weight</label>
+                  </div>
+                  <div className="col-auto">
+                    <input type="number" id="weight" className="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
+                  </div>
+                </div>
+
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="age" className="col-form-label">Age</label>
+                  </div>
+                  <div className="col-auto">
+                    <input type="number" id="age" className="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
+                  </div>
+                </div>
+
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="sex" className="col-form-label">Age</label>
                     <select name='sex'>
                       <option>Select sex</option>
                       <option>Male</option>
@@ -89,33 +89,33 @@ function UserInfo() {
 
                 </div>
 
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="currentPassword" class="col-form-label">Current password</label>
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="currentPassword" className="col-form-label">Current password</label>
                   </div>
-                  <div class="col-auto">
-                    <input type="password" name="currentPassword" class="form-control" aria-describedby="password"></input>
-                  </div>
-                </div>
-
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="newPassword" class="col-form-label">New password</label>
-                  </div>
-                  <div class="col-auto">
-                    <input type="password" name="newPassword" class="form-control" aria-describedby="password" show></input>
+                  <div className="col-auto">
+                    <input type="password" name="currentPassword" className="form-control" aria-describedby="password"></input>
                   </div>
                 </div>
 
-                <div class="row g-3 ms-3 align-items-center">
-                  <div class="col-auto">
-                    <button type="submit" class="btn btn-lg btn-outline-light">Update details</button>
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="newPassword" className="col-form-label">New password</label>
+                  </div>
+                  <div className="col-auto">
+                    <input type="password" name="newPassword" className="form-control" aria-describedby="password" show></input>
+                  </div>
+                </div>
+
+                <div className="row g-3 ms-3 align-items-center">
+                  <div className="col-auto">
+                    <button type="submit" className="btn btn-lg btn-outline-light">Update details</button>
                   </div>
                   <br /><br /><br /><br /><br />
                 </div>
               </Form>
             </div>
-            <div class="col-lg">
+            <div className="col-lg">
               <ProfilePic />
             </div>
           </div>
