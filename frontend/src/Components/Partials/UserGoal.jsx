@@ -6,7 +6,8 @@ import axios from "axios";
 
 function UserGoal() { 
   let nav = useNavigate();
-  var API_URL = new URL('http://localhost:4300/heka/api/goals/getgoal')
+  
+  var API_URL = 'http://localhost:4300/heka/api/goals/addgoal'
 
   const [email, setEmail] = useState('')
     const getAuth = () => {
@@ -20,14 +21,10 @@ function UserGoal() {
   useEffect(() => {
     setEmail(getAuth().email);
     console.log(email);
-    if (email == null) {
-      alert('Login or create an account')
-      nav("/signIn")
-    }
   }, []);
 
   const handleOnClick = async () => {
-    axios.get(API_URL + `/${email}`)
+    axios.post(API_URL + `/${params}`)
           .then((res) => {
             let goal = res.data;
             console.log(goal);

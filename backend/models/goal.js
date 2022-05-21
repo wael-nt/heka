@@ -3,6 +3,7 @@ const goalSchema = new mongoose.Schema({
   owner: {
     type: String,
     required: true,
+    unique: true,
   },
   calories: {
     type: String,
@@ -14,6 +15,6 @@ const goalSchema = new mongoose.Schema({
   },
 });
 
-//goalSchema.index({ owner: 1 }, { unique: true })
+goalSchema.index({ owner: 1 }, { unique: true });
 
 module.exports = mongoose.model("goals", goalSchema);

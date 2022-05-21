@@ -13,17 +13,40 @@ exports.addGoal = async function addGoal(req, res, next) {
     res.send(result);
   } catch (error) {
     res.status(400).json({
-      message: err.message,
+      message: error.message,
     });
   }
 };
 
 exports.getGoal = async function getGoal(req, res, next) {
-  let owner = req.params.email;
+  console.log("Request coming...");
+  const owner = req.body.email;
   try {
-    const r = await goalSchema.findOne({ owner: owner });
-    res.status(200).json(r);
-  } catch (err) {
-    res.status(400).json({ message: "No goal exist." });
+    await goalSchema.findOne({ owner: owner }, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {}
+};
+
+exports.updateGoal = async function updateGoal(req, res, next) {
+  console.log("updating coming...");
+  const obj = req.body;
+  const goalObj = new goalSchema({
+    owner: obj.owner,
+    calories: obj.calories,
+    protein: obj.protein,
+  });
+  try {
+    await goalSchema.findOneAndUpdate(goalObj.owner, {
+      calories: goalObj.calories,
+      protein: goalObj.protein,
+    });
+    res.send("Goal updated");
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
