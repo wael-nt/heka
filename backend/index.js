@@ -23,7 +23,7 @@ const methods = [
   "OPTIONS",
   "DELETE",
 ];
-const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept", "auth-token"]
+const headers = ["*"]
 app.use(
   cors({
     origin: allowedOrigins,

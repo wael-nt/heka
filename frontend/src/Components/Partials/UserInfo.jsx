@@ -33,7 +33,8 @@ function UserInfo() {
     console.log(savedEmail);
     if (savedEmail == null) {
       alert('Login or create an account')
-      nav("/signIn")
+
+      nav("/signin")
     }
   }, [])
 

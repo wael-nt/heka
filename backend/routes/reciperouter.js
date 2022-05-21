@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 //POST - add a new recipe
-router.post('/add', verify, recipeController.addNewRecipe)
+router.post('/add', recipeController.addNewRecipe)
 
 // DELETE - delete a recipe, by name
 router.delete('/deleteOne', verify, recipeController.deleteRecipe) // body : {name: recipe's name}
