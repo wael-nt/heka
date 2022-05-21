@@ -27,7 +27,7 @@ exports.getGoal = async function getGoal(req, res, next) {
       console.log(result);
       res.json(result);
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 exports.updateGoal = async function updateGoal(req, res, next) {
@@ -42,13 +42,17 @@ exports.updateGoal = async function updateGoal(req, res, next) {
   });
   console.log(goalObj.owner);
   try {
-    goalSchema.findOneAndUpdate(
-      { email: goalObj.owner },
+    let result = await goalSchema.findOneAndUpdate(
+      { owner: goalObj.owner },
       {
-        calories: goalObj.calories,
-        protein: goalObj.protein,
+        $set: {
+          calories: goalObj.calories,
+          protein: goalObj.protein,
+        }
       }
-    );
+    )
+
+    console.log(result);
     res.send("Goal updated");
   } catch (error) {
     res.status(400).json({
