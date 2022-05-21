@@ -33,16 +33,22 @@ exports.getGoal = async function getGoal(req, res, next) {
 exports.updateGoal = async function updateGoal(req, res, next) {
   console.log("updating coming...");
   const obj = req.body;
+  console.log("solution here look ");
+  console.log(obj);
   const goalObj = new goalSchema({
     owner: obj.owner,
     calories: obj.calories,
     protein: obj.protein,
   });
+  console.log(goalObj.owner);
   try {
-    await goalSchema.findOneAndUpdate(goalObj.owner, {
-      calories: goalObj.calories,
-      protein: goalObj.protein,
-    });
+    goalSchema.findOneAndUpdate(
+      { email: goalObj.owner },
+      {
+        calories: goalObj.calories,
+        protein: goalObj.protein,
+      }
+    );
     res.send("Goal updated");
   } catch (error) {
     res.status(400).json({

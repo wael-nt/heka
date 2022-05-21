@@ -7,9 +7,14 @@ import axios from "axios";
 function UserGoal() { 
   let nav = useNavigate();
   
-  var API_URL = 'http://localhost:4300/heka/api/goals/addgoal'
+  var API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
+
 
   const [email, setEmail] = useState('')
+  const [cal, setCal] = useState(0)
+
+  const [pro, setPro] = useState(0)
+
     const getAuth = () => {
     let userObj = window.localStorage.getItem('cred')
     if (userObj == null) {
@@ -17,18 +22,44 @@ function UserGoal() {
     } else
       return JSON.parse(userObj)
   }
-  var params = {email:email}
+  
   useEffect(() => {
     setEmail(getAuth().email);
     console.log(email);
   }, []);
 
-  const handleOnClick = async () => {
-    axios.post(API_URL + `/${params}`)
-          .then((res) => {
-            let goal = res.data;
-            console.log(goal);
-          });
+  const handleCalChange = function (e) {
+  console.log(e.target.value)
+    setCal(e.target.value) 
+  }
+  const handleProChange = function (e) {
+    console.log(e.target.value)
+   setPro(e.target.value) 
+}
+
+  const handleOnClick = async (event) => {
+    event.preventDefault();
+    
+    let body = {
+    "owner": email,
+    "calories": cal,
+    "protein":pro
+  }
+    try {
+    console.log(body)
+    const { data } = await axios({
+        method: 'PUT',
+        url: API_URL,
+        headers: { 'Content-Type': 'application/json' },
+        data: JSON.stringify(body) 
+    });
+
+      console.log("Stiv Look here")
+      console.log(body)
+    console.log(data);
+} catch (err) {
+    console.log(err.message);
+}
 
   }
    
@@ -36,12 +67,10 @@ function UserGoal() {
  return (
    <>
      <h1>Goal settings</h1>
-            <form>
-              <label htmlFor='calGoal'>Calories:</label><br></br>
-              <input type="text" id="calGoal"></input><br></br>
-              <label htmlFor='protienGoal'>Protien:</label><br></br>
-              <input type="text" id="protienGoal"></input><br></br>
-              <button type="button" className='btn'  onClick={handleOnClick}>Save</button>
+            <form onSubmit={handleOnClick}>
+              <input type="number" id="calGoal" className='form-control' placeholder='calories'  onChange={handleCalChange}></input><br></br>
+              <input type="number" id="protienGoal" className='form-control' placeholder='protein'  onChange={handleProChange}></input><br></br>
+              <button type="submit" className='btn'>Save</button>
             </form>
   </> 
 )
