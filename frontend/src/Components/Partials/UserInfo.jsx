@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import ProfilePic from '../Partials/ProfilePic';
+import AuthService from "../../Services/Auth-Service";
 
 
 let nav
+
 function UserInfo() {
   let obj
-
+  const [pic, setPic] = useState('')
   nav = useNavigate();
   console.log(window.sessionStorage.getItem('userinfo'));
-
-
   if (checkSession()) {
     console.log('yess');
     obj = getObject()
@@ -25,6 +25,7 @@ function UserInfo() {
   }
   useEffect(() => {
     let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
+    console.log("from user info")
     console.log(savedEmail);
     if (savedEmail == null) {
       alert('Login or create an account')
@@ -34,9 +35,8 @@ function UserInfo() {
 
   return (
     <>
-      <div className='content'>
         <h2>Edit profile details</h2>
-        <div class="container bg-gradient">
+        <div class="container">
           <div class="row">
             <div class="col-lg-7">
               <Form onSubmit={handleSubmit}>
@@ -116,12 +116,10 @@ function UserInfo() {
               </Form>
             </div>
             <div class="col-lg">
-              <ProfilePic />
+              <ProfilePic setPicture={setPic} />
             </div>
           </div>
         </div>
-
-      </div>
     </>
   )
 }
@@ -131,15 +129,14 @@ UserInfo.propTypes = {
 }
 async function handleSubmit(event) {
   event.preventDefault()
-
+  console.log("from where i want now")
   let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
-  console.log(savedEmail);
+  console.log(savedEmail.photo);
+  
   if (savedEmail == null) {
     alert('Login or create an account')
     nav("/signin")
   }
-
-
   let data = {
     name: event.target.elements.name.value,
     email: savedEmail.email,  // get from saved session or something
@@ -148,10 +145,19 @@ async function handleSubmit(event) {
     age: event.target.elements.age.value,
     sex: event.target.elements.sex.value,
     newPassword: event.target.elements.newPassword.value,
-    currentPassword: event.target.elements.currentPassword.value
+    currentPassword: event.target.elements.currentPassword.value,
+    photo:document.getElementById('profile_pic')?.src
   }
   console.log(data);
-  await postUpdate(data)
+  await postUpdate(data);
+}
+
+const saveSession = (respone, email) => {
+  const obj = {
+    respone: respone,
+    email: email,
+  }
+  window.localStorage.setItem('cred', JSON.stringify(obj))
 }
 
 async function postUpdate(userData) {
@@ -163,8 +169,13 @@ async function postUpdate(userData) {
   };
   const response = await fetch('http://127.0.0.1:4300/heka/api/users/edit', requestOptions);
   const res = await response.json();
+  console.log("object being updated")
   console.log(res);
   handleRes(res)
+  window.localStorage.clear()
+  saveSession(res,res.email);
+  window.alert("Your user information have been updated !")
+  window.location.reload();
 }
 
 function handleRes(results) {
