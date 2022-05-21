@@ -9,7 +9,7 @@ import { getStorage, setStorage } from "../util/storage";
 
 import "./Ingredients.css";
 
-function Ingredients(props) {
+function Ingredients() {
   const authCtx = true;
   const [state, dispatcher] = useReducer(ingredientReducer, defaultIngredientState);
 
@@ -29,6 +29,13 @@ function Ingredients(props) {
         if (id === ingredient.id) {
           dispatcher({ type: "SET_INGREDIENT", item: ingredient });
           dispatcher({ type: "TITLE", title: ingredient.name.toUpperCase() });
+          if (state.hasRecipe) {
+            dispatcher({ type: "HAS_IS", id: 4, bool: false });
+            dispatcher({ type: "HAS_IS", id: 5, bool: true });
+          } else {
+            dispatcher({ type: "HAS_IS", id: 4, bool: true });
+            dispatcher({ type: "HAS_IS", id: 5, bool: false });
+          }
         }
       });
       console.log(state.item)
@@ -36,6 +43,7 @@ function Ingredients(props) {
       addItem();
     }
   }
+
 
   async function handleSearch(value) {
     dispatcher({ type: "CATEGORY", category: categories[6] });
@@ -47,69 +55,54 @@ function Ingredients(props) {
   }
 
   function handleAmount(value) {
+    let currentRecipe = getStorage("current-recipe");
     const item = state.item
+    let items = currentRecipe.ingredients;
+    let newList = [];
+    for (let index = 0; index < items.length; index++) {
+      const element = items[index];
+      if (element.id !== null || element.id !== item.id) {
+        newList.push(element)
+      }
+    }
     const newItem = { ...item, amount: value }
-    dispatcher({ type: "SET_INGREDIENT", item: newItem });
+    newList.push(newItem);
+    dispatcher({ type: "SET_INGREDIENT", items: newList });
   }
 
   function addItem() {
     const item = state.item;
     console.log(item)
+    let items = []
     let currentRecipe = getStorage("current-recipe");
     if (!state.hasRecipe) {
-      let items = []
-      items.push(item);
-      let newRecipe = {
-        name: '',
-        description: '',
-        ingredients: items,
-        image: ""
-      };
-      dispatcher({ type: "SET_RECIPE", items: newRecipe });
+      state.currentRecipe.ingredients = items;
       dispatcher({ type: "HAS_IS", id: 3, bool: true });
-      setStorage("current-recipe", newRecipe)
-    } else if (currentRecipe.ingredients.length > 0) {
-      let items = currentRecipe.ingredients;
-      let newList = [];
-      for (let index = 0; index < items.length; index++) {
-        const element = items[index];
-        if (element.id !== null || element.id !== item.id) {
-          newList.push(element)
-        }
-      }
-      newList.push(item);
-      let newRecipe = {
-        name: currentRecipe.name,
-        description: currentRecipe.description,
-        ingredients: newList,
-        image: currentRecipe.image
-      }
-      dispatcher({ type: "SET_RECIPE", items: newList });
-      setStorage("current-recipe", newRecipe);
+    } else if (state.currentRecipe.ingredients.length > 0) {
+      items = state.currentRecipe.ingredients;
+    } else {
+      items = currentRecipe.Ingredients;
     }
+    items.push(item);
+    currentRecipe.ingredients = items;
+    dispatcher({ type: "SET_RECIPE", items: items });
+    setStorage("current-recipe", currentRecipe)
   }
 
   function removeItem(id) {
     if (id === state.item.id) {
       let currentRecipe = getStorage("current-recipe");
-      if (currentRecipe === null && currentRecipe === undefined) {
+      if (currentRecipe !== null && currentRecipe !== undefined) {
         let items = []
-
-        const ingredients = currentRecipe.ingredients
-        for (let index = 0; index < ingredients.length; index++) {
-          const element = ingredients[index];
+        for (let index = 0; index < currentRecipe.length; index++) {
+          const element = currentRecipe[index];
           if (element.id !== id) {
             items.push(element);
           }
         }
-        let newRecipe = {
-          name: currentRecipe.name,
-          description: currentRecipe.description,
-          ingredients: items,
-          image: currentRecipe.image
-        };
-        dispatcher({ type: "SET_RECIPE", items: newRecipe });
-        setStorage("current-recipe", newRecipe)
+        state.currentRecipe.ingredients = items;
+        dispatcher({ type: "SET_RECIPE", items: items });
+        setStorage("current-recipe", state.currentRecipe)
       }
     }
   }
@@ -237,6 +230,8 @@ function Ingredients(props) {
       if (authCtx) {
         dispatcher({ type: "HAS_IS", id: 4, bool: true });
         if (state.hasRecipe) {
+          let currentRecipe = getStorage("current-recipe");
+
           let ingredientList = state.currentRecipe.ingredients
           for (let index = 0; index < ingredientList.length; index++) {
             const element = ingredientList[index];
@@ -260,8 +255,7 @@ function Ingredients(props) {
       <div className="inline-buttons">
         {!state.isCategory && <button className="button" onClick={goBack}>BACK</button>}
         {state.canAdd && < button className="button" onClick={addItem}>ADD</button>}
-        {state.canRemove && < button className="button" onClick={removeItem}>REMOVE</button>}
-        {!state.hasRecipe && <button className="button" onClick={goBack}>VIEW RECIPE</button>}
+        {!state.canRemove && < button className="button" onClick={removeItem}>REMOVE</button>}
       </div>
       {!state.isItem &&
         <IngredientsList

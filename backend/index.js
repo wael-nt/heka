@@ -1,4 +1,4 @@
-"use strict"
+
 require('dotenv').config()
 
 const express = require('express')
@@ -6,10 +6,12 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
+app.use(express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 }));
+
 
 const allowedOrigins = ["*", "http://localhost:3000"];
 const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
-const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept", "auth-token"]
+const headers = ["*"]
 app.use(cors({
   origin: allowedOrigins,
   methods: methods,
@@ -17,8 +19,8 @@ app.use(cors({
 }));
 
 
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({ limit: "50mb" }));
+// app.use(bodyParser.urlencoded({ limit: "50mb", extended: true,  }));
 
 
 const PORT = 4300

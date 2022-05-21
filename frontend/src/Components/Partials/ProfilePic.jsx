@@ -6,7 +6,9 @@ import { UserOutlined } from '@ant-design/icons';
 import { useFilePicker } from "use-file-picker";
 import UserInfo from './UserInfo';
 import default_pic from '../../Assets/profile-picture.png'
-function ProfilePic({setPicture}) {
+
+function ProfilePic(props) {
+  const setPicture = props.setPicture;
   const [pic, setPic] = useState('')
   const image = useRef(null);
   let check = false;
@@ -20,9 +22,9 @@ function ProfilePic({setPicture}) {
   });
 
   useEffect(() => {
-  setPic(filesContent[0]?.content)
-  setPicture(filesContent[0]?.content)
-}, [filesContent[0]?.content]);
+    setPic(filesContent[0]?.content)
+    setPicture(filesContent[0]?.content)
+  }, [filesContent[0]?.content]);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -30,20 +32,20 @@ function ProfilePic({setPicture}) {
   if (errors.length) {
     return <div>Error...</div>;
   }
-console.log(pic)
+  console.log(pic)
 
   return (
     <>
       <div>
-        <img alt='update-pic'  src = {filesContent[0]?.content?filesContent[0]?.content:default_pic} width="200px" id="profile_pic"/>
+        <img alt='update-pic' src={filesContent[0]?.content ? filesContent[0]?.content : default_pic} width="200px" id="profile_pic" />
       </div>
       <div>
-        <button className='button' onClick={async() => {
-        openFileSelector();
+        <button className='button' onClick={async () => {
+          openFileSelector();
         }}>
-          Update profile picture 
-          </button>
-        
+          Update profile picture
+        </button>
+
       </div>
     </>
   );

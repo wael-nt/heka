@@ -3,11 +3,16 @@ import Card from '../UIElements/Card'
 import IngredientItem from './IngredientItem'
 
 import '../Partials/RecipeItem.css'
+import { categories } from '../../util/consts'
 
 function RecipeItem(props) {
+  let value = Math.floor(Math.random() * (6 - 0 + 1)) + 0;
+  console.log(value)
+  let category = categories[value]
+  console.log(category)
   return (
     <Fragment>
-      <div className='recipe-item'>
+      <Card className='recipe-item'>
         <div className='recipe-name'>
           <h5>Name: <span>{props.name}</span></h5>
         </div>
@@ -24,7 +29,7 @@ function RecipeItem(props) {
               id={ingredient.id}
               ingredient={ingredient}
               image={ingredient.image}
-              category={{ id: -2, name: "MEAT", image: "/meatandfish.jpg" }}
+              category={category}
               name={ingredient.name}
               selectItem={props.selectItem}
               addItem={props.addItem}
@@ -33,7 +38,7 @@ function RecipeItem(props) {
             />
           ))}
         </div>
-      </div>
+      </Card>
     </Fragment>
   )
 }

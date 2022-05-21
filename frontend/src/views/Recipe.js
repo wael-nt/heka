@@ -7,6 +7,7 @@ import Card from '../Components/UIElements/Card';
 
 import "./Recipe.css";
 import Ingredients from './Ingredients';
+import { getStorage } from '../util/storage';
 
 const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
 
@@ -29,7 +30,8 @@ function Recipe() {
   const [addRecipe, setAddRecipe] = useState(false)
   const [hasRecipes, setHasRecipes] = useState(false)
   const [items, setRecipes] = useState([]);
-  const [moreRecipes, setMoreRecipes] = useState([])
+  const [moreRecipes, setMoreRecipes] = useState([]);
+  const [currentRecipe, setCurrentRecipe] = useState({});
 
   function handleAddRecipe(event) {
     event.preventDefault()
@@ -37,6 +39,10 @@ function Recipe() {
   }
 
   useEffect(() => {
+
+    if (hasRecipes) {
+
+    }
     const getUserRecipes = async () => {
       const userObj = getAuth()
       if (userObj != null) {
@@ -47,11 +53,8 @@ function Recipe() {
               setHasRecipes(false)
             } else {
               setHasRecipes(true);
-              let arr;
-              Object.keys(recipes).forEach(function (key) {
-                arr.push(recipes[key]);
-              });
-              setRecipes(arr)
+              console.log(recipes);
+              setRecipes(recipes)
             }
           });
       }
@@ -101,22 +104,24 @@ function Recipe() {
         {hasRecipes && <h1>Your Recipes</h1>}
         {hasRecipes && items.map((recipe) => (
           <RecipeItem
+            key={recipe.id}
             name={recipe.name}
             description={recipe.description}
             ingredients={recipe.ingredients}
             image={recipe.image}
-            isItem={false}
+            isItem={true}
           />
         ))
         }
         <h1>Public Recipes</h1>
         {moreRecipes.map((recipe) => (
           <RecipeItem
+            key={recipe.id}
             name={recipe.name}
             description={recipe.description}
             ingredients={recipe.ingredients}
             image={recipe.image}
-            isItem={false}
+            isItem={true}
           />
         ))
         }

@@ -10,7 +10,7 @@ import Nutrition from './views/Nutrition';
 import Contact from './views/Contact';
 import SignIn from './views/SignIn';
 import Signup from './views/Signup';
-import AddIngredient from './views/AddIngredient';
+// import AddIngredient from './views/AddIngredient';
 
 function App() {
 
@@ -25,7 +25,7 @@ function App() {
         <Route path="/ingredients" element={<Ingredients />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/add-ingredient" element={<AddIngredient />} />
+        {/* <Route path="/add-ingredient" element={<AddIngredient />} /> */}
       </Route>
     </Routes>
   );

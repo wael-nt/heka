@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import logo from '../../Assets/pngwinggreen.png'
 function ProfileImg(props) {
 
-  const [pic , setPic] = useState('');
+  const [pic, setPic] = useState('');
 
   const getAuth = () => {
     let userObj = window.localStorage.getItem('cred')
@@ -13,20 +13,20 @@ function ProfileImg(props) {
     } else
       return JSON.parse(userObj)
   }
-  useEffect(()=>{
-     const obj = getAuth();
-     if(obj!=null){
-        console.log("from profile")
-     setPic(obj.respone.photo);
-     }
-    
-  },[])
+  useEffect(() => {
+    const obj = getAuth();
+    if (obj != null) {
+      console.log("from profile")
+      //setPic(obj.respone.photo);
+    }
+
+  }, [])
 
   return (
     <>
-    <div className='container profileImageContaioner'>
-        <img src={pic?pic:logo} alt='This is a profile img' className="profileImage" id='profile-img'></img>
-    </div>
+      <div className='container profileImageContaioner'>
+        <img src={pic ? pic : logo} alt='This is a profile img' className="profileImage" id='profile-img'></img>
+      </div>
     </>
   );
 }

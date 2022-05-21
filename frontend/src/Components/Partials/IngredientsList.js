@@ -19,6 +19,7 @@ function IngredientsList(props) {
       </div>
     );
   }
+
   return (
     <ul className="ingredients-list">
       {props.items.map(ingredient => (
