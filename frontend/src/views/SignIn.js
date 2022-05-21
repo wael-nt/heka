@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../Services/Auth-Service";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [photo, setPhoto] = useState("");
 
   const navigate = useNavigate();
 
@@ -14,10 +15,13 @@ const SignIn = () => {
     try {
       await AuthService.login(email, password).then(
         (response) => {
+          console.log("HERE IS RESPONE");
           console.log(response);
-          saveSession(response, email)
+          console.log("HERE IS RESPONE with email");
+          saveSession(response, email);
           navigate("/");
-          //  window.location.reload();
+          document.location.reload();
+          //window.location.reload();
         },
         (error) => {
           console.log(error);
@@ -28,10 +32,10 @@ const SignIn = () => {
     }
   };
 
-  const saveSession = (auth, email) => {
+  const saveSession = (respone, email) => {
     const obj = {
-      auth: auth,
-      email: email
+      respone: respone,
+      email: email,
     }
     window.localStorage.setItem('cred', JSON.stringify(obj))
   }
@@ -55,6 +59,7 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className='btn' type="submit">Log in</button>
+          <p>Don't have an account ? <Link to={'/signup'}>Create new account</Link></p>
         </form>
       </div>
     </div>

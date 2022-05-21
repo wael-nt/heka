@@ -12,7 +12,7 @@ const DailyQuotes = () => {
         setAuthor(result[random].author);
         setText(result[random].text);
     }
-    const MINUTE_MS = 4000;
+    const MINUTE_MS = 100000;
 
     useEffect(() => {
         const interval = setInterval(() => {

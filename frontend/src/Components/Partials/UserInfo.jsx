@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import ProfilePic from '../Partials/ProfilePic';
+import AuthService from "../../Services/Auth-Service";
 
 
 let nav
+
 function UserInfo() {
   let obj
-
+  const [pic, setPic] = useState('')
   nav = useNavigate();
   console.log(window.sessionStorage.getItem('userinfo'));
-
-
   if (checkSession()) {
     console.log('yess');
     obj = getObject()
@@ -25,6 +25,7 @@ function UserInfo() {
   }
   useEffect(() => {
     let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
+    console.log("from user info")
     console.log(savedEmail);
     if (savedEmail == null) {
       alert('Login or create an account')
@@ -34,51 +35,49 @@ function UserInfo() {
 
   return (
     <>
-      <div className='content'>
         <h2>Edit profile details</h2>
-        <div className="container bg-gradient">
-          <div className="row">
-            <div className="col-lg-7">
-              <Form onSubmit={handleSubmit}>
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor='name' className="col-form-label">Name</label>
+        <div class="userinfo-container">
+          <div class="row">
+            <div class="col-lg-7">
+              <form onSubmit={handleSubmit}>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="name" class="col-form-label">Name</label>
                   </div>
-                  <div className="col-auto">
-                    <input type="text" id="name" className="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
+                  <div class="col-auto">
+                    <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
+                  </div>
+                </div>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="height" class="col-form-label">Height</label>
+                  </div>
+                  <div class="col-auto">
+                    <input type="number" id="height" class="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
                   </div>
                 </div>
 
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="height" className="col-form-label">Height</label>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="weight" class="col-form-label">Weight</label>
                   </div>
-                  <div className="col-auto">
-                    <input type="number" id="height" className="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
-                  </div>
-                </div>
-
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="weight" className="col-form-label">Weight</label>
-                  </div>
-                  <div className="col-auto">
-                    <input type="number" id="weight" className="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
+                  <div class="col-auto">
+                    <input type="number" id="weight" class="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
                   </div>
                 </div>
 
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="age" className="col-form-label">Age</label>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="age" class="col-form-label">Age</label>
                   </div>
-                  <div className="col-auto">
-                    <input type="number" id="age" className="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
+                  <div class="col-auto">
+                    <input type="number" id="age" class="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
                   </div>
                 </div>
 
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="sex" className="col-form-label">Age</label>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="sex" class="col-form-label">Age</label>
                     <select name='sex'>
                       <option>Select sex</option>
                       <option>Male</option>
@@ -89,39 +88,37 @@ function UserInfo() {
 
                 </div>
 
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="currentPassword" className="col-form-label">Current password</label>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="currentPassword" class="col-form-label">Current password</label>
                   </div>
-                  <div className="col-auto">
-                    <input type="password" name="currentPassword" className="form-control" aria-describedby="password"></input>
-                  </div>
-                </div>
-
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <label htmlFor="newPassword" className="col-form-label">New password</label>
-                  </div>
-                  <div className="col-auto">
-                    <input type="password" name="newPassword" className="form-control" aria-describedby="password" show></input>
+                  <div class="col-auto">
+                    <input type="password" name="currentPassword" class="form-control" aria-describedby="password"></input>
                   </div>
                 </div>
 
-                <div className="row g-3 ms-3 align-items-center">
-                  <div className="col-auto">
-                    <button type="submit" className="btn btn-lg btn-outline-light">Update details</button>
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="newPassword" class="col-form-label">New password</label>
+                  </div>
+                  <div class="col-auto">
+                    <input type="password" name="newPassword" class="form-control" aria-describedby="password" show></input>
+                  </div>
+                </div>
+
+                <div class="row g-3 ms-3 align-items-center">
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-lg btn-outline-light">Update details</button>
                   </div>
                   <br /><br /><br /><br /><br />
                 </div>
-              </Form>
+              </form>
             </div>
-            <div className="col-lg">
-              <ProfilePic />
+            <div class="col-lg">
+              <ProfilePic setPicture={setPic} />
             </div>
           </div>
         </div>
-
-      </div>
     </>
   )
 }
@@ -131,15 +128,14 @@ UserInfo.propTypes = {
 }
 async function handleSubmit(event) {
   event.preventDefault()
-
+  console.log("from where i want now")
   let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
-  console.log(savedEmail);
+  console.log(savedEmail.photo);
+  
   if (savedEmail == null) {
     alert('Login or create an account')
     nav("/signin")
   }
-
-
   let data = {
     name: event.target.elements.name.value,
     email: savedEmail.email,  // get from saved session or something
@@ -148,10 +144,19 @@ async function handleSubmit(event) {
     age: event.target.elements.age.value,
     sex: event.target.elements.sex.value,
     newPassword: event.target.elements.newPassword.value,
-    currentPassword: event.target.elements.currentPassword.value
+    currentPassword: event.target.elements.currentPassword.value,
+    photo:document.getElementById('profile_pic')?.src
   }
   console.log(data);
-  await postUpdate(data)
+  await postUpdate(data);
+}
+
+const saveSession = (respone, email) => {
+  const obj = {
+    respone: respone,
+    email: email,
+  }
+  window.localStorage.setItem('cred', JSON.stringify(obj))
 }
 
 async function postUpdate(userData) {
@@ -163,8 +168,13 @@ async function postUpdate(userData) {
   };
   const response = await fetch('http://127.0.0.1:4300/heka/api/users/edit', requestOptions);
   const res = await response.json();
+  console.log("object being updated")
   console.log(res);
   handleRes(res)
+  window.localStorage.clear()
+  saveSession(res,res.email);
+  window.alert("Your user information have been updated !")
+  window.location.reload();
 }
 
 function handleRes(results) {

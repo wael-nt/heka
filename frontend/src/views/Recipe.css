@@ -1,5 +1,31 @@
 .content {
-  flex: fit-content;
+  margin-left: 20px;
+  display: block;
+  align-self: center;
   text-align: center;
+  width: 100%;
+  justify-content: center;
   align-items: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 2%;
+  margin-left: 20px;
+  border-radius: 30px !important;
+  /* Created with https://www.css-gradient.com */
+  background: rgba(108, 115, 118, 1.0);
+  background: -webkit-linear-gradient(right, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
+  background: -moz-linear-gradient(right, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
+  background: linear-gradient(to left, rgba(108, 115, 118, 1.0), rgba(149, 205, 125, 1.0));
+}
+
+.no-recipes {
+  width: 70%;
+}
+
+.not-found {
+  margin: auto;
+  margin-top: 30px;
+  width: 70%;
+  padding: 10px;
 }

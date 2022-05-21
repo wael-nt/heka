@@ -1,84 +1,128 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from 'react'
+import axios from "axios";
+
+import RecipeItem from '../Components/Partials/RecipeItem';
+import AddNewRecipe from '../Components/Partials/AddNewRecipe';
+import Card from '../Components/UIElements/Card';
 
 import "./Recipe.css";
-import axios from "axios";
-import RecipeItem from "../Components/Partials/RecipeItem";
-import { useContext } from "react";
-import RecipeContext from "../context/RecipeContext";
-import addNewRecipe from "../Components/Partials/AddNewRecipe";
+import Ingredients from './Ingredients';
 
 const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
 
-function Recipe() {
-  const [cond, setCond] = useState(false);
-  const [items, setRecipes] = useState([]);
-  const recipeCtx = useContext(RecipeContext);
+const defaultState = {
+  hasRecipes: false,
+  recipes: [],
+  currentRecipe: {},
 
-  const getAuth = () => {
-    let userObj = window.localStorage.getItem("cred");
-    if (userObj == null) {
-      return null;
-    } else return JSON.parse(userObj);
-  };
+};
+
+const getAuth = () => {
+  let userObj = window.localStorage.getItem('cred')
+  if (userObj == null) {
+    return null
+  } else
+    return JSON.parse(userObj)
+}
+
+function Recipe() {
+  const [addRecipe, setAddRecipe] = useState(false)
+  const [hasRecipes, setHasRecipes] = useState(false)
+  const [items, setRecipes] = useState([]);
+  const [moreRecipes, setMoreRecipes] = useState([])
+
+  function handleAddRecipe(event) {
+    event.preventDefault()
+    setAddRecipe(true)
+  }
 
   useEffect(() => {
     const getUserRecipes = async () => {
-      const object = getAuth();
-      console.log(object.auth);
-      if (object != null) {
-        axios
-          .get(API_URL + `/${object.email}`, {
-            headers: {
-              "auth-token": `${object.auth}`,
-            },
-          })
+      const userObj = getAuth()
+      if (userObj != null) {
+        axios.get(API_URL + `/private/${userObj.email}`, { headers: { 'auth-token': `${userObj.auth}` } })
           .then((res) => {
-            let recipes = res.data;
-
-            console.log(recipes);
+            let recipes = res.data
             if (recipes.length === 0) {
-              setCond(false);
+              setHasRecipes(false)
             } else {
-              console.log("here");
-              setCond(true);
+              setHasRecipes(true);
+              let arr;
+              Object.keys(recipes).forEach(function (key) {
+                arr.push(recipes[key]);
+              });
+              setRecipes(arr)
+            }
+          });
+      }
+    }
+
+    const getPublicRecipes = async () => {
+      const userObj = getAuth()
+      if (userObj != null) {
+        axios.get(API_URL + `/public`, { headers: { 'auth-token': `${userObj.auth}` } })
+          .then((res) => {
+            let recipes = res.data
+            if (recipes.length === 0) {
+              setHasRecipes(false)
+            } else {
               let arr = [];
               Object.keys(recipes).forEach(function (key) {
                 arr.push(recipes[key]);
               });
-              setRecipes(arr);
+              setMoreRecipes(arr)
             }
           });
       }
-    };
+    }
 
     getUserRecipes();
-  }, []);
+    getPublicRecipes();
+  }, [addRecipe])
 
-  //recipeCtx.updateRecipe({ name: "test", description: "teststst" })
-  addNewRecipe();
-
-  if (cond) {
-    return (
-      <div className="content">
-        <h1>Recipes</h1>
-        {items.map((recipe) => (
+  return (
+    <div className='content'>
+      <h1>Recipes</h1>
+      {!hasRecipes &&
+        <div className="no-recipe">
+          {!addRecipe &&
+            <Card className="not-found">
+              <h2>Seems you don not have any recipes. Maybe add one?</h2>
+              <button onClick={handleAddRecipe}> Add Recipe</button>
+            </Card>}
+          {addRecipe &&
+            <div>
+              <AddNewRecipe />
+              <Ingredients />
+            </div>
+          }
+        </div>}
+      {<div>
+        {hasRecipes && <h1>Your Recipes</h1>}
+        {hasRecipes && items.map((recipe) => (
           <RecipeItem
             name={recipe.name}
             description={recipe.description}
             ingredients={recipe.ingredients}
+            image={recipe.image}
+            isItem={false}
           />
-        ))}
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <div className="content">
-          <h1>No recipes</h1>
-        </div>
-      </>
-    );
-  }
+        ))
+        }
+        <h1>Public Recipes</h1>
+        {moreRecipes.map((recipe) => (
+          <RecipeItem
+            name={recipe.name}
+            description={recipe.description}
+            ingredients={recipe.ingredients}
+            image={recipe.image}
+            isItem={false}
+          />
+        ))
+        }
+      </div >}
+    </div>
+  );
 }
 
-export default Recipe;
+export default Recipe

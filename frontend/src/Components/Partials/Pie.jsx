@@ -5,7 +5,7 @@ function Pie(props) {
   const data = props.items.map((item) => (
     { title: item.title, value: item.value, color: item.color, key: item.title }
   ))
-  console.log(data)
+
 
   return (
     <div>

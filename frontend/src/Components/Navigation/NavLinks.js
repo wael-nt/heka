@@ -15,7 +15,7 @@ function NavLinks() {
       <NavLink to="/ingredients">Ingredients</NavLink>
       <NavLink to="/recipes"><i className='fa fa-lemon-o'></i>Recipes</NavLink>
       <NavLink to="/contact"><i className='fa fa-fw fa-envelope'></i>Contact</NavLink>
-      <Logo />
+      <Logo className="center"/>
     </ul>
 
   );

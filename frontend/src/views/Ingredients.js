@@ -2,47 +2,16 @@ import React, { useEffect, useReducer } from "react";
 
 import IngredientsList from "../Components/Partials/IngredientsList";
 import SearchBar from "../Components/Partials/SearchBar";
+import Ingredient from "./Ingredient";
+
+import { categories, defaultIngredientState, ingredientReducer } from "../util/consts";
+import { getStorage, setStorage } from "../util/storage";
 
 import "./Ingredients.css";
 
-import Ingredient from "./Ingredient";
-
-const categories = [{ id: -1, name: "Grains", image: "/grains.jpg" },
-{ id: -2, name: "Meat", image: "/meatandfish.jpg" },
-{ id: -3, name: "Vegetables", image: "/vegetables.jpg" },
-{ id: -4, name: "Fruit", image: "/fruits.jpg" },
-{ id: -5, name: "Beverages", image: "/drinks.jpg" },
-{ id: -6, name: "Dairy", image: "/dairy.jpg" },
-{ id: -7, name: "Miscellaneous", image: "/miscellaneous.jpg" }];
-
-const defaultState = {
-  search: "",
-  title: "Ingredients",
-  item: {},
-  ingredients: categories,
-  isItem: false,
-  category: { id: 0, name: "", image: "" },
-  newRecipe: []
-};
-
-const reducer = (state, action) => {
-
-  switch (action.type) {
-    case 'ADD_ITEM': { }
-    case 'REMOVE_ITEM': { }
-    case 'ITEM': { return { ...state, isItem: action.bool } }
-    case 'TITLE': { return { ...state, title: action.title } }
-    case 'SEARCH': { return { ...state, search: action.search } }
-    case 'INGREDIENTS': { return { ...state, ingredients: action.ingredients } }
-    case 'SET_INGREDIENT': { return { ...state, item: action.item } }
-    case "CATEGORY": { return { ...state, category: action.category } }
-    case "DEFAULT": { return defaultState }
-    default:
-      throw new Error();
-  };
-}
-function Ingredients() {
-  const [state, dispatcher] = useReducer(reducer, defaultState);
+function Ingredients(props) {
+  const authCtx = true;
+  const [state, dispatcher] = useReducer(ingredientReducer, defaultIngredientState);
 
   async function selectItem(id) {
     if (state.category.id === 0) {
@@ -50,6 +19,9 @@ function Ingredients() {
         if (category.id === id) {
           dispatcher({ type: "CATEGORY", category: category })
           dispatcher({ type: "TITLE", title: category.name });
+          dispatcher({ type: "HAS_IS", id: 1, bool: true });
+        } else {
+          dispatcher({ type: "HAS_IS", id: 1, bool: false });
         }
       });
     } else if (state.category.id < 0) {
@@ -59,6 +31,9 @@ function Ingredients() {
           dispatcher({ type: "TITLE", title: ingredient.name.toUpperCase() });
         }
       });
+      console.log(state.item)
+    } else if (state.isItem) {
+      addItem();
     }
   }
 
@@ -71,8 +46,86 @@ function Ingredients() {
     }
   }
 
-  function addItem(item) {
+  function handleAmount(value) {
+    const item = state.item
+    const newItem = { ...item, amount: value }
+    dispatcher({ type: "SET_INGREDIENT", item: newItem });
+  }
 
+  function addItem() {
+    const item = state.item;
+    console.log(item)
+    let currentRecipe = getStorage("current-recipe");
+    if (!state.hasRecipe) {
+      let items = []
+      items.push(item);
+      let newRecipe = {
+        name: '',
+        description: '',
+        ingredients: items,
+        image: ""
+      };
+      dispatcher({ type: "SET_RECIPE", items: newRecipe });
+      dispatcher({ type: "HAS_IS", id: 3, bool: true });
+      setStorage("current-recipe", newRecipe)
+    } else if (currentRecipe.ingredients.length > 0) {
+      let items = currentRecipe.ingredients;
+      let newList = [];
+      for (let index = 0; index < items.length; index++) {
+        const element = items[index];
+        if (element.id !== null || element.id !== item.id) {
+          newList.push(element)
+        }
+      }
+      newList.push(item);
+      let newRecipe = {
+        name: currentRecipe.name,
+        description: currentRecipe.description,
+        ingredients: newList,
+        image: currentRecipe.image
+      }
+      dispatcher({ type: "SET_RECIPE", items: newList });
+      setStorage("current-recipe", newRecipe);
+    }
+  }
+
+  function removeItem(id) {
+    if (id === state.item.id) {
+      let currentRecipe = getStorage("current-recipe");
+      if (currentRecipe === null && currentRecipe === undefined) {
+        let items = []
+
+        const ingredients = currentRecipe.ingredients
+        for (let index = 0; index < ingredients.length; index++) {
+          const element = ingredients[index];
+          if (element.id !== id) {
+            items.push(element);
+          }
+        }
+        let newRecipe = {
+          name: currentRecipe.name,
+          description: currentRecipe.description,
+          ingredients: items,
+          image: currentRecipe.image
+        };
+        dispatcher({ type: "SET_RECIPE", items: newRecipe });
+        setStorage("current-recipe", newRecipe)
+      }
+    }
+  }
+
+  function goBack(event) {
+    event.preventDefault()
+    if (!state.isItem) {
+      dispatcher({ type: "CATEGORY", category: { id: 0, name: "", image: "" } });
+      dispatcher({ type: "INGREDIENTS", ingredients: categories });
+      dispatcher({ type: "TITLE", title: "Ingredients" })
+      dispatcher({ type: "HAS_IS", id: 1, bool: true });
+    } else {
+      dispatcher({ type: "HAS_IS", id: 2, bool: false });
+      dispatcher({ type: "TITLE", title: state.category.name.toUpperCase() })
+      dispatcher({ type: "SET_INGREDIENT", item: {} });
+    }
   }
 
   async function searchForIngredient() {
@@ -88,80 +141,134 @@ function Ingredients() {
   }
 
   async function fetchIngredientsByCategory(name) {
-    console.log(name)
     try {
       const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
       fetch(path).then(async response => {
         const newData = await response.json();
-        console.log(newData);
-        dispatcher({ type: "INGREDIENTS", ingredients: newData })
+        setStorage(name, newData);
+        dispatcher({ type: "INGREDIENTS", ingredients: newData });
       });
     } catch (err) {
       console.log(err);
     }
   }
 
-
   useEffect(() => {
+    let skip = false;
+    let ingredients = [];
     if (state.search.length > 0) {
-      dispatcher({ type: "ITEM", bool: false });
+      dispatcher({ type: "HAS_IS", id: 2, bool: false });
       searchForIngredient();
     } else if (state.category.id < 0 && !state.isItem) {
       let name;
       switch (state.category.id) {
         case -1: {
           name = "grains";
+          if (state.hasGrains) {
+            ingredients = getStorage("grains");
+            skip = true;
+          }
           break;
         }
         case -2: {
           name = "meat";
+          if (state.hasMeat) {
+            ingredients = getStorage("meat");
+            skip = true;
+          }
           break;
         }
         case -3: {
           name = "vegetables";
+          if (state.hasVeggies) {
+            ingredients = getStorage("vegetables");
+            skip = true;
+          }
           break;
         }
         case -4: {
           name = "fruit";
+          if (state.hasFruit) {
+            ingredients = getStorage("fruit");
+            skip = true;
+          }
           break;
         }
         case -5: {
           name = "drinks"
+          if (state.hasBeverages) {
+            ingredients = getStorage("drinks");
+            skip = true;
+          }
           break;
         }
         case -6: {
           name = "dairy";
+          if (state.hasDairy) {
+            ingredients = getStorage("dairy");
+            skip = true;
+          }
           break;
         }
         case -7: {
           name = "miscellaneous";
+          if (state.hasMisc) {
+            ingredients = getStorage("miscellaneous");
+            skip = true;
+          }
           break;
         }
         default:
           throw new Error();
       };
-      fetchIngredientsByCategory(name);
-      console.log(state.ingredients);
+
+      if (!skip) {
+        console.log("fetch");
+        fetchIngredientsByCategory(name);
+        dispatcher({ type: "HAS_IS", id: state.category.id, bool: true });
+      } else {
+        console.log("local");
+        dispatcher({ type: "INGREDIENTS", ingredients: ingredients });
+      }
     }
 
     if (state.item.id > 0) {
-      dispatcher({ type: "ITEM", bool: true });
+      dispatcher({ type: "HAS_IS", id: 2, bool: true });
+      if (authCtx) {
+        dispatcher({ type: "HAS_IS", id: 4, bool: true });
+        if (state.hasRecipe) {
+          let ingredientList = state.currentRecipe.ingredients
+          for (let index = 0; index < ingredientList.length; index++) {
+            const element = ingredientList[index];
+            if (element.id === state.item.id) {
+              dispatcher({ type: "HAS_IS", id: 5, bool: true });
+            }
+          }
+        }
+      }
+    } else {
+      dispatcher({ type: "HAS_IS", id: 4, bool: false });
+      dispatcher({ type: "HAS_IS", id: 5, bool: false })
     }
 
-  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id])
-
-
+  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id]);
 
   return (
     <div className="ingredients">
       <h1 className="title">{state.title}</h1>
-      <SearchBar type="text" placeholder="Search for an Ingredient" onSearch={handleSearch} />
+      {!state.isItem && < SearchBar type="text" placeholder="Search for an Ingredient" onSearch={handleSearch} />}
+      <div className="inline-buttons">
+        {!state.isCategory && <button className="button" onClick={goBack}>BACK</button>}
+        {state.canAdd && < button className="button" onClick={addItem}>ADD</button>}
+        {state.canRemove && < button className="button" onClick={removeItem}>REMOVE</button>}
+        {!state.hasRecipe && <button className="button" onClick={goBack}>VIEW RECIPE</button>}
+      </div>
       {!state.isItem &&
         <IngredientsList
           items={state.ingredients}
           category={state.category}
+          hasRecipe={state.hasRecipe}
           selectItem={selectItem}
-          addItem={addItem}
         />}
       {state.isItem &&
         <Ingredient
@@ -172,7 +279,8 @@ function Ingredients() {
           nutrients={state.item.nutrients}
           caloricBreakdown={state.item.caloricBreakdown}
           categories={state.item.categories}
-          selectItem={selectItem}
+          hasRecipe={state.hasRecipe}
+          handleChange={handleAmount}
           addItem={addItem}
         />}
     </div>
