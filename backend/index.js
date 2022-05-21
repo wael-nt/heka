@@ -1,34 +1,40 @@
 
-require('dotenv').config()
+require("dotenv").config();
 
-const express = require('express')
-const mongoose = require('mongoose')
-var bodyParser = require('body-parser')
-const cors = require('cors')
-const app = express()
-app.use(express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 }));
-
-
-const allowedOrigins = ["*", "http://localhost:3000"];
-const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
-const headers = ["*"]
-app.use(cors({
-  origin: allowedOrigins,
-  methods: methods,
-  headers: headers
+const express = require("express");
+const mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+app.use(express.json())
+app.use(bodyParser.urlencoded({
+  limit: "50mb",
+  extended: true,
+  parameterLimit: 50000,
 }));
-
-app.use(bodyParser.json({ limit: "50mb" }));
+const allowedOrigins = ["*", "http://localhost:3000"];
+const methods = [
+  "GET",
+  "PUT",
+  "POST",
+  "PATCH",
+  "UPDATE",
+  "HEAD",
+  "OPTIONS",
+  "DELETE",
+];
+const headers = [
+  "*",
+];
 app.use(
-  bodyParser.urlencoded({
-    limit: "50mb",
-    extended: true,
-    parameterLimit: 50000,
+  cors({
+    origin: allowedOrigins,
+    methods: methods,
+    headers: headers,
   })
 );
-
-app.use(bodyParser.json({ limit: "50mb" }));
-// app.use(bodyParser.urlencoded({ limit: "50mb", extended: true,  }));
+console.log("here")
+const PORT = 4300;
 
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
@@ -48,6 +54,7 @@ const ingredientRouter = require("./routes/ingredientrouter");
 app.use("/heka/api/ingredients", ingredientRouter);
 
 const goalRouter = require("./routes/goalrouter");
+const { json } = require("express");
 app.use("/heka/api/goals", goalRouter);
 
 app.use("/test", (req, res) => {
