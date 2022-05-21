@@ -1,0 +1,79 @@
+import React, { useEffect, useState } from 'react'
+import { Form } from 'react-bootstrap'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
+function UserGoal() { 
+  let nav = useNavigate();
+  
+  var API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
+
+
+  const [email, setEmail] = useState('')
+  const [cal, setCal] = useState(0)
+
+  const [pro, setPro] = useState(0)
+
+    const getAuth = () => {
+    let userObj = window.localStorage.getItem('cred')
+    if (userObj == null) {
+      return null
+    } else
+      return JSON.parse(userObj)
+  }
+  
+  useEffect(() => {
+    setEmail(getAuth().email);
+    console.log(email);
+  }, []);
+
+  const handleCalChange = function (e) {
+  console.log(e.target.value)
+    setCal(e.target.value) 
+  }
+  const handleProChange = function (e) {
+    console.log(e.target.value)
+   setPro(e.target.value) 
+}
+
+  const handleOnClick = async (event) => {
+    event.preventDefault();
+    
+    let body = {
+    "owner": email,
+    "calories": cal,
+    "protein":pro
+  }
+    try {
+    console.log(body)
+    const { data } = await axios({
+        method: 'PUT',
+        url: API_URL,
+        headers: { 'Content-Type': 'application/json' },
+        data: JSON.stringify(body) 
+    });
+
+      console.log("Stiv Look here")
+      console.log(body)
+    console.log(data);
+} catch (err) {
+    console.log(err.message);
+}
+
+  }
+   
+
+ return (
+   <>
+     <h1>Goal settings</h1>
+            <form onSubmit={handleOnClick}>
+              <input type="number" id="calGoal" className='form-control' placeholder='calories'  onChange={handleCalChange}></input><br></br>
+              <input type="number" id="protienGoal" className='form-control' placeholder='protein'  onChange={handleProChange}></input><br></br>
+              <button type="submit" className='btn'>Save</button>
+            </form>
+  </> 
+)
+} 
+
+export default UserGoal 
