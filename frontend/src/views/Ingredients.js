@@ -4,92 +4,15 @@ import IngredientsList from "../Components/Partials/IngredientsList";
 import SearchBar from "../Components/Partials/SearchBar";
 import Ingredient from "./Ingredient";
 
-import { categories } from "../util/consts";
+import { categories, defaultIngredientState, ingredientReducer } from "../util/consts";
 import { getStorage, setStorage } from "../util/storage";
 
 import "./Ingredients.css";
 
-const defaultState = {
-  search: "",
-  title: "Ingredients",
-  item: {},
-  ingredients: categories,
-  isItem: false,
-  category: { id: 0, name: "", image: "" },
-  isCategory: true,
-  currentRecipe: {},
-  canRemove: false,
-  canAdd: false,
-  hasRecipe: false,
-  hasGrains: false,
-  hasMeat: false,
-  hasVeggies: false,
-  hasFruit: false,
-  hasBeverages: false,
-  hasDairy: false,
-  hasMisc: false,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_ITEM': { break }
-    case 'REMOVE_ITEM': { break }
-    case 'TITLE': { return { ...state, title: action.title } }
-    case 'SEARCH': { return { ...state, search: action.search } }
-    case 'INGREDIENTS': { return { ...state, ingredients: action.ingredients } }
-    case 'SET_INGREDIENT': { return { ...state, item: action.item } }
-    case 'SET_RECIPE': { return { ...state, ingredients: action.items } }
-    case "CATEGORY": { return { ...state, category: action.category } }
-    case "HAS_IS": {
-      switch (action.id) {
-        case 1: {
-          return { ...state, isCategory: action.bool }
-        }
-        case 2: {
-          return { ...state, isItem: action.bool }
-        }
-        case 3: {
-          return { ...state, hasRecipe: action.bool }
-        }
-        case 4: {
-          return { ...state, canAdd: action.bool }
-        }
-        case 5: {
-          return { ...state, canRemove: action.bool }
-        }
-        case -1: {
-          return { ...state, hasGrains: action.bool }
-        }
-        case -2: {
-          return { ...state, hasMeat: action.bool }
-        }
-        case -3: {
-          return { ...state, hasVeggies: action.bool }
-        }
-        case -4: {
-          return { ...state, hasFruit: action.bool }
-        }
-        case -5: {
-          return { ...state, hasBeverages: action.bool }
-        }
-        case -6: {
-          return { ...state, hasDairy: action.bool }
-        }
-        case -7: {
-          return { ...state, hasMisc: action.bool }
-        }
-        default:
-          throw new Error();
-      };
-    }
-    case "DEFAULT": { return defaultState }
-    default:
-      throw new Error();
-  };
-}
-function Ingredients() {
+function Ingredients(props) {
   const authCtx = true;
-  const [state, dispatcher] = useReducer(reducer, defaultState);
+  const [state, dispatcher] = useReducer(ingredientReducer, defaultIngredientState);
+
   async function selectItem(id) {
     if (state.category.id === 0) {
       categories.filter((category) => {
@@ -108,6 +31,9 @@ function Ingredients() {
           dispatcher({ type: "TITLE", title: ingredient.name.toUpperCase() });
         }
       });
+      console.log(state.item)
+    } else if (state.isItem) {
+      addItem();
     }
   }
 
@@ -120,10 +46,17 @@ function Ingredients() {
     }
   }
 
-  function addItem(item) {
+  function handleAmount(value) {
+    const item = state.item
+    const newItem = { ...item, amount: value }
+    dispatcher({ type: "SET_INGREDIENT", item: newItem });
+  }
+
+  function addItem() {
+    const item = state.item;
     console.log(item)
     let currentRecipe = getStorage("current-recipe");
-    if (currentRecipe === null && currentRecipe === undefined) {
+    if (!state.hasRecipe) {
       let items = []
       items.push(item);
       let newRecipe = {
@@ -135,7 +68,7 @@ function Ingredients() {
       dispatcher({ type: "SET_RECIPE", items: newRecipe });
       dispatcher({ type: "HAS_IS", id: 3, bool: true });
       setStorage("current-recipe", newRecipe)
-    } else {
+    } else if (currentRecipe.ingredients.length > 0) {
       let items = currentRecipe.ingredients;
       let newList = [];
       for (let index = 0; index < items.length; index++) {
@@ -154,42 +87,43 @@ function Ingredients() {
       dispatcher({ type: "SET_RECIPE", items: newList });
       setStorage("current-recipe", newRecipe);
     }
-
   }
 
-  function removeItem(item) {
-    const id = item.id
-    let currentRecipe = getStorage("current-recipe");
-    if (currentRecipe === null && currentRecipe === undefined) {
-      let items = []
+  function removeItem(id) {
+    if (id === state.item.id) {
+      let currentRecipe = getStorage("current-recipe");
+      if (currentRecipe === null && currentRecipe === undefined) {
+        let items = []
 
-      const ingredients = currentRecipe.ingredients
-      for (let index = 0; index < ingredients.length; index++) {
-        const element = ingredients[index];
-        if (element.id !== id) {
-          items.push(element);
+        const ingredients = currentRecipe.ingredients
+        for (let index = 0; index < ingredients.length; index++) {
+          const element = ingredients[index];
+          if (element.id !== id) {
+            items.push(element);
+          }
         }
+        let newRecipe = {
+          name: currentRecipe.name,
+          description: currentRecipe.description,
+          ingredients: items,
+          image: currentRecipe.image
+        };
+        dispatcher({ type: "SET_RECIPE", items: newRecipe });
+        setStorage("current-recipe", newRecipe)
       }
-      let newRecipe = {
-        name: currentRecipe.name,
-        description: currentRecipe.description,
-        ingredients: items,
-        image: currentRecipe.image
-      };
-      dispatcher({ type: "SET_RECIPE", items: newRecipe });
-      setStorage("current-recipe", newRecipe)
     }
   }
-
 
   function goBack(event) {
     event.preventDefault()
     if (!state.isItem) {
       dispatcher({ type: "CATEGORY", category: { id: 0, name: "", image: "" } });
       dispatcher({ type: "INGREDIENTS", ingredients: categories });
+      dispatcher({ type: "TITLE", title: "Ingredients" })
       dispatcher({ type: "HAS_IS", id: 1, bool: true });
     } else {
       dispatcher({ type: "HAS_IS", id: 2, bool: false });
+      dispatcher({ type: "TITLE", title: state.category.name.toUpperCase() })
       dispatcher({ type: "SET_INGREDIENT", item: {} });
     }
   }
@@ -335,8 +269,6 @@ function Ingredients() {
           category={state.category}
           hasRecipe={state.hasRecipe}
           selectItem={selectItem}
-          addItem={addItem}
-          removeItem={removeItem}
         />}
       {state.isItem &&
         <Ingredient
@@ -348,6 +280,8 @@ function Ingredients() {
           caloricBreakdown={state.item.caloricBreakdown}
           categories={state.item.categories}
           hasRecipe={state.hasRecipe}
+          handleChange={handleAmount}
+          addItem={addItem}
         />}
     </div>
   );

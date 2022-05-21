@@ -40,18 +40,6 @@ function addRecipe(recipe) {
     })
 }
 
-// async function searchForIngredient() {
-//   try {
-//     const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
-//     fetch(path).then(async response => {
-//       const newData = await response.json();
-//       dispatcher({ type: "INGREDIENTS", ingredients: newData });
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
 function AddNewRecipe() {
 
   const [recipe, setRecipe] = useState(getStorage("current-recipe"))
@@ -65,21 +53,23 @@ function AddNewRecipe() {
   return (
     <div className="content">
       <form className="recipe-form" onSubmit={recipeSubmitHandler}>
-        <div class="row g-3 ms-3 align-items-center">
-          <div class="col-auto">
-            <label for="name" class="col-form-label">Name</label>
+        <div className="row g-3 ms-3 align-items-center">
+          <div className="col-auto">
+            <label forhtml="name" class="col-form-label">Name</label>
           </div>
-          <div class="col-auto">
+          <div className="col-auto">
             <input type="text" id="name" class="form-control" aria-describedby="name" placeholder="Name" name='name'></input>
           </div>
         </div>
-        <div class="row g-3 ms-3 align-items-center">
-          <div class="col-auto">
-            <label for="description" class="col-form-label">Description</label>
+        <div className="row g-3 ms-3 align-items-center">
+          <div className="col-auto">
+            <label forhtml="description" className="col-form-label">Description</label>
           </div>
-          <div class="col-auto">
+          <div className="col-auto">
             <textarea
+              className="input"
               id="description"
+              placeholder="Description of the recipe"
               rows={3}
             // onChange={changeHandler}
             // onBlur={touchHandler}
@@ -88,30 +78,6 @@ function AddNewRecipe() {
           </div>
         </div>
       </form>
-      {/* <SearchBar type="text" placeholder="Search for an Ingredient" onSearch={handleSearch} /> */}
-      {/* {!state.isItem &&
-        <IngredientsList
-          items={state.ingredients}
-          category={state.category}
-          hasRecipe={state.hasRecipe}
-          selectItem={selectItem}
-          addItem={addItem}
-          removeItem={removeItem}
-        />}
-      {state.isItem &&
-        <Ingredient
-          name={state.item.name}
-          id={state.item.id}
-          amount={state.item.amount}
-          possibleUnits={state.item.possibleUnits}
-          nutrients={state.item.nutrients}
-          caloricBreakdown={state.item.caloricBreakdown}
-          categories={state.item.categories}
-          hasRecipe={state.hasRecipe}
-        />} */}
-
-
-
     </div>
   );
 }

@@ -25,13 +25,11 @@ function IngredientsList(props) {
         <IngredientItem
           key={ingredient.id}
           id={ingredient.id}
+          item={ingredient}
           image={ingredient.image}
           category={props.category}
           name={ingredient.name}
           selectItem={props.selectItem}
-          addItem={props.addItem}
-          removeItem={props.removeItem}
-          hasRecipe={props.hasRecipe}
         />
       ))}
     </ul>

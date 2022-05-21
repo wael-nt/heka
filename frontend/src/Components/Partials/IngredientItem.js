@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
 import { getStorage } from "../../util/storage";
 
 import Card from "../UIElements/Card";
@@ -10,8 +9,6 @@ function IngredientItem(props) {
   const currentRecipe = getStorage("current-recipe");
   let isItem = false;
   let inRecipe = false;
-  const authContext = true;
-  const navigate = useNavigate();
 
   let image = process.env.PUBLIC_URL + props.image;
   if (props.category.id !== 0) {
@@ -34,19 +31,6 @@ function IngredientItem(props) {
     props.selectItem(props.id);
   }
 
-  function handleAdd(event) {
-    event.preventDefault();
-    if (authContext === false) {
-      navigate("/signin")
-    }
-    props.addItem(props.ingredient);
-  }
-
-  function handleRemove(event) {
-    event.preventDefault();
-    props.removeItem(props.id);
-  }
-
   return (
     <Fragment>
       <li className="ingredient-item">
@@ -59,8 +43,6 @@ function IngredientItem(props) {
           </div>
           <div className="ingredient-item__actions">
             <button className="button" onClick={handleView}>View</ button>
-            {isItem && <button className="button" onClick={handleAdd}>ADD</button>}
-            {inRecipe && <button className="button" onClick={handleRemove}>REMOVE</button>}
           </div>
         </Card>
       </li>

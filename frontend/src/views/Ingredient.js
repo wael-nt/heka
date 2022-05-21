@@ -55,6 +55,7 @@ function Ingredient(props) {
   function handleChange(event) {
     event.preventDefault();
     setAmount(event.target.value)
+    props.handleChange(amount)
   }
 
   const caloricBreakdown = props.caloricBreakdown[0];
@@ -82,12 +83,13 @@ function Ingredient(props) {
             <h3 className="unit">{unit}</h3>
           ))}
         </div>
-        <div class="row g-3 ms-3 align-items-center">
-          <div class="col-auto">
-            <label for="amount" class="col-form-label">amount</label>
+        <div className="row g-3 ms-3 align-items-center">
+          <div className="col-auto">
+            <label forhtml="amount" className="col-form-label">{<h4 className="nutrients-title">Amount (g)</h4>}</label>
           </div>
-          <div class="col-auto">
+          <div className="col-auto">
             <input
+              className="input"
               type="number"
               id="amount"
               placeholder={amount}
@@ -124,7 +126,7 @@ function Ingredient(props) {
           </div>
         </section>
       </div>
-    </div>
+    </div >
   );
 }
 

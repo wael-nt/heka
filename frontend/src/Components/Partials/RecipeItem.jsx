@@ -17,7 +17,7 @@ function RecipeItem(props) {
             <span>{props.description}</span>
           </blockquote>
         </div>
-        <div className='recipe-incredients'>
+        <div className='recipe-ingredients-list'>
           {props.ingredients.map(ingredient => (
             <IngredientItem
               key={ingredient.id}
