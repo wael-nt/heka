@@ -28,7 +28,9 @@ function IngredientItem(props) {
 
   function handleView(event) {
     event.preventDefault();
+    console.log(props.id);
     props.selectItem(props.id);
+
   }
 
   return (

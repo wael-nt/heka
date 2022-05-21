@@ -6,10 +6,12 @@ import '../Partials/RecipeItem.css'
 import { categories } from '../../util/consts'
 
 function RecipeItem(props) {
+
   let value = Math.floor(Math.random() * (6 - 0 + 1)) + 0;
   console.log(value)
   let category = categories[value]
   console.log(category)
+
   return (
     <Fragment>
       <Card className='recipe-item'>

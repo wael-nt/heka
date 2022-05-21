@@ -94,6 +94,7 @@ function Ingredient(props) {
               id="amount"
               placeholder={amount}
               onChange={handleChange}
+              defaultValue={amount}
               name='amount' />
           </div>
         </div>

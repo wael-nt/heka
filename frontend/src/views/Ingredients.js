@@ -55,9 +55,11 @@ function Ingredients() {
   }
 
   function handleAmount(value) {
+    console.log('here');
     let currentRecipe = getStorage("current-recipe");
+    console.log(state.item);
     const item = state.item
-    let items = currentRecipe.ingredients;
+    let items = state.ingredients;
     let newList = [];
     for (let index = 0; index < items.length; index++) {
       const element = items[index];
@@ -65,9 +67,10 @@ function Ingredients() {
         newList.push(element)
       }
     }
+    console.log('newlist', newList);
     const newItem = { ...item, amount: value }
     newList.push(newItem);
-    dispatcher({ type: "SET_INGREDIENT", items: newList });
+    dispatcher({ type: "INGREDIENTS", items: newList });
   }
 
   function addItem() {

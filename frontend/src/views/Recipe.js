@@ -38,6 +38,10 @@ function Recipe() {
     setAddRecipe(true)
   }
 
+  function selectItem() {
+
+  }
+
   useEffect(() => {
 
     if (hasRecipes) {
@@ -93,14 +97,20 @@ function Recipe() {
               <h2>Seems you don not have any recipes. Maybe add one?</h2>
               <button onClick={handleAddRecipe}> Add Recipe</button>
             </Card>}
-          {addRecipe &&
-            <div>
-              <AddNewRecipe />
-              <Ingredients />
-            </div>
-          }
+
         </div>}
       {<div>
+        {!addRecipe &&
+          <Card className="not-found">
+            <h2>Quote of inspiration here</h2>
+            <button onClick={handleAddRecipe}> Add Recipe</button>
+          </Card>}
+        {addRecipe &&
+          <div>
+            <AddNewRecipe />
+            <Ingredients />
+          </div>
+        }
         {hasRecipes && <h1>Your Recipes</h1>}
         {hasRecipes && items.map((recipe) => (
           <RecipeItem
@@ -110,6 +120,7 @@ function Recipe() {
             ingredients={recipe.ingredients}
             image={recipe.image}
             isItem={true}
+            selectItem={selectItem}
           />
         ))
         }
@@ -122,9 +133,23 @@ function Recipe() {
             ingredients={recipe.ingredients}
             image={recipe.image}
             isItem={true}
+            selectItem={selectItem}
           />
         ))
         }
+
+        {/* <Ingredient
+          name={state.item.name}
+          id={state.item.id}
+          amount={state.item.amount}
+          possibleUnits={state.item.possibleUnits}
+          nutrients={state.item.nutrients}
+          caloricBreakdown={state.item.caloricBreakdown}
+          categories={state.item.categories}
+          hasRecipe={state.hasRecipe}
+          handleChange={handleAmount}
+          addItem={addItem}
+        /> */}
       </div >}
     </div>
   );
