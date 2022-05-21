@@ -36,10 +36,10 @@ function UserInfo() {
   return (
     <>
         <h2>Edit profile details</h2>
-        <div class="container">
+        <div class="userinfo-container">
           <div class="row">
             <div class="col-lg-7">
-              <Form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>
                 <div class="row g-3 ms-3 align-items-center">
                   <div class="col-auto">
                     <label for="name" class="col-form-label">Name</label>
@@ -48,7 +48,6 @@ function UserInfo() {
                     <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
                   </div>
                 </div>
-
                 <div class="row g-3 ms-3 align-items-center">
                   <div class="col-auto">
                     <label for="height" class="col-form-label">Height</label>
@@ -113,7 +112,7 @@ function UserInfo() {
                   </div>
                   <br /><br /><br /><br /><br />
                 </div>
-              </Form>
+              </form>
             </div>
             <div class="col-lg">
               <ProfilePic setPicture={setPic} />

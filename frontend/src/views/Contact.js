@@ -3,9 +3,13 @@ import PropTypes from 'prop-types'
 
 function Contact(props) {
   return (
-    <div>
-      <h1>THIS IS CONTACT US PAGE</h1>
+    <>
+    <div className='content'>
+      <h1>contact us</h1>
+      <h2>Contributors</h2>
+      
     </div>
+    </>
   )
 }
 
