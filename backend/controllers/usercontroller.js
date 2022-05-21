@@ -20,7 +20,8 @@ exports.addNewUser = async function addNewUser(req, res, next) {
     height: obj.height,
     weight: obj.weight,
     age: obj.age,
-    sex: obj.sex
+    sex: obj.sex,
+    photo: obj.photo
   })
   email = obj.email;
   userObj.password = userObj.generateHash(obj.password)
@@ -56,7 +57,7 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
         })
       } else {
         let jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
-        res.header('auth-token', jsonToken).send(jsonToken);
+        res.header('auth-token', jsonToken).send(extract(user));
         console.log(jsonToken);
         // password matched. proceed forward
         // without id, v and password fields
@@ -71,15 +72,19 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
   })
 }
 
-// PUT {name,email,password,age,sex,weight,height}  - currentEmail
+// PUT {name,email,password,age,sex,weight,height,photo}  - currentEmail
 exports.editUser = async function editUser(req, res, next) {
   console.log('here');
   console.log(req.body);
-  userSchema.findOne({ email: req.body.email }, function (err, user) {
+  userSchema.findOne({
+  email: req.body.email
+  }, function (err, user) {
     res.set('Access-Control-Allow-Origin', '*');
     try {
       if (!user.validatePassword(req.body.currentPassword)) {
-        res.status(400).json({ message: "Invalid credentials" })
+        res.status(400).json({
+          message: "Invalid credentials"
+        })
       } else {
         user.name = req.body.name
         user.password = user.generateHash(req.body.newPassword)
@@ -87,16 +92,20 @@ exports.editUser = async function editUser(req, res, next) {
         user.weight = req.body.weight
         user.height = req.body.height
         user.sex = req.body.sex
-
-        if (err)
-          res.status(400).json({ message: err })
-
+        user.photo = req.body.photo
         user.save()
-
-        res.send(extract(user))
+        let jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
+        res.header('auth-token', jsonToken).send(extract(user));
+        if (err) {
+          res.status(400).json({
+            message: err
+          })
+        }
       }
     } catch (err) {
-      res.status(400).json({ message: 'User doesnt exist' })
+      res.status(400).json({
+        message: 'User doesnt exist'
+      })
     }
 
   })
@@ -110,7 +119,8 @@ function extract(user) {
     height: user.height,
     weight: user.weight,
     age: user.age,
-    sex: user.sex
+    sex: user.sex,
+    photo: user.photo
   }
   return resObj
 }

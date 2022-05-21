@@ -3,21 +3,24 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
+var bodyParser = require('body-parser')
 const cors = require('cors')
-
 const app = express()
 
 const allowedOrigins = ["*", "http://localhost:3000"];
 const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
 const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept", "auth-token"]
-
 app.use(cors({
   origin: allowedOrigins,
   methods: methods,
   headers: headers
 }));
 
-app.use(express.json());
+
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+
+
 const PORT = 4300
 
 mongoose.connect(process.env.DATABASE_URL)

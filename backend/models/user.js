@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
   sex: {
     type: String,
     required: true
+  },
+  photo:{
+    type:String,
+    required:true
   }
 })
 

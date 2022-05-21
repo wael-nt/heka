@@ -53,6 +53,12 @@
   border-radius: 6rem;
 }
 
+#profile_pic {
+  width: 200px;
+  border-radius: 10rem;
+  margin-bottom: 15px;
+}
+
 .profileImageContaioner {
   border-bottom: solid #69BC45;
   padding-bottom: 30px;

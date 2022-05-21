@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://127.0.0.1:4300/heka/api/users";
 
-const signup = (email, password, name, height, weight, age, sex) => {
+const signup = (email, password, name, height, weight, age, sex,photo) => {
   return axios
     .post(API_URL + "/register", {
       email,
@@ -11,7 +11,8 @@ const signup = (email, password, name, height, weight, age, sex) => {
       height,
       weight,
       age,
-      sex
+      sex,
+      photo
     })
     .then((response) => {
       return response.data;
@@ -36,6 +37,8 @@ const logout = () => {
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
+
+
 
 const authService = {
   signup,

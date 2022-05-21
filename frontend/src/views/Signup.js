@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AuthService from "../Services/Auth-Service";
 import { useNavigate } from "react-router-dom";
+import { useFilePicker } from "use-file-picker";
+import { Avatar } from 'antd';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -10,13 +12,16 @@ const Signup = () => {
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
-
+  const [photo, setPhoto] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    console.log(filesContent[0].content);
+     const file = filesContent[0].content;
+    setPhoto(file);
     try {
-      await AuthService.signup(email, password,name,height,weight,age,sex).then(
+      await AuthService.signup(email, password,name,height,weight,age,sex,photo).then(
         (response) => {
           // check for token and user already exists with 200
           console.log("Sign up successfully", response);
@@ -31,7 +36,23 @@ const Signup = () => {
       console.log(err);
     }
   };
+  const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+    readAs: "DataURL",
+    accept: "image/*",
+    multiple: true,
+    limitFilesConfig: { max: 2 },
+    // minFileSize: 1,
+    maxFileSize: 50 // in megabytes
+  });
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (errors.length) {
+    return <div>Error...</div>;
+  }
+  
   return (
     <div>
        <div className='content'>
@@ -86,6 +107,14 @@ const Signup = () => {
           value={sex}
           onChange={(e) => setSex(e.target.value)}
         />
+           <div>
+        {filesContent.map((file, index) => (
+          <Avatar src={file.content} size={{ xs: 40, sm: 50, md: 40, lg: 64, xl: 80, xxl: 280 }} />
+        ))}
+      </div>
+      <div>
+        <button className='button' onClick={() => openFileSelector()}>Select profile picture </button>
+      </div>
         <button className="btn" type="submit">Sign up</button>
       </form>
       </div>
