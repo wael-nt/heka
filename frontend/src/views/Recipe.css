@@ -24,6 +24,7 @@
 }
 
 .not-found {
+  background-color: grey !important;
   margin: auto;
   margin-top: 30px;
   width: 70%;

@@ -10,7 +10,8 @@
 
 .btn {
   border-radius: 15px !important;
-  background-color: gray !important;
+  background-color: #306d3e !important;
+  color: aliceblue !important;
 }
 
 .btn.btn:hover {

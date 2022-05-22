@@ -1,12 +1,11 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../Services/Auth-Service";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [photo, setPhoto] = useState("");
 
   const navigate = useNavigate();
 
@@ -15,13 +14,10 @@ const SignIn = () => {
     try {
       await AuthService.login(email, password).then(
         (response) => {
-          console.log("HERE IS RESPONE");
           console.log(response);
-          console.log("HERE IS RESPONE with email");
           saveSession(response, email);
           navigate("/");
           document.location.reload();
-          //window.location.reload();
         },
         (error) => {
           console.log(error);

@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import ProfilePic from '../Partials/ProfilePic';
 import UserGoal from "../../Components/Partials/UserGoal";
 import BmiCalculator from "../../Components/Partials/BmiCalculator";
-import AuthService from "../../Services/Auth-Service";
 
 let nav
 
 function UserInfo() {
   const [pic, setPic] = useState('')
-  const [savedEmail, setSavedEmail] = useState('')
   let obj
   nav = useNavigate();
   if (checkSession()) {
@@ -22,7 +20,7 @@ function UserInfo() {
       weight: "weight"
     }
   }
-
+    console.log(pic)
   return (
     <>
       <div class="userinfo-container">

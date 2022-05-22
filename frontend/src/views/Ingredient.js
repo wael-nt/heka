@@ -39,13 +39,13 @@ function calculateNutrientValues(initialAmount, amount, nutrients) {
 function Ingredient(props) {
   const initialValue = getInitialAmount(props.nutrients)
   const [amount, setAmount] = useState(initialValue);
-  const [canAdd, setCanAdd] = useState(false);
   const [nutrients, setNutrients] = useState(props.nutrients);
   const input = useRef(initialValue)
-
+  console.log(input)
   if (props.hasRecipe) {
     const currentRecipe = getStorage("current-recipe");
     const ingredient = currentRecipe.ingredients.filter(item => {
+      console.log(ingredient)
       if (props.id === item.id) {
         return item;
       }
@@ -115,7 +115,7 @@ function Ingredient(props) {
             <div className="nutrients">
               {nutrients.map((nutrient) => {
                 if (nutrient.amount === 0) {
-                  return;
+                  return false;
                 }
                 return (<div className="nutrient">
                   <h2>{nutrient.name}</h2>

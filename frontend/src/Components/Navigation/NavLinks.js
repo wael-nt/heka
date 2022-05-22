@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import NavbarStyle from '../Sass/NavbarStyle.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import '../Sass/NavbarStyle.css';
 import Logo from "./Logo";
 
 

@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AuthService from "../Services/Auth-Service";
 import { useNavigate } from "react-router-dom";
-import { useFilePicker } from "use-file-picker";
-import { Avatar } from 'antd';
 import axios from "axios";
 import ProfilePic from '../../src/Components/Partials/ProfilePic'
-import UserGoal from "../Components/Partials/UserGoal";
 
 const Signup = () => {
   const [email, setEmail] = useState("");

@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from "react";
-
 import IngredientsList from "../Components/Partials/IngredientsList";
 import SearchBar from "../Components/Partials/SearchBar";
 import Ingredient from "./Ingredient";
@@ -55,9 +54,6 @@ function Ingredients() {
   }
 
   function handleAmount(value) {
-    console.log('here');
-    let currentRecipe = getStorage("current-recipe");
-    console.log(state.item);
     const item = state.item
     let items = state.ingredients;
     let newList = [];
@@ -67,7 +63,6 @@ function Ingredients() {
         newList.push(element)
       }
     }
-    console.log('newlist', newList);
     const newItem = { ...item, amount: value }
     newList.push(newItem);
     dispatcher({ type: "INGREDIENTS", items: newList });
@@ -75,7 +70,6 @@ function Ingredients() {
 
   function addItem() {
     const item = state.item;
-    console.log(item)
     let items = []
     let currentRecipe = getStorage("current-recipe");
     if (!state.hasRecipe) {
@@ -92,23 +86,23 @@ function Ingredients() {
     setStorage("current-recipe", currentRecipe)
   }
 
-  function removeItem(id) {
-    if (id === state.item.id) {
-      let currentRecipe = getStorage("current-recipe");
-      if (currentRecipe !== null && currentRecipe !== undefined) {
-        let items = []
-        for (let index = 0; index < currentRecipe.length; index++) {
-          const element = currentRecipe[index];
-          if (element.id !== id) {
-            items.push(element);
-          }
-        }
-        state.currentRecipe.ingredients = items;
-        dispatcher({ type: "SET_RECIPE", items: items });
-        setStorage("current-recipe", state.currentRecipe)
-      }
-    }
-  }
+  // function removeItem(id) {
+  //   if (id === state.item.id) {
+  //     let currentRecipe = getStorage("current-recipe");
+  //     if (currentRecipe !== null && currentRecipe !== undefined) {
+  //       let items = []
+  //       for (let index = 0; index < currentRecipe.length; index++) {
+  //         const element = currentRecipe[index];
+  //         if (element.id !== id) {
+  //           items.push(element);
+  //         }
+  //       }
+  //       state.currentRecipe.ingredients = items;
+  //       dispatcher({ type: "SET_RECIPE", items: items });
+  //       setStorage("current-recipe", state.currentRecipe)
+  //     }
+  //   }
+  // }
 
   function goBack(event) {
     event.preventDefault()
@@ -233,8 +227,6 @@ function Ingredients() {
       if (authCtx) {
         dispatcher({ type: "HAS_IS", id: 4, bool: true });
         if (state.hasRecipe) {
-          let currentRecipe = getStorage("current-recipe");
-
           let ingredientList = state.currentRecipe.ingredients
           for (let index = 0; index < ingredientList.length; index++) {
             const element = ingredientList[index];

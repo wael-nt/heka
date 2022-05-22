@@ -1,22 +1,12 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios";
-
 import RecipeItem from '../Components/Partials/RecipeItem';
 import AddNewRecipe from '../Components/Partials/AddNewRecipe';
 import Card from '../Components/UIElements/Card';
-
 import "./Recipe.css";
 import Ingredients from './Ingredients';
-import { getStorage } from '../util/storage';
-
 const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
 
-const defaultState = {
-  hasRecipes: false,
-  recipes: [],
-  currentRecipe: {},
-
-};
 
 const getAuth = () => {
   let userObj = window.localStorage.getItem('cred')
@@ -31,7 +21,6 @@ function Recipe() {
   const [hasRecipes, setHasRecipes] = useState(false)
   const [items, setRecipes] = useState([]);
   const [moreRecipes, setMoreRecipes] = useState([]);
-  const [currentRecipe, setCurrentRecipe] = useState({});
 
   function handleAddRecipe(event) {
     event.preventDefault()
@@ -85,7 +74,7 @@ function Recipe() {
 
     getUserRecipes();
     getPublicRecipes();
-  }, [addRecipe])
+  }, [])
 
   return (
     <div className='content'>
@@ -95,7 +84,7 @@ function Recipe() {
           {!addRecipe &&
             <Card className="not-found">
               <h2>Seems you don not have any recipes. Maybe add one?</h2>
-              <button onClick={handleAddRecipe}> Add Recipe</button>
+              <button className='btn' onClick={handleAddRecipe}> Add Recipe</button>
             </Card>}
 
         </div>}
@@ -103,7 +92,7 @@ function Recipe() {
         {!addRecipe &&
           <Card className="not-found">
             <h2>Quote of inspiration here</h2>
-            <button onClick={handleAddRecipe}> Add Recipe</button>
+            <button className='btn' onClick={handleAddRecipe}> Add Recipe</button>
           </Card>}
         {addRecipe &&
           <div>

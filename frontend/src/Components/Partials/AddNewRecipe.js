@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-
 import IngredientItem from "./IngredientItem";
-
 import { clearStorage, getStorage, isStorage, setStorage } from "../../util/storage";
 import { categories } from "../../util/consts";
 import { useNavigate } from "react-router-dom";

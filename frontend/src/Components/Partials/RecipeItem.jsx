@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import Card from '../UIElements/Card'
 import IngredientItem from './IngredientItem'
-
 import '../Partials/RecipeItem.css'
 import { categories } from '../../util/consts'
 

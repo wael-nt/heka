@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import BmiCalculatorStyle from '../../Components/Sass/BmiCalculator.css';
+import { useState } from 'react'
+import '../../Components/Sass/BmiCalculator.css';
+
 const BmiCalculator = () => {
     const [height, setHeight] = useState();
     const [mass, setMass] = useState();

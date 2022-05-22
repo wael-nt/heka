@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Form } from 'react-bootstrap'
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 function UserGoal() { 
-  let nav = useNavigate();
-  
   const API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
   const [email, setEmail] = useState('')
   const [cal, setCal] = useState(0)
-
   const [pro, setPro] = useState(0)
 
     const getAuth = () => {
@@ -65,7 +60,7 @@ function UserGoal() {
  return (
    <>
             <form onSubmit={handleOnClick}>
-               <h1>Goal settings</h1>
+               <h1>Current Nutrition</h1>
               <input type="number" id="calGoal" className='form-control' placeholder='calories'  onChange={handleCalChange}></input><br></br>
               <input type="number" id="protienGoal" className='form-control' placeholder='protein'  onChange={handleProChange}></input><br></br>
               <button type="submit" className='btn'>Save</button>

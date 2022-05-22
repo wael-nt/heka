@@ -1,6 +1,5 @@
 import React from "react";
-import pic from "../../Assets/profile-picture.png";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../Assets/pngwinggreen.png";
 function ProfileImg(props) {
   const [pic, setPic] = useState("");

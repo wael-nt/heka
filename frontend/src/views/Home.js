@@ -2,7 +2,6 @@ import React from 'react'
 import axios from "axios";
 import  { useEffect, useState } from 'react'
 import Pie from '../Components/Partials/Pie';
-import DailyMeals from '../Components/Partials/DailyMeals';
 import DailyQuotes from '../Components/Partials/DailyQuotes';
 import Bar from '../Components/Partials/Bar';
 import "./Home.css";
@@ -11,11 +10,15 @@ import BmiCalculator from '../Components/Partials/BmiCalculator';
 
 const colors = ['#69BC45', 'yellow', 'purple'];
 const API_URL = 'http://localhost:4300/heka/api/goals/get';
-  
+const Protein_Goal = 200;
+const Calories_Goal = 2000;
+
   function Home() {
     const [email , setEmail] = useState('')
     const [calories , setCalories] = useState(0)
     const [protein , setProtein] = useState(0)
+    const [goal , setGol] = useState({})
+
 
     // Sample data
     const pieItems = [{ title: "Calories %", value: calories, color: colors[0] },
@@ -44,6 +47,7 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
       if(getAuth()?.email?.length>1){
         setEmail(getAuth().email)
         console.log(email)
+       setGol(CalculateGoal(protein,calories)) 
         getUserGoal();
       }
     })
@@ -53,11 +57,10 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
     <div className='content'>
       <div className='row'>
         <div className='dailymeals col'>
-           <h1>Goal</h1>
-          <Bar name='Protein' value={protein} />
+           <h1>Nutrition Goal</h1>
+          <Bar name='Protein' value={goal.calProtien} />
           <br/>
-          <Bar name='Calories' value={calories} /> 
-          {/* <DailyMeals /> */}
+          <Bar name='Calories' value={goal.calCalorie} /> 
         </div>
         <div className='dailyqotues col-2'>
           <h1>Daily quotes</h1>
@@ -67,13 +70,9 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
       <div className='row'>
         <div className='barchart col'>
         <BmiCalculator /> 
-          {/* <h1>Goal</h1>
-          <Bar name='Protein' value={protein} />
-          <br/>
-          <Bar name='Calories' value={calories} /> */}
         </div>
         <div className='piechart col-2'>
-          <Pie items={pieItems} title="Goal"/>
+          <Pie items={pieItems} title="Nutrition"/>
           <div className='center'>
           <div class='box yellow'><h4> Protien : {protein}</h4></div>
            <div class='box green'><h4>Calories: {calories}</h4></div>
@@ -82,6 +81,12 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
       </div>
     </div>
   )
+}
+
+function CalculateGoal(protein , calories){
+let calProtien = (protein/Protein_Goal * 100) ;
+let calCalorie = (calories/Calories_Goal * 100) ;
+return {calProtien,calCalorie}
 }
 
 export default Home
