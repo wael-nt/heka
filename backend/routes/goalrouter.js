@@ -10,4 +10,6 @@ router.put("/updategoal", goalController.updateGoal);
 
 router.get("/getgoal", goalController.getGoal);
 
+router.get('/get', goalController.getGoalByEmail);
+
 module.exports = router;

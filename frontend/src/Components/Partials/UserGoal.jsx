@@ -7,9 +7,7 @@ import axios from "axios";
 function UserGoal() { 
   let nav = useNavigate();
   
-  var API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
-
-
+  const API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
   const [email, setEmail] = useState('')
   const [cal, setCal] = useState(0)
 
@@ -66,8 +64,8 @@ function UserGoal() {
 
  return (
    <>
-     <h1>Goal settings</h1>
             <form onSubmit={handleOnClick}>
+               <h1>Goal settings</h1>
               <input type="number" id="calGoal" className='form-control' placeholder='calories'  onChange={handleCalChange}></input><br></br>
               <input type="number" id="protienGoal" className='form-control' placeholder='protein'  onChange={handleProChange}></input><br></br>
               <button type="submit" className='btn'>Save</button>

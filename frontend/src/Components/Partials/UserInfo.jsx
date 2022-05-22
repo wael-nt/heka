@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Form } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import ProfilePic from '../Partials/ProfilePic';
+import UserGoal from "../../Components/Partials/UserGoal";
+import BmiCalculator from "../../Components/Partials/BmiCalculator";
 import AuthService from "../../Services/Auth-Service";
-
 
 let nav
 
 function UserInfo() {
-  let obj
   const [pic, setPic] = useState('')
+  const [savedEmail, setSavedEmail] = useState('')
+  let obj
   nav = useNavigate();
-  console.log(window.sessionStorage.getItem('userinfo'));
-
-  function handlePic() {
-
-  }
   if (checkSession()) {
-    console.log('yess');
     obj = getObject()
   } else {
     obj = {
@@ -27,103 +22,41 @@ function UserInfo() {
       weight: "weight"
     }
   }
-  useEffect(() => {
-    let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
-    console.log("from user info")
-    console.log(savedEmail);
-    if (savedEmail == null) {
-      alert('Login or create an account')
-
-      nav("/signin")
-    }
-  }, [])
 
   return (
     <>
-      <h2>Edit profile details</h2>
       <div class="userinfo-container">
-        <div class="row">
-          <div class="col-lg-7">
+        <div className='row'>
+          <div className="col center">
             <form onSubmit={handleSubmit}>
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="name" class="col-form-label">Name</label>
-                </div>
-                <div class="col-auto">
-                  <input type="text" id="name" class="form-control" aria-describedby="name" placeholder={obj.name} name='name'></input>
-                </div>
-              </div>
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="height" class="col-form-label">Height</label>
-                </div>
-                <div class="col-auto">
-                  <input type="number" id="height" class="form-control" aria-describedby="name" placeholder={obj.height} name='height'></input>
-                </div>
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="weight" class="col-form-label">Weight</label>
-                </div>
-                <div class="col-auto">
-                  <input type="number" id="weight" class="form-control" aria-describedby="name" placeholder={obj.weight} name='weight'></input>
-                </div>
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="age" class="col-form-label">Age</label>
-                </div>
-                <div class="col-auto">
-                  <input type="number" id="age" class="form-control" aria-describedby="name" placeholder={obj.age} name='age'></input>
-                </div>
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="sex" class="col-form-label">Age</label>
-                  <select name='sex'>
+             <h2>Edit profile details</h2> 
+                  <input type="text" id="name" class="form-control" placeholder={obj.name?obj.name:"Name"} name='name'></input>
+                  <input type="number" id="height" class="form-control" placeholder={obj.height?obj.height:"height"} name='height'></input> 
+                  <input type="number" id="weight" class="form-control"  placeholder={obj.weight?obj.weight:"weight"} name='weight'></input>
+                  <input type="number" id="age" class="form-control" placeholder={obj.age?obj.age:"age"} name='age'></input>     
+                  <select className='form-select' name='sex'>
                     <option>Select sex</option>
                     <option>Male</option>
                     <option>Female</option>
                     <option>Non binary</option>
-                  </select>
-                </div>
-
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="currentPassword" class="col-form-label">Current password</label>
-                </div>
-                <div class="col-auto">
-                  <input type="password" name="currentPassword" class="form-control" aria-describedby="password"></input>
-                </div>
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <label for="newPassword" class="col-form-label">New password</label>
-                </div>
-                <div class="col-auto">
-                  <input type="password" name="newPassword" class="form-control" aria-describedby="password" show></input>
-                </div>
-              </div>
-
-              <div class="row g-3 ms-3 align-items-center">
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-lg btn-outline-light">Update details</button>
-                </div>
-                <br /><br /><br /><br /><br />
-              </div>
+                  </select>     
+                  <input type="password" name="currentPassword" class="form-control" placeholder='Password'></input>
+                  <input type="password" name="newPassword" class="form-control" placeholder='NewPassword'></input>
+                  <button type="submit" class="btn mt-3 mb-3">Update details</button>
             </form>
+             </div>
+            <div className="col">
+            <h2>Update profile picture</h2> 
+               <ProfilePic setPhoto={setPic}/>
+            </div>
+          <div className="col">
+            <UserGoal />
           </div>
-          <div class="col-lg">
-            <ProfilePic setPicture={setPic} />
+          <div className="col">
+         <BmiCalculator /> 
+        </div>
           </div>
         </div>
-      </div>
     </>
   )
 }
@@ -133,10 +66,8 @@ UserInfo.propTypes = {
 }
 async function handleSubmit(event) {
   event.preventDefault()
-  console.log("from where i want now")
   let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
   console.log(savedEmail.photo);
-
   if (savedEmail == null) {
     alert('Login or create an account')
     nav("/signin")
@@ -150,9 +81,10 @@ async function handleSubmit(event) {
     sex: event.target.elements.sex.value,
     newPassword: event.target.elements.newPassword.value,
     currentPassword: event.target.elements.currentPassword.value,
-    photo: document.getElementById('profile_pic')?.src
+    photo: document.getElementById('profile_pic')?.src?document.getElementById('profile_pic')?.src:savedEmail.photo
   }
   console.log(data);
+
   await postUpdate(data);
 }
 
@@ -173,8 +105,6 @@ async function postUpdate(userData) {
   };
   const response = await fetch('http://127.0.0.1:4300/heka/api/users/edit', requestOptions);
   const res = await response.json();
-  console.log("object being updated")
-  console.log(res);
   handleRes(res)
   window.localStorage.clear()
   saveSession(res, res.email);

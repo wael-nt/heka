@@ -82,3 +82,25 @@
   max-width: 700px !important;
   min-width: 300px !important;
 }
+.form-select{
+  width: max-content !important;
+  }
+
+.box {
+    margin: auto;
+    float: left;
+    height: fit-content;
+    width: fit-content;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    clear: both;
+  }
+
+  .yellow {
+    background-color: yellow;
+  }
+  
+  .green {
+    background-color: #69BC45;
+  }
+  

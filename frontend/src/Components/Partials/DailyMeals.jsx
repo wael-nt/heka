@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DailyMeals() {
+ function DailyMeals() {
   return (
     <div>
       <ul className="list-group">

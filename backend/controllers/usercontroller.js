@@ -10,10 +10,6 @@ let email = "";
 exports.addNewUser = async function addNewUser(req, res, next) {
   console.log("post");
   const obj = req.body
-  let emailChecked = check(obj.email, "Invalid email").isEmail();
-  let passwordChecked = check(obj.password, "Password must be at least 6 chars long").isLength({
-    min: 6
-  })
   const userObj = new userSchema({
     name: obj.name,
     email: obj.email,

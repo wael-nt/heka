@@ -5,9 +5,21 @@ function Contact(props) {
   return (
     <>
     <div className='content'>
-      <h1>contact us</h1>
-      <h2>Contributors</h2>
-      
+      <div className='row'>
+       <h1>Contributors</h1>
+       <div className='col'>
+         <h2>Wael Natafji</h2>
+         </div>
+       <div className='col'>
+        <h2>Stiv Abdullah</h2> 
+         </div>
+       <div className='col'>
+       <h2>Samuel</h2> 
+       </div>
+       <div className='col'>
+       <h2>Willz</h2>  
+         </div>
+      </div>
     </div>
     </>
   )

@@ -1,23 +1,23 @@
 import React from 'react'
 import { PieChart } from 'react-minimal-pie-chart';
 
-function Pie(props) {
+ function Pie(props) {
   const data = props.items.map((item) => (
     { title: item.title, value: item.value, color: item.color, key: item.title }
   ))
 
+  
 
   return (
     <div>
       <h1>{props.title}</h1>
       <PieChart
         data={data}
-        animationDuration="1000"
+        animationDuration="100"
         radius="40"
-        lineWidth={40}
+        lineWidth={30}
         rounded={true}
         center={[50, 40]}
-        animationEasing="out"
       />
     </div>
   )

@@ -20,7 +20,21 @@ exports.addGoal = async function addGoal(req, res, next) {
 
 exports.getGoal = async function getGoal(req, res, next) {
   console.log("Request coming...");
-  const owner = req.body.email;
+  const owner = req.body.owner;
+  console.log(owner)
+  try {
+    await goalSchema.findOne({ owner: owner }, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) { }
+};
+
+exports.getGoalByEmail = async function getGoalByEmail(req, res, next) {
+  console.log("Request coming here...");
+  const owner = req.query.owner
+  console.log(owner)
   try {
     await goalSchema.findOne({ owner: owner }, function (err, result) {
       if (err) throw err;

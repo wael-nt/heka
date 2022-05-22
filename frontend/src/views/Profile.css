@@ -32,3 +32,7 @@
   background-color: #69BC45;
   color: white;
 }
+.userinfo-container{
+display: grid ;
+margin: auto;
+}

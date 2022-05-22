@@ -25,7 +25,7 @@ const DailyQuotes = () => {
     return (
         <blockquote>
             <h3>
-                "{text}"
+                {text}
             </h3>
             <h3>
                 <strong>Author : </strong>
