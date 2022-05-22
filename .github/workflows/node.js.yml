@@ -10,7 +10,7 @@ on:
     branches: [ Master ]
 defaults:
   run:
-    working-directory: /backend
+    working-directory: backend
 jobs:
   build:
 
