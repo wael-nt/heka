@@ -74,7 +74,7 @@ function Recipe() {
 
     getUserRecipes();
     getPublicRecipes();
-  }, [])
+  }, [hasRecipes])
 
   return (
     <div className='content'>
