@@ -50,7 +50,7 @@ const Calories_Goal = 2000;
        setGol(CalculateGoal(protein,calories)) 
         getUserGoal();
       }
-    })
+    },[])
  
     
   return (
