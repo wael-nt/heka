@@ -120,20 +120,21 @@ function Ingredients() {
     }
   }
 
-  // async function fetchIngredientsByCategory(name) {
-  //   try {
-  //     const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-  //     fetch(path).then(async response => {
-  //       const newData = await response.json();
-  //       setStorage(name, newData);
-  //       dispatcher({ type: "INGREDIENTS", ingredients: newData });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  
 
   useEffect(() => {
+    async function fetchIngredientsByCategory(name) {
+      try {
+        const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+        fetch(path).then(async response => {
+          const newData = await response.json();
+          setStorage(name, newData);
+          dispatcher({ type: "INGREDIENTS", ingredients: newData });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
     let skip = false;
     let ingredients = [];
     if (state.search.length > 0) {
@@ -212,16 +213,7 @@ function Ingredients() {
 
       if (!skip) {
         console.log("fetch");
-        try {
-          const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-          fetch(path).then(async response => {
-            const newData = await response.json();
-            setStorage(name, newData);
-            dispatcher({ type: "INGREDIENTS", ingredients: newData });
-          });
-        } catch (err) {
-          console.log(err);
-        }
+        fetchIngredientsByCategory(name);
         dispatcher({ type: "HAS_IS", id: state.category.id, bool: true });
       } else {
         console.log("local");
