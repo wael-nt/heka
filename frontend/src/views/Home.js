@@ -22,7 +22,7 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
     {title: "Protein %", value: protein, color: colors[1] }];
 
     const getAuth = () => {
-      let userObj = window.localStorage.getItem('cred')
+      let userObj = window?.localStorage?.getItem('cred')
       if (userObj == null) {
         return null
       } else
@@ -30,18 +30,22 @@ const API_URL = 'http://localhost:4300/heka/api/goals/get';
     }
 
     const getUserGoal = async () => {
-    let res =  await axios.get(API_URL,{params: {"owner": email}})
-    console.log(res.data.calories)
-    console.log(res.data.protein)
-    setCalories(parseInt(res.data.calories))
-    setProtein(parseInt(res.data.protein))
+      if(email?.length>1){
+        let res =  await axios.get(API_URL,{params: {"owner": email}})
+    console.log(res?.data?.calories)
+    console.log(res?.data?.protein)
+    setCalories(parseInt(res?.data?.calories))
+    setProtein(parseInt(res?.data?.protein))
     return res
+      }
     }
 
     useEffect(()=>{
-    setEmail(getAuth().email)
-    console.log(email)
-    getUserGoal();
+      if(getAuth()?.email?.length>1){
+        setEmail(getAuth().email)
+        console.log(email)
+        getUserGoal();
+      }
     })
  
     

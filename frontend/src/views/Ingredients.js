@@ -258,7 +258,6 @@ function Ingredients() {
       <div className="inline-buttons">
         {!state.isCategory && <button className="button" onClick={goBack}>BACK</button>}
         {state.canAdd && < button className="button" onClick={addItem}>ADD</button>}
-        {!state.canRemove && < button className="button" onClick={removeItem}>REMOVE</button>}
       </div>
       {!state.isItem &&
         <IngredientsList
