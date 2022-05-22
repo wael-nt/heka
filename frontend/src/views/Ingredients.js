@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from "react";
+
 import IngredientsList from "../Components/Partials/IngredientsList";
 import SearchBar from "../Components/Partials/SearchBar";
 import Ingredient from "./Ingredient";
@@ -17,12 +18,11 @@ function Ingredients() {
       categories.filter((category) => {
         if (category.id === id) {
           dispatcher({ type: "CATEGORY", category: category })
-          dispatcher({ type: "TITLE", title: category.name });
+          dispatcher({ type: "TITLE", title: category.name.toUpperCase() });
           dispatcher({ type: "HAS_IS", id: 1, bool: true });
         } else {
           dispatcher({ type: "HAS_IS", id: 1, bool: false });
         }
-        return null
       });
     } else if (state.category.id < 0) {
       state.ingredients.filter(ingredient => {
@@ -37,7 +37,6 @@ function Ingredients() {
             dispatcher({ type: "HAS_IS", id: 5, bool: false });
           }
         }
-        return null
       });
       console.log(state.item)
     } else if (state.isItem) {
@@ -56,22 +55,24 @@ function Ingredients() {
   }
 
   function handleAmount(value) {
+    let items = getStorage(state.category.name);
     const item = state.item
-    let items = state.ingredients;
     let newList = [];
-        for (let index = 0; index < items.length; index++) {
+    for (let index = 0; index < items.length; index++) {
       const element = items[index];
       if (element.id !== null || element.id !== item.id) {
         newList.push(element)
       }
-    }  
-    const newItem = { ...item, amount: value }
+    }
+    console.log('newlist', newList);
+    const newItem = { ...item, amount: Number(value) }
     newList.push(newItem);
-    dispatcher({ type: "INGREDIENTS", items: newList });
+    dispatcher({ type: "INGREDIENTS", ingredients: newList });
   }
 
   function addItem() {
     const item = state.item;
+    console.log(item)
     let items = []
     let currentRecipe = getStorage("current-recipe");
     if (!state.hasRecipe) {
@@ -88,23 +89,23 @@ function Ingredients() {
     setStorage("current-recipe", currentRecipe)
   }
 
-  // function removeItem(id) {
-  //   if (id === state.item.id) {
-  //     let currentRecipe = getStorage("current-recipe");
-  //     if (currentRecipe !== null && currentRecipe !== undefined) {
-  //       let items = []
-  //       for (let index = 0; index < currentRecipe.length; index++) {
-  //         const element = currentRecipe[index];
-  //         if (element.id !== id) {
-  //           items.push(element);
-  //         }
-  //       }
-  //       state.currentRecipe.ingredients = items;
-  //       dispatcher({ type: "SET_RECIPE", items: items });
-  //       setStorage("current-recipe", state.currentRecipe)
-  //     }
-  //   }
-  // }
+  function removeItem(id) {
+    if (id === state.item.id) {
+      let currentRecipe = getStorage("current-recipe");
+      if (currentRecipe !== null && currentRecipe !== undefined) {
+        let items = []
+        for (let index = 0; index < currentRecipe.length; index++) {
+          const element = currentRecipe[index];
+          if (element.id !== id) {
+            items.push(element);
+          }
+        }
+        state.currentRecipe.ingredients = items;
+        dispatcher({ type: "SET_RECIPE", items: items });
+        setStorage("current-recipe", state.currentRecipe)
+      }
+    }
+  }
 
   function goBack(event) {
     event.preventDefault()
@@ -120,33 +121,37 @@ function Ingredients() {
     }
   }
 
-  // async function fetchIngredientsByCategory(name) {
-  //   try {
-  //     const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-  //     fetch(path).then(async response => {
-  //       const newData = await response.json();
-  //       setStorage(name, newData);
-  //       dispatcher({ type: "INGREDIENTS", ingredients: newData });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  async function searchForIngredient() {
+    try {
+      const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
+      fetch(path).then(async response => {
+        const newData = await response.json();
+        dispatcher({ type: "INGREDIENTS", ingredients: newData });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function fetchIngredientsByCategory(name) {
+    try {
+      const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+      fetch(path).then(async response => {
+        const newData = await response.json();
+        setStorage(name, newData);
+        dispatcher({ type: "INGREDIENTS", ingredients: newData });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     let skip = false;
     let ingredients = [];
     if (state.search.length > 0) {
       dispatcher({ type: "HAS_IS", id: 2, bool: false });
-      try {
-        const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
-        fetch(path).then(async response => {
-          const newData = await response.json();
-          dispatcher({ type: "INGREDIENTS", ingredients: newData });
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      searchForIngredient();
     } else if (state.category.id < 0 && !state.isItem) {
       let name;
       switch (state.category.id) {
@@ -212,16 +217,7 @@ function Ingredients() {
 
       if (!skip) {
         console.log("fetch");
-        try {
-          const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-          fetch(path).then(async response => {
-            const newData = await response.json();
-            setStorage(name, newData);
-            dispatcher({ type: "INGREDIENTS", ingredients: newData });
-          });
-        } catch (err) {
-          console.log(err);
-        }
+        fetchIngredientsByCategory(name);
         dispatcher({ type: "HAS_IS", id: state.category.id, bool: true });
       } else {
         console.log("local");
@@ -234,6 +230,8 @@ function Ingredients() {
       if (authCtx) {
         dispatcher({ type: "HAS_IS", id: 4, bool: true });
         if (state.hasRecipe) {
+          let currentRecipe = getStorage("current-recipe");
+
           let ingredientList = state.currentRecipe.ingredients
           for (let index = 0; index < ingredientList.length; index++) {
             const element = ingredientList[index];
@@ -248,15 +246,16 @@ function Ingredients() {
       dispatcher({ type: "HAS_IS", id: 5, bool: false })
     }
 
-  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id,authCtx, state.currentRecipe.ingredients, state.hasBeverages, state.hasDairy, state.hasFruit, state.hasGrains, state.hasMeat, state.hasMisc, state.hasRecipe, state.hasVeggies,state.search]);
+  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id]);
 
   return (
     <div className="ingredients">
-      <h1 className="title">{state.title}</h1>
+      <h1 className="title">{state.title.toUpperCase()}</h1>
       {!state.isItem && < SearchBar type="text" placeholder="Search for an Ingredient" onSearch={handleSearch} />}
       <div className="inline-buttons">
         {!state.isCategory && <button className="button" onClick={goBack}>BACK</button>}
         {state.canAdd && < button className="button" onClick={addItem}>ADD</button>}
+        {state.canRemove && < button className="button" onClick={removeItem}>REMOVE</button>}
       </div>
       {!state.isItem &&
         <IngredientsList
@@ -264,7 +263,6 @@ function Ingredients() {
           category={state.category}
           hasRecipe={state.hasRecipe}
           selectItem={selectItem}
-          isItem={state.isItem}
         />}
       {state.isItem &&
         <Ingredient
