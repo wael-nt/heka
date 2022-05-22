@@ -3,7 +3,6 @@ import axios from "axios";
 import IngredientItem from "./IngredientItem";
 import { clearStorage, getStorage, isStorage, setStorage } from "../../util/storage";
 import { categories } from "../../util/consts";
-import { useNavigate } from "react-router-dom";
 
 const POST_URL = 'http://127.0.0.1:4300/heka/api/recipes'
 
@@ -26,9 +25,6 @@ function AddNewRecipe() {
     image: ''
   })
 
-
-
-  let nav = useNavigate()
 
   function getOwner() {
     let owner = JSON.parse(window.localStorage.getItem('cred')).email

@@ -18,7 +18,7 @@ function ProfilePic({setPhoto}) {
     console.log(savedPic);
     setPic(filesContent[0]?.content)
     setPhoto(filesContent[0]?.content)
-  }, [filesContent[0]?.content]);
+  }, [setPhoto,filesContent, savedPic]);
   if (loading) {
     return <div>Loading...</div>;
   }

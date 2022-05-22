@@ -22,6 +22,7 @@ function Ingredients() {
         } else {
           dispatcher({ type: "HAS_IS", id: 1, bool: false });
         }
+        return null
       });
     } else if (state.category.id < 0) {
       state.ingredients.filter(ingredient => {
@@ -36,6 +37,7 @@ function Ingredients() {
             dispatcher({ type: "HAS_IS", id: 5, bool: false });
           }
         }
+        return null
       });
       console.log(state.item)
     } else if (state.isItem) {
@@ -57,12 +59,12 @@ function Ingredients() {
     const item = state.item
     let items = state.ingredients;
     let newList = [];
-    for (let index = 0; index < items.length; index++) {
+        for (let index = 0; index < items.length; index++) {
       const element = items[index];
       if (element.id !== null || element.id !== item.id) {
         newList.push(element)
       }
-    }
+    }  
     const newItem = { ...item, amount: value }
     newList.push(newItem);
     dispatcher({ type: "INGREDIENTS", items: newList });
@@ -118,37 +120,33 @@ function Ingredients() {
     }
   }
 
-  async function searchForIngredient() {
-    try {
-      const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
-      fetch(path).then(async response => {
-        const newData = await response.json();
-        dispatcher({ type: "INGREDIENTS", ingredients: newData });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function fetchIngredientsByCategory(name) {
-    try {
-      const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-      fetch(path).then(async response => {
-        const newData = await response.json();
-        setStorage(name, newData);
-        dispatcher({ type: "INGREDIENTS", ingredients: newData });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function fetchIngredientsByCategory(name) {
+  //   try {
+  //     const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+  //     fetch(path).then(async response => {
+  //       const newData = await response.json();
+  //       setStorage(name, newData);
+  //       dispatcher({ type: "INGREDIENTS", ingredients: newData });
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   useEffect(() => {
     let skip = false;
     let ingredients = [];
     if (state.search.length > 0) {
       dispatcher({ type: "HAS_IS", id: 2, bool: false });
-      searchForIngredient();
+      try {
+        const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
+        fetch(path).then(async response => {
+          const newData = await response.json();
+          dispatcher({ type: "INGREDIENTS", ingredients: newData });
+        });
+      } catch (err) {
+        console.log(err);
+      }
     } else if (state.category.id < 0 && !state.isItem) {
       let name;
       switch (state.category.id) {
@@ -214,7 +212,16 @@ function Ingredients() {
 
       if (!skip) {
         console.log("fetch");
-        fetchIngredientsByCategory(name);
+        try {
+          const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+          fetch(path).then(async response => {
+            const newData = await response.json();
+            setStorage(name, newData);
+            dispatcher({ type: "INGREDIENTS", ingredients: newData });
+          });
+        } catch (err) {
+          console.log(err);
+        }
         dispatcher({ type: "HAS_IS", id: state.category.id, bool: true });
       } else {
         console.log("local");
@@ -241,7 +248,7 @@ function Ingredients() {
       dispatcher({ type: "HAS_IS", id: 5, bool: false })
     }
 
-  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id]);
+  }, [state.category, state.isItem, state.ingredient, state.search.length, state.item.id,authCtx, state.currentRecipe.ingredients, state.hasBeverages, state.hasDairy, state.hasFruit, state.hasGrains, state.hasMeat, state.hasMisc, state.hasRecipe, state.hasVeggies,state.search]);
 
   return (
     <div className="ingredients">
@@ -257,6 +264,7 @@ function Ingredients() {
           category={state.category}
           hasRecipe={state.hasRecipe}
           selectItem={selectItem}
+          isItem={state.isItem}
         />}
       {state.isItem &&
         <Ingredient

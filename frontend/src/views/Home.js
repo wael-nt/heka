@@ -32,25 +32,25 @@ const Calories_Goal = 2000;
         return JSON.parse(userObj)
     }
 
-    const getUserGoal = async () => {
-      if(email?.length>1){
-        let res =  await axios.get(API_URL,{params: {"owner": email}})
-    console.log(res?.data?.calories)
-    console.log(res?.data?.protein)
-    setCalories(parseInt(res?.data?.calories))
-    setProtein(parseInt(res?.data?.protein))
-    return res
-      }
-    }
 
     useEffect(()=>{
       if(getAuth()?.email?.length>1){
         setEmail(getAuth().email)
         console.log(email)
        setGol(CalculateGoal(protein,calories)) 
+       const getUserGoal = async () => {
+        if(email?.length>1){
+          let res =  await axios.get(API_URL,{params: {"owner": email}})
+      console.log(res?.data?.calories)
+      console.log(res?.data?.protein)
+      setCalories(parseInt(res?.data?.calories))
+      setProtein(parseInt(res?.data?.protein))
+      return res
+        }
+      }  
         getUserGoal();
       }
-    },[])
+    },[calories, email,protein])
  
     
   return (
@@ -74,8 +74,8 @@ const Calories_Goal = 2000;
         <div className='piechart col-2'>
           <Pie items={pieItems} title="Nutrition"/>
           <div className='center'>
-          <div class='box yellow'><h4> Protien : {protein}</h4></div>
-           <div class='box green'><h4>Calories: {calories}</h4></div>
+          <div className='box yellow'><h4> Protien : {protein}</h4></div>
+           <div className='box green'><h4>Calories: {calories}</h4></div>
           </div>
           </div>
       </div>

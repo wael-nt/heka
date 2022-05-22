@@ -9,7 +9,8 @@ import './IngredientsList.css';
 function IngredientsList(props) {
   const navigate = useNavigate()
 
-  if (props.items.length === 0) {
+  if (props.isItem) { 
+    if (props.items.length === 0) {
     return (
       <div className="not-found">
         <Card className="not-found">
@@ -18,7 +19,9 @@ function IngredientsList(props) {
         </Card>
       </div>
     );
-  }
+  }}
+
+ 
 
   return (
     <ul className="ingredients-list">

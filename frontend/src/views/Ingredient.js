@@ -41,7 +41,6 @@ function Ingredient(props) {
   const [amount, setAmount] = useState(initialValue);
   const [nutrients, setNutrients] = useState(props.nutrients);
   const input = useRef(initialValue)
-  console.log(input)
   if (props.hasRecipe) {
     const currentRecipe = getStorage("current-recipe");
     const ingredient = currentRecipe.ingredients.filter(item => {
@@ -49,13 +48,14 @@ function Ingredient(props) {
       if (props.id === item.id) {
         return item;
       }
+      return null
     })
   }
 
   function handleChange(event) {
     event.preventDefault();
     setAmount(event.target.value)
-    props.handleChange(amount)
+    props.handleChange(input.current.value)
   }
 
   const caloricBreakdown = props.caloricBreakdown[0];
@@ -66,7 +66,7 @@ function Ingredient(props) {
   useEffect(() => {
     let newNutrients = calculateNutrientValues(initialValue, amount, props.nutrients);
     setNutrients(newNutrients);
-  }, [amount])
+  }, [amount,initialValue,props.nutrients])
 
   return (
     <div className="ingredient">
@@ -92,6 +92,7 @@ function Ingredient(props) {
               className="input"
               type="number"
               id="amount"
+              ref={input}
               placeholder={amount}
               onChange={handleChange}
               defaultValue={amount}
@@ -103,7 +104,7 @@ function Ingredient(props) {
           <div className="pie">
             <Pie items={pieItems} title="The Caloric Make-up" />
             {pieItems.map((item) => (
-              <div className="nutrient">
+              <div key={item.title} className="nutrient">
                 <h2>{item.title}</h2>
                 <h3>{item.value}</h3>
                 <h4>{item.clrStr}</h4>
@@ -117,7 +118,7 @@ function Ingredient(props) {
                 if (nutrient.amount === 0) {
                   return false;
                 }
-                return (<div className="nutrient">
+                return (<div key={nutrient.name} className="nutrient">
                   <h2>{nutrient.name}</h2>
                   <h3>{nutrient.amount}</h3>
                   <h4>{nutrient.unit}</h4>

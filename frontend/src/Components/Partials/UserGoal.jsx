@@ -19,7 +19,7 @@ function UserGoal() {
   useEffect(() => {
     setEmail(getAuth().email);
     console.log(email);
-  }, []);
+  }, [email]);
 
   const handleCalChange = function (e) {
   console.log(e.target.value)

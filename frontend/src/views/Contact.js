@@ -13,10 +13,10 @@ function Contact(props) {
         <h2>Stiv Abdullah</h2> 
          </div>
        <div className='col'>
-       <h2>Samuel</h2> 
+       <h2>Samuel Mcmurray</h2> 
        </div>
        <div className='col'>
-       <h2>Willz</h2>  
+       <h2>Willz Ekanem</h2>  
          </div>
       </div>
     </div>
