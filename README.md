@@ -89,11 +89,11 @@
 > | [jsonWebToken](https://www.npmjs.com/package/jsonwebtoken) | Security
 > | [dotenv](https://www.npmjs.com/package/dotenv)             | environment variables, tokens.
 > | [mongoose](https://www.npmjs.com/package/mongoose)         | Cloud database
-> | [side-channel](https://www.npmjs.com/package/side-channel) |
-> | [raw-body](https://www.npmjs.com/package/raw-body)         |
-> | [antd](https://www.npmjs.com/package/antd)                 |
-> | [react](https://www.npmjs.com/package/react)               |
-> | [react-dom](https://www.npmjs.com/package/react-dom)       |
+> | [side-channel](https://www.npmjs.com/package/side-channel) | This is more or less about keeping the react render "tree" clean
+> | [raw-body](https://www.npmjs.com/package/raw-body)         | Validates the stream's length against an expected length and maximum limit
+> | [antd](https://www.npmjs.com/package/antd)                 | set of high-quality React components out of the box. Used for filepicker
+> | [react](https://www.npmjs.com/package/react)               | React is a JavaScript library for creating user interfaces.
+> | [react-dom](https://www.npmjs.com/package/react-dom)       | This package serves as the entry point to the DOM and server renderers for React
 > | [axios](https://www.npmjs.com/package/axios)               | HTTP requests
 
 
