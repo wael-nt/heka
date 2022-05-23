@@ -48,6 +48,8 @@
 > | Node and Express JS | Backend     |
 > | MongoDB    | Backend (Database)   |
 > | Figma      | Frontend (wireframe) |
+> | Docker     | Frontend & backend   |
+> | Heroku     | Frontend & backend   |
 
 > ## Project dependencies
 > | Dependencies                                      |
