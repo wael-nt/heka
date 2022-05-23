@@ -1,14 +1,25 @@
 # Heka Documentation
 
-
 > ## *WireFrame*
+  ### *Figma design*
+  ![resources/Figma-Navebar_Frame.png](resources/Figma-Navebar_Frame.png)
+> 
+>  *Navbar heka figma design*
 
+ ![resources/Figma-Home_Frame.png](resources/Figma-Home_Frame.png)
+> 
+>  *Home page heka figma design*
+
+ ![resources/Figma_Frame.png](resources/Figma_Frame.png)
+> 
+>  *Heka prototype figma design*
+>  
 > ## *API*
 > The API serves and handles all HTTP requests from the frontend. GET, POST, PUT and DELETE requests are handled on the API. The API serves as an interface to access the used cloud database (MongoDB).
 >
 > ![resources/controllers](resources/api-interface.png)
 > 
-> *API Interface*
+> *API Interface - Backend*
 > #### *Routes*
 >  Below are the exposed API routes;
 > | Routes(Endpoint)            | Description           | Method | Request data |
