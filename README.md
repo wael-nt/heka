@@ -99,14 +99,26 @@
 
 > ## *Deployment*
 > Both the frontend and backend packages have been deployed seperately on heroku with their respective docker images, URL:
-> 
-> | Point       | URL    |
-> |-------------|--------|
-> |
+> ### Heroku
+> |URL                                                              |Point           |
+> |-----------------------------------------------------------------|----------------|
+> |[Heka-Client-side](https://heka-nutrition.herokuapp.com/)        |Heka-Client-side|       
+> |[Heka-Server-side](https://boiling-wave-51445.herokuapp.com/test)|Heka-Server-side|
 > 
 
+> ## *Dockerize*
+> ![resources/docker-containers.png](resources/docker-containers.png)
+> 
+>  *Docker running containers for front-end and back-end*
+>  
+> ### *Heka-Client-side docker image*
+> docker pull waenat/heka-frontend:hekafrontend
+> ### *Heka-Server-side docker image*
+> docker-compose pull
+> Should be used with respective docker-compose.yml and .evn file
 
-## *Members*
+
+## *Contributors*
 * [Stiv Abdullwahed](https://github.com/StivHKR)
 * [Wael NataFji](https://github.com/wael-nt)
 * [Sam Mcmurray ](https://github.com/sam-mcmurray)
