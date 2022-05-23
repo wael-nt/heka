@@ -35,7 +35,7 @@ function IngredientItem(props) {
             <img src={image} alt={props.name} />
           </div>
           <div className="ingredient-item__info">
-            <h2>{props.name}</h2>
+            <h2>{props.name.toUpperCase()}</h2>
           </div>
           <div className="ingredient-item__actions">
             <button className="btn" onClick={handleView}>View</ button>
