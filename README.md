@@ -1,27 +1,27 @@
 # Heka Documentation
 
 > ## *WireFrame*
-  ### *Figma design*
-  ![resources/Figma-Navebar_Frame.png](resources/Figma-Navebar_Frame.png)
+>  ### *Figma design*
+>  ![resources/Figma-Navebar_Frame.png](resources/Figma-Navebar_Frame.png)
 > 
 >  *Navbar heka figma design*
-
- ![resources/Figma-Home_Frame.png](resources/Figma-Home_Frame.png)
+>
+> ![resources/Figma-Home_Frame.png](resources/Figma-Home_Frame.png)
 > 
 >  *Home page heka figma design*
-
- ![resources/Figma_Frame.png](resources/Figma_Frame.png)
+>
+> ![resources/Figma_Frame.png](resources/Figma_Frame.png)
 > 
 >  *Heka prototype figma design*
->  
+
 > ## *API*
 > The API serves and handles all HTTP requests from the frontend. GET, POST, PUT and DELETE requests are handled on the API. The API serves as an interface to access the used cloud database (MongoDB).
 >
 > ![resources/controllers](resources/api-interface.png)
 > 
 > *API Interface - Backend*
-> #### *Routes*
->  Below are the exposed API routes;
+> ### *Routes*
+>  *Below are the exposed API routes*;
 > | Routes(Endpoint)            | Description           | Method | Request data |
 > |-----------------------------|-----------------------|--------|--------------|
 > | /heka/api/users/register    | Add new user          | POST   | {email, name, password, age, sex, height, weight, photo} |
@@ -48,14 +48,14 @@
 > | /heka/api/goals/updategoal          | Update user's goal             | PUT  | {owner, category, protein}
 > | /heka/api/goals/getgoal             | Get user's goal                | GET  | {owner}
 >
-> #### *Controllers*
+> ### *Controllers*
 > All database document(object) data manipulation regarding a recieved request is handled in their respective controller. The controllers handle getting, editing, object data functions and other provided CRUD opertions which are exposed via their respective routes ['**/users/login**', '**/recipes/add**', ... ]
 > 
 > ![resources/controllers](resources/routes-controllers-db.png)
 >
 > *Controller and route packages*
 >
-> #### *Data collection (DB)*
+> ### *Data collection (DB)*
 > MongoDB was used for data collection, we chose mongoDB on the basis that it is a cloud database, good documentation and active online community. Each entity/row is represented by a document in a collection in mongoDB. Each document is directly mapped to an individual object.
 > 
 > ![resources/mongo.png](resources/mongo.png)
