@@ -9,7 +9,7 @@ import { getStorage, setStorage } from "../util/storage";
 
 import "./Ingredients.css";
 
-const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api';
+const API_URL = 'https://boiling-wave-51445.herokuapp.com/heka/api';
 
 function Ingredients() {
   const authCtx = true;
@@ -25,6 +25,7 @@ function Ingredients() {
         } else {
           dispatcher({ type: "HAS_IS", id: 1, bool: false });
         }
+        return category;
       });
     } else if (state.category.id < 0) {
       state.ingredients.filter(ingredient => {
@@ -39,6 +40,7 @@ function Ingredients() {
             dispatcher({ type: "HAS_IS", id: 5, bool: false });
           }
         }
+        return ingredient;
       });
       console.log(state.item)
     } else if (state.isItem) {
@@ -125,22 +127,9 @@ function Ingredients() {
 
   async function searchForIngredient() {
     try {
-      const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
+      const path = (`${API_URL}/ingredients?search=${state.search}`);
       fetch(path).then(async response => {
         const newData = await response.json();
-        dispatcher({ type: "INGREDIENTS", ingredients: newData });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function fetchIngredientsByCategory(name) {
-    try {
-      const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
-      fetch(path).then(async response => {
-        const newData = await response.json();
-        setStorage(name, newData);
         dispatcher({ type: "INGREDIENTS", ingredients: newData });
       });
     } catch (err) {
