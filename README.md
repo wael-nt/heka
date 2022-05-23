@@ -11,7 +11,7 @@
 > *API Interface*
 > #### *Routes*
 >  Below are the exposed API routes;
-> | Routes                      | Description           | Method | Request data |
+> | Routes(Endpoint)            | Description           | Method | Request data |
 > |-----------------------------|-----------------------|--------|--------------|
 > | /heka/api/users/register    | Add new user          | POST   | {email, name, password, age, sex, height, weight, photo} |
 > | /heka/api/users/login       | Login                 | POST   | {email, password}                                        |
@@ -38,14 +38,14 @@
 > | /heka/api/goals/getgoal             | Get user's goal                | GET  | {owner}
 >
 > #### *Controllers*
-> All database document(object) data manipulation regarding a recieeved request is handled in their respective controller. The controllers handle getting, editing, object data functions and other provided CRUD opertions which are exposed via their respective routes ['**/users/login**', '**/recipes/add**', ... ]
+> All database document(object) data manipulation regarding a recieved request is handled in their respective controller. The controllers handle getting, editing, object data functions and other provided CRUD opertions which are exposed via their respective routes ['**/users/login**', '**/recipes/add**', ... ]
 > 
 > ![resources/controllers](resources/routes-controllers-db.png)
 >
 > *Controller and route packages*
 >
 > #### *Data collection (DB)*
-> MongoDB was used for data collection, we chose mongoDB on the basis that it is a cloud database. Each entity/row is represented by a document in a collection in mongoDB. Each document is directly mapped to an individual object.
+> MongoDB was used for data collection, we chose mongoDB on the basis that it is a cloud database, good documentation and active online community. Each entity/row is represented by a document in a collection in mongoDB. Each document is directly mapped to an individual object.
 > 
 > ![resources/mongo.png](resources/mongo.png)
 > 
@@ -69,21 +69,21 @@
 > | Heroku     | Frontend & backend   |
 
 > ## *Project dependencies*
-> | Dependencies                                      |
-> |---------------------------------------------------|
-> | [Nodemon](https://www.npmjs.com/package/nodemon)  |
-> | [Express](https://www.npmjs.com/package/express)  |
-> | [bcrypt](https://www.npmjs.com/package/bcrypt)    |
-> | [cors](https://www.npmjs.com/package/cors)        |
-> | [jsonWebToken](https://www.npmjs.com/package/jsonwebtoken) |
-> | [dotenv](https://www.npmjs.com/package/dotenv)             |
-> | [mongoose](https://www.npmjs.com/package/mongoose)         |
+> | Dependencies                                      | Use |
+> |---------------------------------------------------|-----|
+> | [Nodemon](https://www.npmjs.com/package/nodemon)  | Auto restarting dev server
+> | [Express](https://www.npmjs.com/package/express)  | API
+> | [bcrypt](https://www.npmjs.com/package/bcrypt)    | Encrypting and validating passwords.
+> | [cors](https://www.npmjs.com/package/cors)        | cors option
+> | [jsonWebToken](https://www.npmjs.com/package/jsonwebtoken) | Security
+> | [dotenv](https://www.npmjs.com/package/dotenv)             | environment variables, tokens.
+> | [mongoose](https://www.npmjs.com/package/mongoose)         | Cloud database
 > | [side-channel](https://www.npmjs.com/package/side-channel) |
 > | [raw-body](https://www.npmjs.com/package/raw-body)         |
 > | [antd](https://www.npmjs.com/package/antd)                 |
 > | [react](https://www.npmjs.com/package/react)               |
 > | [react-dom](https://www.npmjs.com/package/react-dom)       |
-> | [axios](https://www.npmjs.com/package/axios)               |
+> | [axios](https://www.npmjs.com/package/axios)               | HTTP requests
 
 
 > ## *Deployment*
