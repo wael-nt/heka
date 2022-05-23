@@ -43,7 +43,7 @@
 > ![resources/controllers](resources/routes-controllers-db.png)
 >
 > *Controller and route packages*
-
+>
 > #### *Data collection (DB)*
 > MongoDB was used for data collection, we chose mongoDB on the basis that it is a cloud database. Each entity/row is represented by a document in a collection in mongoDB. Each document is directly mapped to an individual object.
 > 
