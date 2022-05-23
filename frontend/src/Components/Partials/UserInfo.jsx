@@ -4,8 +4,8 @@ import ProfilePic from '../Partials/ProfilePic';
 import UserGoal from "../../Components/Partials/UserGoal";
 import BmiCalculator from "../../Components/Partials/BmiCalculator";
 
+const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api';
 let nav
-
 function UserInfo() {
   const [pic, setPic] = useState('')
   let obj
@@ -101,7 +101,7 @@ async function postUpdate(userData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData)
   };
-  const response = await fetch('http://127.0.0.1:4300/heka/api/users/edit', requestOptions);
+  const response = await fetch(API_URL+'/users/edit', requestOptions);
   const res = await response.json();
   handleRes(res)
   window.localStorage.clear()

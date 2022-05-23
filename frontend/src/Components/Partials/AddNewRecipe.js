@@ -4,7 +4,9 @@ import IngredientItem from "./IngredientItem";
 import { clearStorage, getStorage, isStorage, setStorage } from "../../util/storage";
 import { categories } from "../../util/consts";
 
-const POST_URL = 'http://127.0.0.1:4300/heka/api/recipes'
+
+const POST_URL ='https://boiling-wave-51445.herokuapp.com/heka/api/recipes';
+
 
 
 function AddNewRecipe() {

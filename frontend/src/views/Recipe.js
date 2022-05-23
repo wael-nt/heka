@@ -5,7 +5,8 @@ import AddNewRecipe from '../Components/Partials/AddNewRecipe';
 import Card from '../Components/UIElements/Card';
 import "./Recipe.css";
 import Ingredients from './Ingredients';
-const API_URL = "http://127.0.0.1:4300/heka/api/recipes";
+
+const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api/recipes';
 
 
 const getAuth = () => {

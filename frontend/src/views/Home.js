@@ -9,7 +9,7 @@ import BmiCalculator from '../Components/Partials/BmiCalculator';
 
 
 const colors = ['#69BC45', 'yellow', 'purple'];
-const API_URL = 'http://localhost:4300/heka/api/goals/get';
+const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api/goals/get';
 const Protein_Goal = 200;
 const Calories_Goal = 2000;
 

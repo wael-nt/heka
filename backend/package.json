@@ -36,5 +36,8 @@
     "nodemon": "^2.0.15",
     "raw-body": "^2.5.1",
     "side-channel": "^1.0.4"
+  },
+  "engines": {
+    "node": "16.14.0"
   }
 }

@@ -8,6 +8,8 @@ import { getStorage, setStorage } from "../util/storage";
 
 import "./Ingredients.css";
 
+const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api';
+
 function Ingredients() {
   const authCtx = true;
   const [state, dispatcher] = useReducer(ingredientReducer, defaultIngredientState);
@@ -125,7 +127,7 @@ function Ingredients() {
   useEffect(() => {
     async function fetchIngredientsByCategory(name) {
       try {
-        const path = (`http://localhost:4300/heka/api/ingredients/${name}`);
+        const path = (`${API_URL}/ingredients/${name}`);
         fetch(path).then(async response => {
           const newData = await response.json();
           setStorage(name, newData);
@@ -140,7 +142,7 @@ function Ingredients() {
     if (state.search.length > 0) {
       dispatcher({ type: "HAS_IS", id: 2, bool: false });
       try {
-        const path = (`http://localhost:4300/heka/api/ingredients?search=${state.search}`);
+        const path = (`${API_URL}/ingredients?search=${state.search}`);
         fetch(path).then(async response => {
           const newData = await response.json();
           dispatcher({ type: "INGREDIENTS", ingredients: newData });

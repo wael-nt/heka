@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 function UserGoal() { 
-  const API_URL = 'http://localhost:4300/heka/api/goals/updategoal'
+  const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api/goals/updategoal';
   const [email, setEmail] = useState('')
   const [cal, setCal] = useState(0)
   const [pro, setPro] = useState(0)
@@ -46,9 +46,7 @@ function UserGoal() {
         headers: { 'Content-Type': 'application/json' },
         data: JSON.stringify(body) 
     });
-
-      console.log("Stiv Look here")
-      console.log(body)
+    console.log(body)
     console.log(data);
 } catch (err) {
     console.log(err.message);

@@ -14,9 +14,8 @@ const Signup = () => {
   const [sex, setSex] = useState("");
   const [photo, setPhoto] = useState("");
   const navigate = useNavigate();
-  const API_URL = 'http://localhost:4300/heka/api/goals/addgoal'
-
- 
+  const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api/goals/addgoal';
+  
 
   const handleSignup = async (e) => {
     e.preventDefault();

@@ -6,6 +6,8 @@ import { getStorage } from "../util/storage";
 
 import "./Ingredient.css"
 
+
+
 const colors = ['#69BC45', 'yellow', 'purple'];
 const colorStrings = ["Green", "Yellow", "Purple"]
 
