@@ -1,11 +1,16 @@
 # Heka Documentation
 
 
-> ## WireFrame
+> ## *WireFrame*
 
-> ## API
-> The API serves and handles HTTP requests. GET, POST, PUT an DELETE request are handled on the API. The API > serves as an interface to access the used cloud database (MongoDB)
-> #### Routes
+> ## *API*
+> The API serves and handles all HTTP requests from the frontend. GET, POST, PUT and DELETE requests are handled on the API. The API serves as an interface to access the used cloud database (MongoDB).
+>
+> ![resources/controllers](resources/api-interface.png)
+> 
+> *API Interface*
+> #### *Routes*
+>  Below are the exposed API routes;
 > | Routes                      | Description           | Method | Request data |
 > |-----------------------------|-----------------------|--------|--------------|
 > | /heka/api/users/register    | Add new user          | POST   | {email, name, password, age, sex, height, weight, photo} |
@@ -31,14 +36,26 @@
 > | /heka/api/goals/addgoal             | Add goal                       | POST | {owner, category, protein}
 > | /heka/api/goals/updategoal          | Update user's goal             | PUT  | {owner, category, protein}
 > | /heka/api/goals/getgoal             | Get user's goal                | GET  | {owner}
+>
+> #### *Controllers*
+> All database document(object) data manipulation regarding a recieeved request is handled in their respective controller. The controllers handle getting, editing, object data functions and other provided CRUD opertions which are exposed via their respective routes ['**/users/login**', '**/recipes/add**', ... ]
+> 
+> ![resources/controllers](resources/routes-controllers-db.png)
+>
+> *Controller and route packages*
 
-> #### Data collection (DB)
+> #### *Data collection (DB)*
 > MongoDB was used for data collection, we chose mongoDB on the basis that it is a cloud database. Each entity/row is represented by a document in a collection in mongoDB. Each document is directly mapped to an individual object.
 > 
-> ![resources/mongo.png](resources/mongo.png)  
+> ![resources/mongo.png](resources/mongo.png)
+> 
+>  *MongoDB heka database collections*
+>
 >  ![DB](resources/DB.png)
+>
+> *Database collections*
 
-> ## Technologies
+> ## *Technologies*
 > The following languages, frameworks were used:
 > | Tech       | Where     |
 > |------------|-----------|
@@ -51,7 +68,7 @@
 > | Docker     | Frontend & backend   |
 > | Heroku     | Frontend & backend   |
 
-> ## Project dependencies
+> ## *Project dependencies*
 > | Dependencies                                      |
 > |---------------------------------------------------|
 > | [Nodemon](https://www.npmjs.com/package/nodemon)  |
@@ -69,7 +86,7 @@
 > | [axios](https://www.npmjs.com/package/axios)               |
 
 
-> ## Deployment
+> ## *Deployment*
 > Both the frontend and backend packages have been deployed seperately on heroku with their respective docker images, URL:
 > 
 > | Point       | URL    |
@@ -78,7 +95,7 @@
 > 
 
 
-## Members
+## *Members*
 * [Stiv Abdullwahed](https://github.com/StivHKR)
 * [Wael NataFji](https://github.com/wael-nt)
 * [Sam Mcmurray ](https://github.com/sam-mcmurray)
