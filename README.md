@@ -12,14 +12,12 @@
 > | /heka/api/users/login       | Login                 | POST   | {email, password}                                        |
 > | /heka/api/users/edit        | Edit user info        | PUT    | {email, name, password, age, sex, height, weight, photo} |
 > | /heka/api/users/delete      | Delete user document  | DELETE | {email}     
-> |
 > | /heka/api/recipes/add       | Add new recipe              | POST   | {owner, name, img, public, ingredients}
 > | /heka/api/recipes/deleteOne | Delete one recipe by name   | DELETE | {name}
 > | /heka/api/recipes/deleteAll | Delete all a user's recipes | DELETE | {owner}
 > | /heka/api/recipes/private/:email |  Get all private the user's recipes | GET | {params: email}
 > | /heka/api/recipes/public    | Get public recipes          | GET |
 > | /heka/api/recipes/:name     | Get a recipe by its name    | GET | {params: name}
-> |
 > | /heka/api/ingredients/              | Search for ingredients         | GET | {query: search}                                           
 > | /heka/api/ingredients/grains        | Get grains like ingredients    | GET |                                             
 > | /heka/api/ingredients/meat          | Get meat like ingredients      | GET |                                             
@@ -30,7 +28,6 @@
 > | /heka/api/ingredients/miscellaneous | Get miscellaneous ingredients  | GET |                                             
 > | /heka/api/ingredients/add           | Add new ingredient             | GET | {name, id, amount, possibleUnits, nutrients, caloricBreakdown, categories}                                           
 > | /heka/api/ingredients/:id           | Get an ingredient              | GET | {params: id}       
-> |
 > | /heka/api/goals/addgoal             | Add goal                       | POST | {owner, category, protein}
 > | /heka/api/goals/updategoal          | Update user's goal             | PUT  | {owner, category, protein}
 > | /heka/api/goals/getgoal             | Get user's goal                | GET  | {owner}
