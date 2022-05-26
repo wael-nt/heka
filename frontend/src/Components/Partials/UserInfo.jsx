@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ProfilePic from '../Partials/ProfilePic';
 import UserGoal from "../../Components/Partials/UserGoal";
 import BmiCalculator from "../../Components/Partials/BmiCalculator";
-
+import authHeader from '../../Services/Auth-Header';
 const API_URL ='https://boiling-wave-51445.herokuapp.com/heka/api';
 let nav
 function UserInfo() {
@@ -45,7 +45,7 @@ function UserInfo() {
              </div>
             <div className="col">
             <h2>Update profile picture</h2> 
-               <ProfilePic setPhoto={setPic}/>
+               <ProfilePic setPhoto ={setPic}/>
             </div>
           <div className="col">
             <UserGoal />
@@ -65,7 +65,10 @@ UserInfo.propTypes = {
 async function handleSubmit(event) {
   event.preventDefault()
   let savedEmail = JSON.parse(window.localStorage.getItem('cred'))
-  console.log(savedEmail.photo);
+  let token = JSON.stringify(window.localStorage.getItem('auth-token'))
+  console.log(token)
+  console.log("photo")
+  console.log(savedEmail.respone.photo);
   if (savedEmail == null) {
     alert('Login or create an account')
     nav("/signin")
@@ -81,6 +84,7 @@ async function handleSubmit(event) {
     currentPassword: event.target.elements.currentPassword.value,
     photo: document.getElementById('profile_pic')?.src?document.getElementById('profile_pic')?.src:savedEmail.photo
   }
+  console.log("DATA")
   console.log(data);
 
   await postUpdate(data);
@@ -95,31 +99,39 @@ const saveSession = (respone, email) => {
 }
 
 async function postUpdate(userData) {
+  let token = authHeader();
+  console.log(token.accessToken);
   const requestOptions = {
     method: 'PUT',
     mode: 'cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData)
+    body: JSON.stringify(userData),
+    headers: { 'Content-Type': 'application/json' ,
+    'auth-token':token                                    },
   };
   const response = await fetch(API_URL+'/users/edit', requestOptions);
+   
+  console.log(response)
   const res = await response.json();
+  window.localStorage.removeItem('cred')
   handleRes(res)
-  window.localStorage.clear()
+  console.log("shit we passed handleRes")
   saveSession(res, res.email);
   window.alert("Your user information have been updated !")
   window.location.reload();
 }
 
 function handleRes(results) {
-  window.sessionStorage.setItem('userinfo', JSON.stringify(results))
+  console.log("we are entring handleRes")
+  window.localStorage.setItem('cred', JSON.stringify(results))
+
 }
 
 const checkSession = function () {
-  return (window.sessionStorage.getItem('userinfo') != null)
+  return (window.localStorage.getItem('cred') != null)
 }
 
 const getObject = function () {
-  return JSON.parse(window.sessionStorage.getItem('userinfo'))
+  return JSON.parse(window.localStorage.getItem('cred'))
 }
 export default UserInfo
 

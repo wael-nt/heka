@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
-const allowedOrigins = ["*", "http://localhost:3000"];
+const allowedOrigins = ["*", "http://localhost:3000","http://localhost:3001"];
 const methods = [
   "GET",
   "PUT",
@@ -29,7 +29,6 @@ app.use(
     headers: headers,
   })
 );
-console.log("here")
 const PORT = 4300;
 
 mongoose.connect(process.env.DATABASE_URL);

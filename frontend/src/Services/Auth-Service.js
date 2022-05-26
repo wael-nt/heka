@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL =  "https://boiling-wave-51445.herokuapp.com/heka/api/users";
+const API_URL =  "http://127.0.0.1:4300/heka/api/users";
 
 const signup = (email, password, name, height, weight, age, sex,photo) => {
   return axios.post(API_URL + "/register", {
@@ -14,7 +14,7 @@ const signup = (email, password, name, height, weight, age, sex,photo) => {
       photo
     })
     .then((response) => {
-      return response.data;
+      return response;
     });
 };
 
@@ -24,7 +24,7 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      return response.data;
+      return response;
     });
 };
 

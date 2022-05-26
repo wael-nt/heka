@@ -6,6 +6,7 @@ const {
 } = require("express-validator");
 
 let email = "";
+let jsonToken = "";
 // POST
 exports.addNewUser = async function addNewUser(req, res, next) {
   console.log("post");
@@ -52,8 +53,9 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
           message: "Invalid login credentials"
         })
       } else {
-        let jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
-        res.header('auth-token', jsonToken).send(extract(user));
+        jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
+        res.setHeader('auth-token', jsonToken);
+        res.status(200).send(extract(user));
         console.log(jsonToken);
         // password matched. proceed forward
         // without id, v and password fields
@@ -77,6 +79,8 @@ exports.editUser = async function editUser(req, res, next) {
   }, function (err, user) {
     res.set('Access-Control-Allow-Origin', '*');
     try {
+      console.log("Problem")
+      console.log(req.body.currentPassword)
       if (!user.validatePassword(req.body.currentPassword)) {
         res.status(400).json({
           message: "Invalid credentials"
@@ -89,9 +93,10 @@ exports.editUser = async function editUser(req, res, next) {
         user.height = req.body.height
         user.sex = req.body.sex
         user.photo = req.body.photo
-        user.save()
-        let jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
-        res.header('auth-token', jsonToken).send(extract(user));
+        console.log('before saving');
+        user.save();
+        console.log('after');
+        res.status(200).json(extractEdit(user));
         if (err) {
           res.status(400).json({
             message: err
@@ -99,9 +104,9 @@ exports.editUser = async function editUser(req, res, next) {
         }
       }
     } catch (err) {
-      res.status(400).json({
-        message: 'User doesnt exist'
-      })
+      res.status(400).json(
+        err.message
+        )
     }
 
   })
@@ -116,7 +121,20 @@ function extract(user) {
     weight: user.weight,
     age: user.age,
     sex: user.sex,
-    photo: user.photo
+    photo: user.photo,
+    jwt: jsonToken  
+  }
+  return resObj
+}
+function extractEdit(user) {
+  const resObj = {
+    name: user.name,
+    email: user.email,
+    height: user.height,
+    weight: user.weight,
+    age: user.age,
+    sex: user.sex,
+    photo: user.photo 
   }
   return resObj
 }
@@ -130,7 +148,7 @@ exports.deleteUser = async function deleteUser(req, res, next) {
     await userSchema.deleteOne({
       email: req.body.email
     })
-    res.send(extract(deleted))
+    res.send(extractEdit(deleted))
   } else {
     res.send("User doesn't exist.")
   }

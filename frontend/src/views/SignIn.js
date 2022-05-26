@@ -14,10 +14,12 @@ const SignIn = () => {
     try {
       await AuthService.login(email, password).then(
         (response) => {
-          console.log(response);
-          saveSession(response, email);
-          navigate("/");
-          document.location.reload();
+          console.log("response")
+           console.log(response.data.jwt);
+          saveSession(response.data, email);
+          saveToken(response.data.jwt);
+          //  navigate("/");
+          //  document.location.reload();
         },
         (error) => {
           console.log(error);
@@ -34,6 +36,13 @@ const SignIn = () => {
       email: email,
     }
     window.localStorage.setItem('cred', JSON.stringify(obj))
+  }
+
+  const saveToken = (jwt,email) => {
+    const obj = {
+      accessToken: jwt,
+    }
+    window.localStorage.setItem('auth-token', JSON.stringify(obj))
   }
   return (
     <div>
