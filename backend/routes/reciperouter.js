@@ -15,13 +15,13 @@ router.delete('/deleteOne', verify, recipeController.deleteRecipe) // body : {na
 router.delete('/deleteAll', verify, recipeController.deleteAllRecipes) // body : {owner: user's email}
 
 // GET - all the users private recipes
-router.get('/private/:email', recipeController.getPrivateRecipes) // body : {owner: user's email}
+router.get('/private/:email', verify, recipeController.getPrivateRecipes) // body : {owner: user's email}
 
 // GET - all public recipes
-router.get('/public', recipeController.getPublicRecipes)
+router.get('/public', verify, recipeController.getPublicRecipes)
 
 // GET - a recipe, by name
-router.get('/:name', recipeController.getRecipe) // params 'name'
+router.get('/:name', verify, recipeController.getRecipe) // params 'name'
 
 
 
