@@ -106,7 +106,7 @@ async function postUpdate(userData) {
     mode: 'cors',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' ,
-    'auth-token':token                                    },
+    'auth-token':token},
   };
   const response = await fetch(API_URL+'/users/edit', requestOptions);
    
@@ -114,16 +114,15 @@ async function postUpdate(userData) {
   const res = await response.json();
   window.localStorage.removeItem('cred')
   handleRes(res)
-  console.log("shit we passed handleRes")
+  console.log("passed handleRes")
   saveSession(res, res.email);
   window.alert("Your user information have been updated !")
   window.location.reload();
 }
 
 function handleRes(results) {
-  console.log("we are entring handleRes")
+  console.log("entring handleRes")
   window.localStorage.setItem('cred', JSON.stringify(results))
-
 }
 
 const checkSession = function () {

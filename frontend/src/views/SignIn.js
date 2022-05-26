@@ -18,8 +18,8 @@ const SignIn = () => {
            console.log(response.data.jwt);
           saveSession(response.data, email);
           saveToken(response.data.jwt);
-          //  navigate("/");
-          //  document.location.reload();
+          navigate("/");
+          document.location.reload();
         },
         (error) => {
           console.log(error);

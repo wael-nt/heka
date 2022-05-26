@@ -53,10 +53,7 @@ exports.checkUserByEmailAndPassword = async function checkUserByEmailAndPassword
           message: "Invalid login credentials"
         })
       } else {
-        jsonToken = JWT.sign(req.body.email, process.env.TOKEN_SECRET);
-        res.setHeader('auth-token', jsonToken);
-        res.status(200).send(extract(user));
-        console.log(jsonToken);
+        
         // password matched. proceed forward
         // without id, v and password fields
         //res.send(extract(user))
